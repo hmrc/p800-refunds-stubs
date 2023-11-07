@@ -1,3 +1,5 @@
 # microservice specific routes
 
 GET        /hello-world             uk.gov.hmrc.p800refundsstubs.controllers.MicroserviceHelloWorldController.hello
+
+POST       /validate-reference      uk.gov.hmrc.p800refundsstubs.controllers.ReferenceValidationStubController.validateReference
