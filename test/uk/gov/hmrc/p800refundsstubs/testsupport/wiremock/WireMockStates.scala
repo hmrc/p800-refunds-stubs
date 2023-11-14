@@ -23,7 +23,7 @@ object WireMockStates {
   def nextState(index: Int): String = (index + 1).toString
   def endState(index: Int, size: Int): String = if (size == 1) Scenario.STARTED else (if (index + 1 >= size) index else index + 1).toString
 
-  val tpsBackendUpsert: String = "tps-payments-backend-upsert"
-  val tpsBackendFind: String = "tps-payments-backend-find"
+  val p800BackendUpsert: String = "p800-refunds-backend-upsert"
+  val p800BackendFind: String = "p800-refunds-backend-find"
 }
 

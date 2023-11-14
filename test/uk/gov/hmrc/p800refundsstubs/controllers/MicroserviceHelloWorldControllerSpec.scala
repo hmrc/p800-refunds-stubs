@@ -16,18 +16,17 @@
 
 package uk.gov.hmrc.p800refundsstubs.controllers
 
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
 import play.api.http.Status
 import play.api.test.Helpers._
 import play.api.test.{FakeRequest, Helpers}
+import testsupport.UnitSpec
 
-class MicroserviceHelloWorldControllerSpec extends AnyWordSpec with Matchers {
+class MicroserviceHelloWorldControllerSpec extends UnitSpec {
 
   private val fakeRequest = FakeRequest("GET", "/")
   private val controller = new MicroserviceHelloWorldController(Helpers.stubControllerComponents())
 
-  "GET /" should {
+  "GET /" - {
     "return 200" in {
       val result = controller.hello()(fakeRequest)
       status(result) shouldBe Status.OK

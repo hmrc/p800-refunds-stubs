@@ -16,9 +16,6 @@
 
 package uk.gov.hmrc.p800refundsstubs.testsupport
 
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.htmlunit.HtmlUnitDriver
-import org.scalatest.BeforeAndAfterEach
 import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.play.guice.GuiceOneServerPerSuite
@@ -31,16 +28,12 @@ import testsupport.wiremock.WireMockSupport
 
 trait ItSpec extends AnyFreeSpecLike
   with RichMatchers
-  with BeforeAndAfterEach
   with GuiceOneServerPerSuite
   with WireMockSupport
   with Matchers {
 
   private val testServerPort = 19001
   private val databaseName: String = "p800-refunds-frontend-it"
-  lazy val webdriverUrl: String = s"http://localhost:${port.toString}"
-
-  protected implicit val webDriver: WebDriver = new HtmlUnitDriver()
 
   protected lazy val configMap: Map[String, Any] = Map[String, Any](
     "mongodb.uri" -> s"mongodb://localhost:27017/$databaseName",
@@ -62,12 +55,4 @@ trait ItSpec extends AnyFreeSpecLike
       sc.copy(configuration = sc.configuration.withFallback(overrideServerConfiguration(app)))
     }
   }
-
-  override def beforeEach(): Unit = {
-    super.beforeEach()
-    webDriver.manage().deleteAllCookies()
-  }
-
-  def goToViaPath(path: String): Unit = webDriver.get(s"$webdriverUrl$path")
-
 }
