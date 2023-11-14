@@ -17,34 +17,31 @@
 package uk.gov.hmrc.p800refundsstubs.controllers
 
 import akka.stream.Materializer
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.HeaderNames.CONTENT_TYPE
 import play.api.http.Status
-import play.api.libs.json.Json
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.p800refundsstubs.models.ReferenceValidationRequest
+import uk.gov.hmrc.p800refundsstubs.models.{ReferenceValidationRequest, ReferenceValidationResponse}
+import uk.gov.hmrc.p800refundsstubs.testsupport.ItSpec
 
 import scala.concurrent.Future
 
-class ReferenceValidationStubControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
+class ReferenceValidationStubControllerSpec extends ItSpec {
 
   private val controller = app.injector.instanceOf[ReferenceValidationStubController]
   implicit lazy val materializer: Materializer = app.materializer
 
-  "POST /" should {
+  "POST /" - {
     "Valid reference responds with isValid true" in {
       val fakeRequest = FakeRequest()
-        .withBody(ReferenceValidationRequest("VALLIDREF1"))
+        .withBody(ReferenceValidationRequest("VALIDREF1"))
         .withHeaders(CONTENT_TYPE -> JSON)
 
       val result: Future[Result] = controller.validateReference()(fakeRequest)
 
       status(result) shouldBe Status.OK
-      contentAsJson(result) shouldBe Json.parse("""{ "isValid": true} """)
+      contentAsJson(result).as[ReferenceValidationResponse].isValid shouldBe true
     }
 
     "Invalid reference responds with isValid false" in {
@@ -55,7 +52,7 @@ class ReferenceValidationStubControllerSpec extends AnyWordSpec with Matchers wi
       val result: Future[Result] = controller.validateReference()(fakeRequest)
 
       status(result) shouldBe Status.OK
-      contentAsJson(result) shouldBe Json.parse("""{ "isValid": false} """)
+      contentAsJson(result).as[ReferenceValidationResponse].isValid shouldBe false
     }
   }
 }

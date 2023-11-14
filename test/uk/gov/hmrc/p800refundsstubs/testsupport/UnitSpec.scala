@@ -14,22 +14,8 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.p800refundsstubs.controllers
+package testsupport
 
-import play.api.http.Status
-import play.api.test.Helpers._
-import play.api.test.{FakeRequest, Helpers}
-import testsupport.UnitSpec
+import org.scalatest.freespec.AnyFreeSpec
 
-class MicroserviceHelloWorldControllerSpec extends UnitSpec {
-
-  private val fakeRequest = FakeRequest("GET", "/")
-  private val controller = new MicroserviceHelloWorldController(Helpers.stubControllerComponents())
-
-  "GET /" - {
-    "return 200" in {
-      val result = controller.hello()(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-  }
-}
+trait UnitSpec extends AnyFreeSpec with RichMatchers

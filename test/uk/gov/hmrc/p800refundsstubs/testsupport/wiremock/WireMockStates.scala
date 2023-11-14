@@ -14,22 +14,16 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.p800refundsstubs.controllers
+package testsupport.wiremock
 
-import play.api.http.Status
-import play.api.test.Helpers._
-import play.api.test.{FakeRequest, Helpers}
-import testsupport.UnitSpec
+import com.github.tomakehurst.wiremock.stubbing.Scenario
 
-class MicroserviceHelloWorldControllerSpec extends UnitSpec {
+object WireMockStates {
+  def state(index: Int): String = if (index == 0) Scenario.STARTED else index.toString
+  def nextState(index: Int): String = (index + 1).toString
+  def endState(index: Int, size: Int): String = if (size == 1) Scenario.STARTED else (if (index + 1 >= size) index else index + 1).toString
 
-  private val fakeRequest = FakeRequest("GET", "/")
-  private val controller = new MicroserviceHelloWorldController(Helpers.stubControllerComponents())
-
-  "GET /" - {
-    "return 200" in {
-      val result = controller.hello()(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-  }
+  val p800BackendUpsert: String = "p800-refunds-backend-upsert"
+  val p800BackendFind: String = "p800-refunds-backend-find"
 }
+

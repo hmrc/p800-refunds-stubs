@@ -14,22 +14,24 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.p800refundsstubs.controllers
+package testsupport
 
-import play.api.http.Status
-import play.api.test.Helpers._
-import play.api.test.{FakeRequest, Helpers}
-import testsupport.UnitSpec
+import org.scalatest._
+import org.scalatest.concurrent.{Eventually, IntegrationPatience, ScalaFutures}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.diagrams.Diagrams
 
-class MicroserviceHelloWorldControllerSpec extends UnitSpec {
+object RichMatchers extends RichMatchers
 
-  private val fakeRequest = FakeRequest("GET", "/")
-  private val controller = new MicroserviceHelloWorldController(Helpers.stubControllerComponents())
-
-  "GET /" - {
-    "return 200" in {
-      val result = controller.hello()(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-  }
-}
+trait RichMatchers
+  extends Matchers
+  with Diagrams
+  with TryValues
+  with EitherValues
+  with OptionValues
+  with AppendedClues
+  with ScalaFutures
+  with StreamlinedXml
+  with Inside
+  with Eventually
+  with IntegrationPatience

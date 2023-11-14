@@ -12,6 +12,8 @@ object SbtUpdatesSettings {
     (Compile / compile) := ((Compile / compile) dependsOn dependencyUpdates).value,
     dependencyUpdatesFilter -= moduleFilter("org.scala-lang"),
     dependencyUpdatesFilter -= moduleFilter("com.typesafe.play"),
+    dependencyUpdatesFilter -= moduleFilter("org.scalatestplus.play", "scalatestplus-play"),
+    dependencyUpdatesFilter -= moduleFilter("com.vladsch.flexmark", "flexmark-all")
   // locked to the version of play
   )
 
