@@ -16,16 +16,22 @@
 
 package uk.gov.hmrc.p800refundsstubs.controllers
 
+import play.api.libs.json.Json
+import play.api.mvc.{Action, ControllerComponents}
+import uk.gov.hmrc.p800refundsstubs.models.{IdentityVerificationRequest, IdentityVerificationResponse}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
-import javax.inject.{Inject, Singleton}
+
+import javax.inject.Inject
 import scala.concurrent.Future
 
-@Singleton()
-class MicroserviceHelloWorldController @Inject() (cc: ControllerComponents)
-  extends BackendController(cc) {
+class IdentityVerificationStubController @Inject() (cc: ControllerComponents) extends BackendController(cc) {
 
-  def hello(): Action[AnyContent] = Action.async { _ =>
-    Future.successful(Ok("Hello world"))
+  val verifyIdentity: Action[IdentityVerificationRequest] = Action.async(parse.json[IdentityVerificationRequest]) { implicit request =>
+    val response: IdentityVerificationResponse = request.body.nino match {
+      case "MA000003A" => IdentityVerificationResponse(identityVerified = false)
+      case _           => IdentityVerificationResponse(identityVerified = true)
+    }
+    Future.successful(Ok(Json.toJson(response)))
   }
+
 }

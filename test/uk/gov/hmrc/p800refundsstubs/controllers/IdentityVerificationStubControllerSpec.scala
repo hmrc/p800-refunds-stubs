@@ -17,42 +17,45 @@
 package uk.gov.hmrc.p800refundsstubs.controllers
 
 import akka.stream.Materializer
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.HeaderNames.CONTENT_TYPE
 import play.api.http.Status
+import play.api.libs.json.Json
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.p800refundsstubs.models.{ReferenceValidationRequest, ReferenceValidationResponse}
-import uk.gov.hmrc.p800refundsstubs.testsupport.ItSpec
+import uk.gov.hmrc.p800refundsstubs.models.IdentityVerificationRequest
 
 import scala.concurrent.Future
 
-class ReferenceValidationStubControllerSpec extends ItSpec {
+class IdentityVerificationStubControllerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
 
-  private val controller = app.injector.instanceOf[ReferenceValidationStubController]
+  private val controller = app.injector.instanceOf[IdentityVerificationStubController]
   implicit lazy val materializer: Materializer = app.materializer
 
-  "POST /validate-reference" - {
-    "Valid reference responds with isValid true" in {
+  "POST /verify-identity" should {
+    "Valid nino responds with true" in {
       val fakeRequest = FakeRequest()
-        .withBody(ReferenceValidationRequest("VALIDREF1"))
+        .withBody(IdentityVerificationRequest("LM001014C"))
         .withHeaders(CONTENT_TYPE -> JSON)
 
-      val result: Future[Result] = controller.validateReference()(fakeRequest)
+      val result: Future[Result] = controller.verifyIdentity()(fakeRequest)
 
       status(result) shouldBe Status.OK
-      contentAsJson(result).as[ReferenceValidationResponse].isValid shouldBe true
+      contentAsJson(result) shouldBe Json.parse("""{ "identityVerified": true} """)
     }
 
-    "Invalid reference responds with isValid false" in {
+    "Invalid nino responds with false" in {
       val fakeRequest = FakeRequest()
-        .withBody(ReferenceValidationRequest("INVALIDREF1"))
+        .withBody(IdentityVerificationRequest("MA000003A"))
         .withHeaders(CONTENT_TYPE -> JSON)
 
-      val result: Future[Result] = controller.validateReference()(fakeRequest)
+      val result: Future[Result] = controller.verifyIdentity()(fakeRequest)
 
       status(result) shouldBe Status.OK
-      contentAsJson(result).as[ReferenceValidationResponse].isValid shouldBe false
+      contentAsJson(result) shouldBe Json.parse("""{ "identityVerified": false} """)
     }
   }
 }
