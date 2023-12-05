@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.p800refundsstubs.controllers
+package uk.gov.hmrc.p800refundsstubs.models
 
-import play.api.http.Status
-import play.api.test.Helpers._
-import play.api.test.{FakeRequest, Helpers}
-import testsupport.UnitSpec
+import play.api.libs.json.{Format, Json}
 
-class MicroserviceHelloWorldControllerSpec extends UnitSpec {
+//nino?
+final case class IdentityVerificationRequest(nino: String) extends AnyVal
 
-  private val fakeRequest = FakeRequest("GET", "/")
-  private val controller = new MicroserviceHelloWorldController(Helpers.stubControllerComponents())
+object IdentityVerificationRequest {
+  implicit val format: Format[IdentityVerificationRequest] = Json.format[IdentityVerificationRequest]
+}
 
-  "GET /" - {
-    "return 200" in {
-      val result = controller.hello()(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-  }
+final case class IdentityVerificationResponse(identityVerified: Boolean) extends AnyVal
+
+object IdentityVerificationResponse {
+  implicit val format: Format[IdentityVerificationResponse] = Json.format[IdentityVerificationResponse]
 }
