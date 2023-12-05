@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package testsupport.stubs
+package uk.gov.hmrc.p800refundsstubs.testsupport.wiremock
 
 import cats.syntax.eq._
 import com.github.tomakehurst.wiremock.client.WireMock._
@@ -29,9 +29,10 @@ object WireMockHelpers {
   /**
    * Useful wiremock helper to verify that the request body serialises to what we expect.
    * Hint: If it's not working and you can't work out why, check what A you are passing in... :)
-   * @param url: String
-   * @param format: play.api.libs.json.Format as an implicit
-   * @tparam A: Model we want to get format for
+   *
+   * @param url    : String
+   * @param format : play.api.libs.json.Format as an implicit
+   * @tparam A : Model we want to get format for
    */
   def verifyWithBodyParse[A](url: String)(implicit format: Format[A]): Unit = verify(
     postRequestedFor(urlPathEqualTo(url))
