@@ -18,7 +18,7 @@ package uk.gov.hmrc.p800refundsstubs.controllers
 
 import play.api.libs.json.Json
 import play.api.mvc.{Action, ControllerComponents}
-import uk.gov.hmrc.p800refundsstubs.models.{IdentityVerificationRequest, IdentityVerificationResponse}
+import uk.gov.hmrc.p800refundsstubs.models.{AmountInPence, IdentityVerificationRequest, IdentityVerificationResponse, IdentityVerified}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
@@ -27,9 +27,9 @@ import scala.concurrent.Future
 class IdentityVerificationStubController @Inject() (cc: ControllerComponents) extends BackendController(cc) {
 
   val verifyIdentity: Action[IdentityVerificationRequest] = Action.async(parse.json[IdentityVerificationRequest]) { implicit request =>
-    val response: IdentityVerificationResponse = request.body.nino match {
-      case "MA000003A" => IdentityVerificationResponse(identityVerified = false)
-      case _           => IdentityVerificationResponse(identityVerified = true)
+    val response: IdentityVerificationResponse = request.body.nino.value match {
+      case "MA000003A" => IdentityVerificationResponse(IdentityVerified(false), AmountInPence(12312))
+      case _           => IdentityVerificationResponse(IdentityVerified(true), AmountInPence(123122))
     }
     Future.successful(Ok(Json.toJson(response)))
   }
