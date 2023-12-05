@@ -1,7 +1,9 @@
 
 # p800-refunds-stubs
 
-This is a placeholder README.md for a new repository
+### /verify-identity
+Nino to trigger false response: `MA000003A`
+All other values return true: e.g. `LM001014C`
 
 ### License
 
