@@ -3,3 +3,8 @@
 POST       /validate-reference      uk.gov.hmrc.p800refundsstubs.controllers.ReferenceValidationStubController.validateReference
 
 POST       /verify-identity         uk.gov.hmrc.p800refundsstubs.controllers.IdentityVerificationStubController.verifyIdentity
+
+# Ecospend
+POST       /connect/token           uk.gov.hmrc.p800refundsstubs.controllers.EcospendAuthController.accessToken
+
+GET        /api/v2.0/banks          uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.banks
