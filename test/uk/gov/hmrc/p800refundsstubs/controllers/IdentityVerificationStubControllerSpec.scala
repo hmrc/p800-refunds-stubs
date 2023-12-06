@@ -23,7 +23,7 @@ import play.api.libs.json.Json
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.p800refundsstubs.models.IdentityVerificationRequest
+import uk.gov.hmrc.p800refundsstubs.models.{IdentityVerificationRequest, NationalInsuranceNumber}
 import uk.gov.hmrc.p800refundsstubs.testsupport.ItSpec
 
 import scala.concurrent.Future
@@ -36,24 +36,24 @@ class IdentityVerificationStubControllerSpec extends ItSpec {
   "POST /verify-identity" - {
     "Valid nino responds with true" in {
       val fakeRequest = FakeRequest()
-        .withBody(IdentityVerificationRequest("LM001014C"))
+        .withBody(IdentityVerificationRequest(NationalInsuranceNumber("LM001014C")))
         .withHeaders(CONTENT_TYPE -> JSON)
 
       val result: Future[Result] = controller.verifyIdentity()(fakeRequest)
 
       status(result) shouldBe Status.OK
-      contentAsJson(result) shouldBe Json.parse("""{ "identityVerified": true} """)
+      contentAsJson(result) shouldBe Json.parse("""{ "identityVerified": true, "amount": 123122 }""")
     }
 
     "Invalid nino responds with false" in {
       val fakeRequest = FakeRequest()
-        .withBody(IdentityVerificationRequest("MA000003A"))
+        .withBody(IdentityVerificationRequest(NationalInsuranceNumber("MA000003A")))
         .withHeaders(CONTENT_TYPE -> JSON)
 
       val result: Future[Result] = controller.verifyIdentity()(fakeRequest)
 
       status(result) shouldBe Status.OK
-      contentAsJson(result) shouldBe Json.parse("""{ "identityVerified": false} """)
+      contentAsJson(result) shouldBe Json.parse("""{ "identityVerified": false, "amount": 12312 }""")
     }
   }
 }

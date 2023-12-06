@@ -18,16 +18,8 @@ package uk.gov.hmrc.p800refundsstubs.models
 
 import play.api.libs.json.{Format, Json}
 
-//assumption that it's amount in pence, this may need to change when we get api specs
-final case class IdentityVerificationRequest(nino: NationalInsuranceNumber)
+final case class NationalInsuranceNumber(value: String) extends AnyVal
 
-object IdentityVerificationRequest {
-  implicit val format: Format[IdentityVerificationRequest] = Json.format[IdentityVerificationRequest]
-}
-
-final case class IdentityVerificationResponse(identityVerified: IdentityVerified, amount: AmountInPence)
-
-object IdentityVerificationResponse {
-  @SuppressWarnings(Array("org.wartremover.warts.Any"))
-  implicit val format: Format[IdentityVerificationResponse] = Json.format[IdentityVerificationResponse]
+object NationalInsuranceNumber {
+  implicit val formats: Format[NationalInsuranceNumber] = Json.valueFormat[NationalInsuranceNumber]
 }
