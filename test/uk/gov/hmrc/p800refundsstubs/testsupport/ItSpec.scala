@@ -25,6 +25,9 @@ import play.api.{Application, Mode}
 import play.core.server.ServerConfig
 import testsupport.RichMatchers
 import testsupport.wiremock.WireMockSupport
+import uk.gov.hmrc.p800refundsstubs.repo.BankVerificationRepo
+
+import scala.concurrent.ExecutionContext
 
 trait ItSpec extends AnyFreeSpecLike
   with RichMatchers
@@ -32,8 +35,10 @@ trait ItSpec extends AnyFreeSpecLike
   with WireMockSupport
   with Matchers {
 
+  implicit val ec: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
+
   private val testServerPort = 19001
-  private val databaseName: String = "p800-refunds-frontend-it"
+  private val databaseName: String = "p800-refunds-stubs-it"
 
   protected lazy val configMap: Map[String, Any] = Map[String, Any](
     "mongodb.uri" -> s"mongodb://localhost:27017/$databaseName",
@@ -42,6 +47,18 @@ trait ItSpec extends AnyFreeSpecLike
     "auditing.enabled" -> false,
     "auditing.traceRequests" -> false
   )
+
+  lazy val bankVerificationRepo: BankVerificationRepo = app.injector.instanceOf[BankVerificationRepo]
+
+  override def beforeEach(): Unit = {
+    super.beforeEach()
+    bankVerificationRepo.collection.drop().toFuture().map(_ => ()).futureValue
+  }
+
+  override def afterEach(): Unit = {
+    super.afterEach()
+    bankVerificationRepo.collection.drop().toFuture().map(_ => ()).futureValue
+  }
 
   override def fakeApplication(): Application = new GuiceApplicationBuilder()
     .configure(configMap).build()

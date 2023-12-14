@@ -20,13 +20,18 @@ import play.api.Logger
 import play.api.libs.json.Json
 import play.api.mvc._
 import uk.gov.hmrc.p800refundsstubs.EcospendData
+import uk.gov.hmrc.p800refundsstubs.models.bankverification.{BankVerification, BankVerificationRequest}
+import uk.gov.hmrc.p800refundsstubs.services.BankVerificationService
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton()
-class EcospendController @Inject() (cc: ControllerComponents) extends BackendController(cc) {
+class EcospendController @Inject() (
+    cc:                      ControllerComponents,
+    bankVerificationService: BankVerificationService
+)(implicit executionContext: ExecutionContext) extends BackendController(cc) {
 
   val logger: Logger = Logger(this.getClass)
 
@@ -50,5 +55,15 @@ class EcospendController @Inject() (cc: ControllerComponents) extends BackendCon
         Future.successful(Unauthorized(Json.toJson(EcospendData.missingAccessTokenCheckResponse)))
     }
   }
+
+  val notification: Action[BankVerificationRequest] = Action.async(parse.json[BankVerificationRequest]) { implicit request =>
+    val bankVerificationRequest = request.body
+    bankVerificationService
+      .findData(bankVerificationRequest)
+      .foldF[Result](bankVerificationService.insertData(bankVerificationRequest).map(_ => NotFound)){
+        bankVerificationResult: BankVerification => Future.successful(Ok(Json.toJson(bankVerificationResult)))
+      }
+  }
+
 }
 
