@@ -12,7 +12,7 @@ class EcospendControllerSpec extends ItSpec {
 
   private def fakeRequest(identifier: String): FakeRequest[BankVerificationRequest] = FakeRequest()
     .withBody(BankVerificationRequest(identifier))
-    .withHeaders(CONTENT_TYPE -> JSON)
+    .withHeaders(CONTENT_TYPE -> JSON, AUTHORIZATION -> "Bearer 1234567890")
 
   private def prepMongo(identifier: String, verificationStatus: VerificationStatus) =
     bankVerificationRepo

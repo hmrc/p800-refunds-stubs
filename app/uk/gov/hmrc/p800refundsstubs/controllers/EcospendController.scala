@@ -58,11 +58,13 @@ class EcospendController @Inject() (
 
   val notification: Action[BankVerificationRequest] = Action.async(parse.json[BankVerificationRequest]) { implicit request =>
     val bankVerificationRequest = request.body
-    bankVerificationService
-      .findData(bankVerificationRequest)
-      .foldF[Result](bankVerificationService.insertData(bankVerificationRequest).map(_ => NotFound)){
-        bankVerificationResult: BankVerification => Future.successful(Ok(Json.toJson(bankVerificationResult)))
-      }
+    performAccessTokenHeaderCheck {
+      bankVerificationService
+        .findData(bankVerificationRequest)
+        .foldF[Result](bankVerificationService.insertData(bankVerificationRequest).map(_ => NotFound)){
+          bankVerificationResult: BankVerification => Future.successful(Ok(Json.toJson(bankVerificationResult)))
+        }
+    }
   }
 
 }
