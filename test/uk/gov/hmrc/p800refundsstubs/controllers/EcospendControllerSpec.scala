@@ -20,9 +20,9 @@ class EcospendControllerSpec extends ItSpec {
       .futureValue
 
   "POST /notification" - {
-    "return 404 if no entry in mongo" in {
+    "return 402 (PaymentRequired) if no entry in mongo" in {
       val result = ecospendController.notification(fakeRequest("AB123456A"))
-      status(result) shouldBe 404
+      status(result) shouldBe PAYMENT_REQUIRED
     }
 
     "return Successful when that is the value in mongo" in {
@@ -36,23 +36,23 @@ class EcospendControllerSpec extends ItSpec {
     }
 
     "return UnSuccessful when that is the value in mongo" in {
-      val identifier: String = "AB123456B"
+      val identifier: String = "MA000003B"
       prepMongo(identifier, VerificationStatus.UnSuccessful)
       val result = ecospendController.notification(fakeRequest(identifier))
       status(result) shouldBe 200
       //language=JSON
-      val expectedJsonResponse = """{"identifier":"AB123456B","verificationStatus":"UnSuccessful"}"""
+      val expectedJsonResponse = """{"identifier":"MA000003B","verificationStatus":"UnSuccessful"}"""
       contentAsString(result) shouldBe expectedJsonResponse
     }
 
     "update to a status when called a second time by the frontend" in {
       val identifier: String = "AB123456C"
       val firstCall = ecospendController.notification(fakeRequest(identifier))
-      status(firstCall) shouldBe 404
+      status(firstCall) shouldBe PAYMENT_REQUIRED
       val secondCall = ecospendController.notification(fakeRequest(identifier))
       status(secondCall) shouldBe 200
       //language=JSON
-      val expectedJsonResponse = """{"identifier":"AB123456C","verificationStatus":"UnSuccessful"}"""
+      val expectedJsonResponse = """{"identifier":"AB123456C","verificationStatus":"Successful"}"""
       contentAsString(secondCall) shouldBe expectedJsonResponse
     }
   }

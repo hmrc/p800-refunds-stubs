@@ -61,7 +61,7 @@ class EcospendController @Inject() (
     performAccessTokenHeaderCheck {
       bankVerificationService
         .findData(bankVerificationRequest)
-        .foldF[Result](bankVerificationService.insertData(bankVerificationRequest).map(_ => NotFound)){
+        .foldF[Result](bankVerificationService.insertData(bankVerificationRequest).map(_ => PaymentRequired)){
           bankVerificationResult: BankVerification => Future.successful(Ok(Json.toJson(bankVerificationResult)))
         }
     }

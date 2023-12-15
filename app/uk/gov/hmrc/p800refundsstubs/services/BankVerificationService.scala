@@ -30,8 +30,8 @@ class BankVerificationService @Inject() (bankVerificationRepo: BankVerificationR
 
   def insertData(bankVerificationRequest: BankVerificationRequest): Future[Unit] = {
     val statusToUpdateTo: VerificationStatus = bankVerificationRequest match {
-      case BankVerificationRequest("LM001014C") => bankverification.VerificationStatus.Successful
-      case _                                    => bankverification.VerificationStatus.UnSuccessful
+      case BankVerificationRequest("MA000003B") => bankverification.VerificationStatus.UnSuccessful
+      case _                                    => bankverification.VerificationStatus.Successful
     }
     bankVerificationRepo
       .insert(BankVerificationEntry(Instant.now(), BankVerification(bankVerificationRequest.identifier, statusToUpdateTo)))

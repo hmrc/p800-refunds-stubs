@@ -9,4 +9,4 @@ POST       /connect/token           uk.gov.hmrc.p800refundsstubs.controllers.Eco
 
 GET        /api/v2.0/banks          uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.banks
 
-POST       /notification            uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.notification
+POST       /api/v2.0/validate       uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.notification
