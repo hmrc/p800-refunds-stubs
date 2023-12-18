@@ -13,8 +13,9 @@ object SbtUpdatesSettings {
     dependencyUpdatesFilter -= moduleFilter("org.scala-lang"),
     dependencyUpdatesFilter -= moduleFilter("com.typesafe.play"),
     dependencyUpdatesFilter -= moduleFilter("org.scalatestplus.play", "scalatestplus-play"),
-    dependencyUpdatesFilter -= moduleFilter("com.vladsch.flexmark", "flexmark-all")
-  // locked to the version of play
+    dependencyUpdatesFilter -= moduleFilter("com.vladsch.flexmark", "flexmark-all"),
+    // locked to the version of play
+    dependencyUpdatesFilter -= moduleFilter("com.beachape", "enumeratum-play-json")
   )
 
 }
