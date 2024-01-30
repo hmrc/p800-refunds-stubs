@@ -23,7 +23,6 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.{DefaultTestServerFactory, RunningServer}
 import play.api.{Application, Mode}
 import play.core.server.ServerConfig
-import testsupport.RichMatchers
 import testsupport.wiremock.WireMockSupport
 import uk.gov.hmrc.p800refundsstubs.repo.BankVerificationRepo
 

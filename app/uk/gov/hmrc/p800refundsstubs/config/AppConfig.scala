@@ -16,11 +16,15 @@
 
 package uk.gov.hmrc.p800refundsstubs.config
 
-import javax.inject.{Inject, Singleton}
 import play.api.Configuration
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+
+import javax.inject.{Inject, Singleton}
 
 @Singleton
-class AppConfig @Inject() (config: Configuration) {
+class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig) {
 
   val appName: String = config.get[String]("appName")
+
+  val p800RefundsFrontendBaseUrl: String = servicesConfig.baseUrl("p800-refunds-frontend")
 }

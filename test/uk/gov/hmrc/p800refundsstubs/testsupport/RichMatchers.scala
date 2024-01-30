@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package testsupport
+package uk.gov.hmrc.p800refundsstubs.testsupport
 
 import org.scalatest._
 import org.scalatest.concurrent.{Eventually, IntegrationPatience, ScalaFutures}

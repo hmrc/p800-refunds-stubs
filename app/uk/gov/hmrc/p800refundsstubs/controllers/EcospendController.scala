@@ -21,7 +21,8 @@ import play.api.libs.json.Json
 import play.api.mvc._
 import uk.gov.hmrc.p800refundsstubs.EcospendData
 import uk.gov.hmrc.p800refundsstubs.models.bankverification.{BankVerification, BankVerificationRequest}
-import uk.gov.hmrc.p800refundsstubs.services.BankVerificationService
+import uk.gov.hmrc.p800refundsstubs.models.bankconsent.{BankConsentRequest, BankConsentResponse}
+import uk.gov.hmrc.p800refundsstubs.services.{BankVerificationService, BankConsentService}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{Inject, Singleton}
@@ -30,7 +31,8 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton()
 class EcospendController @Inject() (
     cc:                      ControllerComponents,
-    bankVerificationService: BankVerificationService
+    bankVerificationService: BankVerificationService,
+    bankConsentService:      BankConsentService
 )(implicit executionContext: ExecutionContext) extends BackendController(cc) {
 
   val logger: Logger = Logger(this.getClass)
@@ -63,6 +65,31 @@ class EcospendController @Inject() (
         .findData(bankVerificationRequest)
         .foldF[Result](bankVerificationService.insertData(bankVerificationRequest).map(_ => PaymentRequired)){
           bankVerificationResult: BankVerification => Future.successful(Ok(Json.toJson(bankVerificationResult)))
+        }
+    }
+  }
+
+  val createConsent: Action[BankConsentRequest] = Action.async(parse.json[BankConsentRequest]) { implicit request =>
+    val bankConsentRequest = request.body
+
+    bankConsentRequest.bankId match {
+      case "test-bad-request" =>
+        Future.successful(BadRequest(Json.toJson(EcospendData.badRequestErrorReponse)))
+      case "test-unauthorized-401" =>
+        Future.successful(Unauthorized("Unauthorized"))
+      case "test-server-error-500" =>
+        Future.successful(InternalServerError(Json.toJson(EcospendData.internalServerErrorResponse)))
+      case "test-server-error-502" =>
+        Future.successful(BadGateway(Json.toJson(EcospendData.badGatewayErrorResponse)))
+      case "test-server-error-503" =>
+        Future.successful(ServiceUnavailable(Json.toJson(EcospendData.badRequestErrorReponse)))
+      case _ =>
+        performAccessTokenHeaderCheck {
+          bankConsentService
+            .insertData(bankConsentRequest)
+            .map {
+              bankConsentResponse: BankConsentResponse => Ok(Json.toJson(bankConsentResponse))
+            }
         }
     }
   }

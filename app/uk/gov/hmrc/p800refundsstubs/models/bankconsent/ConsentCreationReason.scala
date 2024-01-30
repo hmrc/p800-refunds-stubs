@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.p800refundsstubs.testsupport
+package uk.gov.hmrc.p800refundsstubs.models.bankconsent
 
-import org.scalatest.freespec.AnyFreeSpec
+import enumeratum._
 
-trait UnitSpec extends AnyFreeSpec with RichMatchers
+sealed trait ConsentCreationReason extends EnumEntry
+
+object ConsentCreationReason extends Enum[ConsentCreationReason] with PlayJsonEnum[ConsentCreationReason] {
+
+  val values = findValues
+
+  case object Regular extends ConsentCreationReason
+  case object Algorithm extends ConsentCreationReason
+  case object FinancialReport extends ConsentCreationReason
+  case object Scoring extends ConsentCreationReason
+}
+
