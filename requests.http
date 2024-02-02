@@ -1,0 +1,4 @@
+GET http://localhost:10151/nps-json-service/nps/v1/api/reconciliation/p800/AB923123C/123
+CorrelationId: "sialala"
+Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
+#Authorization: Basic sialala
