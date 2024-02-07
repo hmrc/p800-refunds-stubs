@@ -21,15 +21,39 @@ import uk.gov.hmrc.p800refundsstubs.models.EcospendErrorResponse
 
 object EcospendData {
 
-  def invalidAccessTokenCheckResponse: EcospendErrorResponse = EcospendErrorResponse(
+  val invalidAccessTokenCheckResponse: EcospendErrorResponse = EcospendErrorResponse(
     "INVALID_ACCESS_TOKEN",
     "Access token provided in Authorization header was not valid",
     Json.obj()
   )
 
-  def missingAccessTokenCheckResponse: EcospendErrorResponse = EcospendErrorResponse(
+  val missingAccessTokenCheckResponse: EcospendErrorResponse = EcospendErrorResponse(
     "MISSING_ACCESS_TOKEN",
     "No Authorization header was present so access token couldn't be retrieved",
+    Json.obj()
+  )
+
+  val badRequestErrorReponse: EcospendErrorResponse = EcospendErrorResponse(
+    "BadRequest",
+    "Bad Request 400",
+    Json.obj()
+  )
+
+  val internalServerErrorResponse: EcospendErrorResponse = EcospendErrorResponse(
+    "InternalServerError",
+    "Internal Server Error 500",
+    Json.obj()
+  )
+
+  val badGatewayErrorResponse: EcospendErrorResponse = EcospendErrorResponse(
+    "BadGateway",
+    "Bad Gateway 502",
+    Json.obj()
+  )
+
+  val serviceUnavailableErrorResponse: EcospendErrorResponse = EcospendErrorResponse(
+    "ServiceUnavailable",
+    "Service Unavailable 503",
     Json.obj()
   )
 
@@ -70,6 +94,116 @@ object EcospendData {
               "country_iso_code": "",
               "division": "GB",
               "group": "Barclays",
+              "order": 0,
+              "abilities": {
+                "domestic_payment": true,
+                "domestic_scheduled_payment": true,
+                "domestic_standing_order": true,
+                "international_payment": true,
+                "international_scheduled_payment": true,
+                "international_standing_order": true
+              },
+              "service_status": true
+            },
+            {
+              "bank_id": "test-bad-request",
+              "name": "Test | Bad Request",
+              "friendly_name": "Test | Bad Request",
+              "is_sandbox": true,
+              "logo": "https://logo.com",
+              "icon": "https://example.com",
+              "standard": "obie",
+              "country_iso_code": "",
+              "division": "GB",
+              "group": "Test",
+              "order": 0,
+              "abilities": {
+                "domestic_payment": true,
+                "domestic_scheduled_payment": true,
+                "domestic_standing_order": true,
+                "international_payment": true,
+                "international_scheduled_payment": true,
+                "international_standing_order": true
+              },
+              "service_status": true
+            },
+            {
+              "bank_id": "test-unauthorized-401",
+              "name": "Test | Unauthorized 401",
+              "friendly_name": "Test | Unauthorized 401",
+              "is_sandbox": true,
+              "logo": "https://logo.com",
+              "icon": "https://example.com",
+              "standard": "obie",
+              "country_iso_code": "",
+              "division": "GB",
+              "group": "Test",
+              "order": 0,
+              "abilities": {
+                "domestic_payment": true,
+                "domestic_scheduled_payment": true,
+                "domestic_standing_order": true,
+                "international_payment": true,
+                "international_scheduled_payment": true,
+                "international_standing_order": true
+              },
+              "service_status": true
+            },
+            {
+              "bank_id": "test-server-error-500",
+              "name": "Test | Internal Server Error 500",
+              "friendly_name": "Test | Internal Server Error 500",
+              "is_sandbox": true,
+              "logo": "https://logo.com",
+              "icon": "https://example.com",
+              "standard": "obie",
+              "country_iso_code": "",
+              "division": "GB",
+              "group": "Test",
+              "order": 0,
+              "abilities": {
+                "domestic_payment": true,
+                "domestic_scheduled_payment": true,
+                "domestic_standing_order": true,
+                "international_payment": true,
+                "international_scheduled_payment": true,
+                "international_standing_order": true
+              },
+              "service_status": true
+            },
+            {
+              "bank_id": "test-server-error-502",
+              "name": "Test | Bad Gateway 502",
+              "friendly_name": "Test | Bad Gateway 502",
+              "is_sandbox": true,
+              "logo": "https://logo.com",
+              "icon": "https://example.com",
+              "standard": "obie",
+              "country_iso_code": "",
+              "division": "GB",
+              "group": "Test",
+              "order": 0,
+              "abilities": {
+                "domestic_payment": true,
+                "domestic_scheduled_payment": true,
+                "domestic_standing_order": true,
+                "international_payment": true,
+                "international_scheduled_payment": true,
+                "international_standing_order": true
+              },
+              "service_status": true
+            },
+            {
+              "bank_id": "test-server-error-503",
+              "name": "Test | Service Unavailable 503",
+              "friendly_name": "Test | Service Unavailable 503",
+              "is_sandbox": true,
+              "logo": "https://logo.com",
+              "icon": "https://example.com",
+              "standard": "obie",
+              "country_iso_code": "",
+              "division": "GB",
+              "group": "Test",
               "order": 0,
               "abilities": {
                 "domestic_payment": true,
