@@ -20,9 +20,10 @@ import play.api.Logger
 import play.api.libs.json.Json
 import play.api.mvc._
 import uk.gov.hmrc.p800refundsstubs.EcospendData
-import uk.gov.hmrc.p800refundsstubs.models.bankverification.{BankVerification, BankVerificationRequest}
 import uk.gov.hmrc.p800refundsstubs.models.bankconsent.{BankConsentRequest, BankConsentResponse}
-import uk.gov.hmrc.p800refundsstubs.services.{BankVerificationService, BankConsentService}
+import uk.gov.hmrc.p800refundsstubs.models.bankverification.{BankVerification, BankVerificationRequest}
+import uk.gov.hmrc.p800refundsstubs.models.{BankAccountSummaryResponse}
+import uk.gov.hmrc.p800refundsstubs.services.{BankVerificationService, BankConsentService, BankAccountService}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{Inject, Singleton}
@@ -32,7 +33,8 @@ import scala.concurrent.{ExecutionContext, Future}
 class EcospendController @Inject() (
     cc:                      ControllerComponents,
     bankVerificationService: BankVerificationService,
-    bankConsentService:      BankConsentService
+    bankConsentService:      BankConsentService,
+    bankAccountService:      BankAccountService
 )(implicit executionContext: ExecutionContext) extends BackendController(cc) {
 
   val logger: Logger = Logger(this.getClass)
@@ -89,6 +91,22 @@ class EcospendController @Inject() (
             .insertData(bankConsentRequest)
             .map {
               bankConsentResponse: BankConsentResponse => Ok(Json.toJson(bankConsentResponse))
+            }
+        }
+    }
+  }
+
+  def accountSummary(merchant_id: Option[String], merchant_user_id: Option[String]): Action[AnyContent] = Action.async { implicit request =>
+    performAccessTokenHeaderCheck {
+      logger.info(s"Account summary ConsentID Header: [${request.headers.get("consent_id").toString}], Query Parameters: merchant_id: [${merchant_id.toString}], merchant_user_id: [${merchant_user_id.toString}]")
+
+      request.headers
+        .get("consent_id")
+        .fold(Future.successful(BadRequest(Json.toJson(EcospendData.badRequestErrorReponse)))) { consentId: String =>
+          bankAccountService
+            .getAccountSummary(consentId)
+            .foldF[Result](Future.successful(NoContent)) {
+              bankAccountSummaryResponse: BankAccountSummaryResponse => Future.successful(Ok(Json.toJson(bankAccountSummaryResponse)))
             }
         }
     }
