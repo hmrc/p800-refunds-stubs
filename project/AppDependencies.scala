@@ -18,7 +18,7 @@ object AppDependencies {
     // format: OFF
     "uk.gov.hmrc"             %% "bootstrap-test-play-28"  % bootstrapVersion % "test, it",
     "uk.gov.hmrc.mongo"       %% "hmrc-mongo-test-play-28" % hmrcMongoVersion % Test,
-    "org.scalatest"           %% "scalatest"               % "3.2.17"         % Test,
+    "org.scalatest"           %% "scalatest"               % "3.2.18"         % Test,
     "com.vladsch.flexmark"    %  "flexmark-all"            % "0.62.2"         % Test,
     "org.scalatestplus.play"  %% "scalatestplus-play"      % "5.1.0"          % Test,
   // format: ON
