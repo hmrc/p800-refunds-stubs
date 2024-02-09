@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,22 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.p800refundsstubs.models
-
+package uk.gov.hmrc.p800refundsstubs.models.nps
 import play.api.libs.json.{Json, OFormat}
 
-final case class ReferenceValidationRequest(reference: String)
+final case class P800ReferenceCheckResultFailures(
+    failures: List[Failure]
+)
 
-object ReferenceValidationRequest {
-  @SuppressWarnings(Array("org.wartremover.warts.Any"))
-  implicit val format: OFormat[ReferenceValidationRequest] = Json.format[ReferenceValidationRequest]
+object P800ReferenceCheckResultFailures {
+  implicit val format: OFormat[P800ReferenceCheckResultFailures] = Json.format[P800ReferenceCheckResultFailures]
 }
 
-final case class ReferenceValidationResponse(isValid: Boolean)
+final case class Failure(reason: String, code: String)
 
-object ReferenceValidationResponse {
+object Failure {
+
   @SuppressWarnings(Array("org.wartremover.warts.Any"))
-  implicit val format: OFormat[ReferenceValidationResponse] = Json.format[ReferenceValidationResponse]
+  implicit val format: OFormat[Failure] = Json.format[Failure]
 }
+

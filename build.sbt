@@ -16,6 +16,11 @@ lazy val microservice = Project("p800-refunds-stubs", file("."))
     pipelineStages := Seq(gzip),
     Compile / scalacOptions -= "utf8"
   )
+  .settings(
+      routesImport ++= Seq(
+          "uk.gov.hmrc.p800refundsstubs.models.Nino",
+          "uk.gov.hmrc.p800refundsstubs.models.P800Reference"
+      ))
   .configs(IntegrationTest)
   .settings(resolvers += Resolver.jcenterRepo)
   .settings(CodeCoverageSettings.settings: _*)
