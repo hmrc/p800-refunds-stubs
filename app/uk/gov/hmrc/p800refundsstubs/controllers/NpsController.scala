@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.p800refundsstubs.controllers
 
+import play.api.Logger
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import uk.gov.hmrc.p800refundsstubs.actions.Actions
@@ -35,14 +36,14 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
     val paymentNumber = _paymentNumber
     val identifier = _identifier
     if (!identifier.isValid) {
-      //      logger.info(s"Not valid identifier: [${identifier.toString}], returning BadRequest [${request.correlationId.toString}]")
+      logger.info(s"Not valid identifier: [${identifier.toString}], returning BadRequest [${request.correlationId.toString}]")
       BadRequest(Json.toJson(P800ReferenceCheckResultFailures(
         failures = List(
           Failure(reason = s"Invalid identifier ${identifier.toString}", code = "TODO3")
         )
       )))
     } else if (!paymentNumber.isValid) {
-      //      logger.info(s"Not valid paymentNumber: [${paymentNumber.toString}], returning BadRequest [${request.correlationId.toString}]")
+      logger.info(s"Not valid paymentNumber: [${paymentNumber.toString}], returning BadRequest [${request.correlationId.toString}]")
       BadRequest(Json.toJson(P800ReferenceCheckResultFailures(
         failures = List(
           Failure(reason = s"Invalid paymentNumber ${paymentNumber.toString}", code = "TODO3")
@@ -95,4 +96,5 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
     }
   }
 
+  private lazy val logger = Logger(this.getClass)
 }
