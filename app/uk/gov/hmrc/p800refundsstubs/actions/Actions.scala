@@ -36,7 +36,7 @@ class Actions @Inject() (
   val default: ActionBuilder[Request, AnyContent] = actionBuilder
 
   @SuppressWarnings(Array("org.wartremover.warts.Any"))
-  val npsAction: ActionBuilder[Request, AnyContent] =
+  val npsAction: ActionBuilder[NpsRequest, AnyContent] =
     default
       .andThen(correlationIdRefiner)
       .andThen(basicAuthRefiner())

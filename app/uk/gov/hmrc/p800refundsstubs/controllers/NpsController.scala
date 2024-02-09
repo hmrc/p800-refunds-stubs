@@ -32,7 +32,7 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
   /**
    * NPS Interface to validate a P800 Reference and retrieve Payment Reference data.
    */
-  def p800ReferenceCheck(_identifier: Nino, _paymentNumber: P800Reference): Action[AnyContent] = actions.npsAction{ _ =>
+  def p800ReferenceCheck(_identifier: Nino, _paymentNumber: P800Reference): Action[AnyContent] = actions.npsAction{ request =>
     val paymentNumber = _paymentNumber
     val identifier = _identifier
     if (!identifier.isValid) {
