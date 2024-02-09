@@ -1,13 +1,34 @@
 
 # p800-refunds-stubs
 
-### /verify-identity
-Nino to trigger false response: `MA000003A`
-All other values return true: e.g. `LM001014C`
+## Scenarios
+The microservice responds with configured response depending on the incoming request data.
 
-### /api/v2.0/validate
-Nino to trigger failed payment response (`Unsuccessful`): `MA000003B`
-All other values return `Successful` response: e.g. `LM001014C`
+### Example Test Data
+
+| Nino pattern | Behaviour of Check Reference API            |
+|--------------|---------------------------------------------|
+| `AB999999C`  | 200 - Happy path                            |
+| `AB099999C`  | 404 - Nino And P800Reference aren't matched |
+| `AB199999C`  | 422 - Refund is already taken               |
+| `AB299999C`  | 422 - Unprocessable Entity                  |
+| `AB399999C`  | 400 - BadRequest                            |
+| `AB499999C`  | 403 - Forbidden                             |
+| `AB599999C`  | 500 - InternalServerError                   |
+
+
+### `GET /nps-json-service/nps/v1/api/reconciliation/p800/:identifier/:paymentNumber`
+For this endpoint the selection is driven via the NINO number using according to below table.
+
+| Nino pattern for CheckReference API | Scenario                                  |
+|-------------------------------------|-------------------------------------------|
+| `**0******`                         | Nino And P800Reference aren't matched     |
+| `**1******`                         | Refund is already taken                   |
+| `**2******`                         | Unprocessed Entity                        |
+| `**3******`                         | BadRequest                                |
+| `**4******`                         | Forbidden                                 |
+| `**5******`                         | InternalServerError                       |
+| `*********`                         | Happy path                                |
 
 ### License
 
