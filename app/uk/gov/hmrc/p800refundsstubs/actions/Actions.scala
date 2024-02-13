@@ -84,7 +84,7 @@ class Actions @Inject() (
   private lazy val correlationIdRefiner: ActionRefiner[Request, NpsRequest] = new ActionRefiner[Request, NpsRequest] {
 
     override protected def refine[A](request: Request[A]): Future[Either[Result, NpsRequest[A]]] = {
-      val correlationId: Option[CorrelationId] = request.headers.headers.find(_._1 === CorrelationId.key).map(_._2).map(CorrelationId.apply)
+      val correlationId: Option[CorrelationId] = request.headers.headers.find(_._1.toLowerCase() === CorrelationId.key.toLowerCase()).map(_._2).map(CorrelationId.apply)
 
       correlationId.fold[Future[Either[Result, NpsRequest[A]]]] {
         val correlationId = CorrelationId.fresh()
