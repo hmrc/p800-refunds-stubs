@@ -1,11 +1,18 @@
 # Check Reference API at NPS
-GET       /nps-json-service/nps/v1/api/reconciliation/p800/:identifier/:paymentNumber      uk.gov.hmrc.p800refundsstubs.controllers.NpsController.p800ReferenceCheck(identifier: Nino, paymentNumber: P800Reference)
+GET        /nps-json-service/nps/v1/api/reconciliation/p800/:identifier/:paymentNumber      uk.gov.hmrc.p800refundsstubs.controllers.NpsController.p800ReferenceCheck(identifier: Nino, paymentNumber: P800Reference)
+
+# microservice specific routes
+# POST       /validate-reference               uk.gov.hmrc.p800refundsstubs.controllers.ReferenceValidationStubController.validateReference
+
+POST       /verify-identity                  uk.gov.hmrc.p800refundsstubs.controllers.IdentityVerificationStubController.verifyIdentity
 
 # Ecospend
-POST       /connect/token           uk.gov.hmrc.p800refundsstubs.controllers.EcospendAuthController.accessToken
+POST       /connect/token                    uk.gov.hmrc.p800refundsstubs.controllers.EcospendAuthController.accessToken
 
-GET        /api/v2.0/banks          uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.banks
+GET        /api/v2.0/banks                   uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.banks
 
-POST       /api/v2.0/validate       uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.notification
+POST       /api/v2.0/validate                uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.notification
 
-POST       /api/v2.0/consents       uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.createConsent
+POST       /api/v2.0/consents                uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.createConsent
+
+GET        /api/v2.0/accounts/summary        uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.accountSummary(merchant_id: Option[String], merchant_user_id: Option[String])

@@ -17,10 +17,16 @@
 package uk.gov.hmrc.p800refundsstubs.controllers
 
 import play.api.http.HeaderNames.CONTENT_TYPE
+import play.api.libs.json._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import uk.gov.hmrc.p800refundsstubs.models._
 import uk.gov.hmrc.p800refundsstubs.models.bankverification._
 import uk.gov.hmrc.p800refundsstubs.testsupport.ItSpec
+
+import java.util.{Currency, UUID}
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class EcospendControllerSpec extends ItSpec {
 
@@ -71,5 +77,61 @@ class EcospendControllerSpec extends ItSpec {
       val expectedJsonResponse = """{"identifier":"AB123456C","verificationStatus":"Successful"}"""
       contentAsString(secondCall) shouldBe expectedJsonResponse
     }
+  }
+
+  "Validate custom JSON parsing for BankAccountSummaryResponse" in {
+    //language=JSON
+    val input = Json.parse(
+      """
+        [
+          {
+            "id": "cddd0273-b709-4ee7-b73d-7113dd7a7d66",
+            "bank_id": "obie-barclays-personal",
+            "type": "Personal",
+            "sub_type": "CurrentAccount",
+            "currency": "GBP",
+            "account_format": "SortCode",
+            "account_identification": "abc:123",
+            "calculated_owner_name": "Greg Greggson",
+            "account_owner_name": "Greg Greggson",
+            "display_name": "Greg G Greggson",
+            "balance": 123.7,
+            "last_update_time": "2024-02-13T12:52:45.081236",
+            "parties": [
+              {
+                "name": "Greg Greggson",
+                "full_legal_name": "Greg Greggory Greggson"
+              }
+            ]
+          }
+        ]""".stripMargin
+    )
+
+    val localDateTime: LocalDateTime = {
+      LocalDateTime.parse("2024-02-13T12:52:45.081236", DateTimeFormatter.ISO_DATE_TIME)
+    }
+
+    val expectedBankAccountSummaryResponse: BankAccountSummaryResponse = BankAccountSummaryResponse(List(BankAccountSummary(
+      id                    = UUID.fromString("cddd0273-b709-4ee7-b73d-7113dd7a7d66"),
+      bankId                = "obie-barclays-personal",
+      merchantId            = None,
+      merchantUserId        = None,
+      ttype                 = BankAccountType.Personal,
+      subType               = BankAccountSubType.CurrentAccount,
+      currency              = Currency.getInstance("GBP"),
+      accountFormat         = BankAccountFormat.SortCode,
+      accountIdentification = AccountIdentification("abc:123"),
+      calculatedOwnerName   = CalculatedOwnerName("Greg Greggson"),
+      accountOwnerName      = AccountOwnerName("Greg Greggson"),
+      displayName           = DisplayName("Greg G Greggson"),
+      balance               = 123.7,
+      lastUpdateTime        = localDateTime,
+      parties               = List(BankAccountParty(
+        name          = BankPartyName("Greg Greggson"),
+        fullLegalName = BankPartyFullLegalName("Greg Greggory Greggson")
+      ))
+    )))
+
+    implicitly[Format[BankAccountSummaryResponse]].reads(input) shouldBe JsSuccess(expectedBankAccountSummaryResponse)
   }
 }
