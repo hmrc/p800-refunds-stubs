@@ -83,28 +83,28 @@ class EcospendControllerSpec extends ItSpec {
     //language=JSON
     val input = Json.parse(
       """
-        |[
-        |  {
-        |    "id": "cddd0273-b709-4ee7-b73d-7113dd7a7d66",
-        |    "bank_id": "obie-barclays-personal",
-        |    "type": "Personal",
-        |    "sub_type": "CurrentAccount",
-        |    "currency": "GBP",
-        |    "account_format": "SortCode",
-        |    "account_identification": "abc:123",
-        |    "calculated_owner_name": "Greg Greggson",
-        |    "account_owner_name": "Greg Greggson",
-        |    "display_name": "Greg G Greggson",
-        |    "balance": 123.7,
-        |    "last_update_time": "2024-02-13T12:52:45.081236",
-        |    "parties": [
-        |      {
-        |        "name": "Greg Greggson",
-        |        "full_legal_name": "Greg Greggory Greggson"
-        |      }
-        |    ]
-        |  }
-        |]""".stripMargin
+        [
+          {
+            "id": "cddd0273-b709-4ee7-b73d-7113dd7a7d66",
+            "bank_id": "obie-barclays-personal",
+            "type": "Personal",
+            "sub_type": "CurrentAccount",
+            "currency": "GBP",
+            "account_format": "SortCode",
+            "account_identification": "abc:123",
+            "calculated_owner_name": "Greg Greggson",
+            "account_owner_name": "Greg Greggson",
+            "display_name": "Greg G Greggson",
+            "balance": 123.7,
+            "last_update_time": "2024-02-13T12:52:45.081236",
+            "parties": [
+              {
+                "name": "Greg Greggson",
+                "full_legal_name": "Greg Greggory Greggson"
+              }
+            ]
+          }
+        ]""".stripMargin
     )
 
     val localDateTime: LocalDateTime = {
