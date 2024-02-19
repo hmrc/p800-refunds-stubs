@@ -21,7 +21,7 @@ import play.api.libs.json.Json
 import play.api.mvc.Results.BadRequest
 import play.api.mvc._
 import uk.gov.hmrc.p800refundsstubs.actions.CorrelationId.WithCorrelationId
-import uk.gov.hmrc.p800refundsstubs.models.nps.Failure
+import uk.gov.hmrc.p800refundsstubs.models.nps.{Failure, P800ReferenceCheckResultFailures}
 import uk.gov.hmrc.p800refundsstubs.util.SafeEquals.EqualsOps
 
 import java.util.Base64
@@ -31,7 +31,8 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class Actions @Inject() (
     actionBuilder: DefaultActionBuilder
-)(implicit ec: ExecutionContext) { self =>
+)(implicit ec: ExecutionContext) {
+  self =>
 
   val default: ActionBuilder[Request, AnyContent] = actionBuilder
 
@@ -40,6 +41,7 @@ class Actions @Inject() (
     default
       .andThen(correlationIdRefiner)
       .andThen(basicAuthRefiner())
+      .andThen(ensureGovUkOriginatorId)
       .andThen(addCorrelationIdActionBuilder())
 
   def basicAuthRefiner(): ActionRefiner[NpsRequest, NpsRequest] = new ActionRefiner[NpsRequest, NpsRequest] {
@@ -103,9 +105,26 @@ class Actions @Inject() (
 
   private def addCorrelationIdActionBuilder[R[_]](): ActionFunction[R, R] = new ActionFunction[R, R] {
     override protected def executionContext: ExecutionContext = ec
+
     override def invokeBlock[A](request: R[A], block: R[A] => Future[Result]): Future[Result] = request match {
       case r: NpsRequest[_] => block(request).map(_.withCorrelationId(r.correlationId))
       case _                => block(request).map(_.withCorrelationId(CorrelationId.fresh()))
     }
+  }
+
+  private lazy val ensureGovUkOriginatorId = new ActionFilter[NpsRequest] {
+    override protected def filter[A](request: NpsRequest[A]): Future[Option[Result]] = Future.successful{
+
+      val `gov-uk-originator-id`: Option[String] = request.headers.headers.find(_._1.toLowerCase() === "gov-uk-originator-id").map(_._2)
+      if (`gov-uk-originator-id`.exists(_ === "DA2_MRA_DIGITAL")) None else {
+        Some(BadRequest(Json.toJson(P800ReferenceCheckResultFailures(
+          failures = List(
+            Failure(reason = s"Invalid or missing 'gov-uk-originator-id' ", code = "400.invalid-or-missing-gov-uk-originator-id")
+          )
+        ))))
+      }
+    }
+
+    override protected def executionContext: ExecutionContext = ec
   }
 }

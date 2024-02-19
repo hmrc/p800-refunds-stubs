@@ -50,38 +50,38 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
         )
       )))
     } else {
-      P800ReferenceCheckScenario.selectScenario(identifier) match {
-        case P800ReferenceCheckScenario.NinoAndP800RefNotMatched =>
+      Scenarios.selectScenario(identifier)._1 match {
+        case Scenarios.CheckReference.NinoAndP800RefNotMatched =>
           NotFound("")
-        case P800ReferenceCheckScenario.RefundAlreadyTaken =>
+        case Scenarios.CheckReference.RefundAlreadyTaken =>
           UnprocessableEntity(Json.toJson(P800ReferenceCheckResultFailures(
             failures = List(
               Failure(
-                reason = "TODO Refund already taken",
+                reason = "TODO Refund already taken as per scenario",
                 code   = "TODO-refund-already-taken"
               )
             )
           )))
-        case P800ReferenceCheckScenario.UnprocessedEntity =>
+        case Scenarios.CheckReference.UnprocessedEntity =>
           UnprocessableEntity(Json.toJson(P800ReferenceCheckResultFailures(
             failures = List(
               Failure(
-                reason = "Something wrong at NPS",
+                reason = "Unprocessable Entity as per scenario",
                 code   = "TODO2"
               )
             )
           )))
-        case P800ReferenceCheckScenario.BadRequest =>
+        case Scenarios.CheckReference.BadRequest =>
           BadRequest(Json.toJson(P800ReferenceCheckResultFailures(
             failures = List(
-              Failure(reason = "Incorrect Identifier", code = "TODO3")
+              Failure(reason = "Bad Request as per scenario", code = "TODO3")
             )
           )))
-        case P800ReferenceCheckScenario.Forbidden =>
-          Forbidden(Json.toJson(Failure(reason = "Forbidden", code = "403.2")))
-        case P800ReferenceCheckScenario.InternalServerError =>
-          InternalServerError("Simulating Internal Server Error response...")
-        case P800ReferenceCheckScenario.HappyPath =>
+        case Scenarios.CheckReference.Forbidden =>
+          Forbidden(Json.toJson(Failure(reason = "Forbidden as per scenarion", code = "403.2")))
+        case Scenarios.CheckReference.InternalServerError =>
+          InternalServerError("Internal Server Error as per scenario")
+        case Scenarios.CheckReference.HappyPath =>
           Ok(Json.toJson(P800ReferenceCheckResult(
             reconciliationIdentifier = ReconciliationIdentifier("reconciliationIdentifier"),
             paymentNumber            = paymentNumber,
@@ -92,6 +92,42 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
             customerAccountNumber    = CustomerAccountNumber("customerAccountNumber"),
             currentOptimisticLock    = CurrentOptimisticLock(123)
           )))
+      }
+    }
+  }
+
+  /**
+   * NPS Interface to Trace Individual
+   */
+  def traceIndividual(exactMatch: Boolean, returnRealName: Boolean): Action[TraceIndividualRequest] = actions.npsAction(parse.json[TraceIndividualRequest]){ request =>
+    val r: TraceIndividualRequest = request.body
+    val identifier: Nino = r.identifier
+    require(exactMatch, "'exactMatch' has to be true")
+    require(returnRealName, "'returnRealName' has to be true")
+    if (!identifier.isValid) {
+      logger.info(s"Not a valid identifier: [${identifier.toString}], returning BadRequest [${request.correlationId.toString}]")
+      BadRequest(Json.toJson(P800ReferenceCheckResultFailures(
+        failures = List(
+          Failure(reason = s"Invalid identifier ${identifier.toString}", code = "TODO3")
+        )
+      )))
+    } else {
+      Scenarios.selectScenario(identifier)._2 match {
+        case Scenarios.TraceIndividual.NotFound => NotFound("")
+        case Scenarios.TraceIndividual.BadRequest => BadRequest(Json.toJson(P800ReferenceCheckResultFailures(
+          failures = List(
+            Failure(
+              reason = "Bad Request as per selected scenario",
+              code   = "400.1scenario"
+            )
+          )
+        )))
+        case Scenarios.TraceIndividual.InternalServerError =>
+          InternalServerError("Internal Server Error as per scenario")
+        case Scenarios.TraceIndividual.HappyPath =>
+          Ok(Json.toJson(List(TraceIndividualResponse(
+            identifier = identifier
+          ))))
       }
     }
   }
