@@ -29,7 +29,7 @@ class TraceIndividualResponseSpec extends UnitSpec {
     )
 
     Json.toJson(t) shouldBe Json.parse(
-      //Language=JSON
+      //language=JSON
       """{
         "identifier" : "AB999999C",
         "firstForename" : "Bob",
