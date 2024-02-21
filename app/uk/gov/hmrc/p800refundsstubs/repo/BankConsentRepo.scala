@@ -24,6 +24,7 @@ import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 import uk.gov.hmrc.p800refundsstubs.models.bankconsent.BankConsentEntry
 
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ExecutionContext, Future}
@@ -48,8 +49,8 @@ final class BankConsentRepo @Inject() (
       options     = new ReplaceOptions().upsert(true)
     ).toFuture()
 
-  def findBankConsentEntry(id: String): OptionT[Future, BankConsentEntry] =
-    OptionT(collection.find(Filters.eq("bankConsent.id", id)).headOption())
+  def findBankConsentEntry(id: UUID): OptionT[Future, BankConsentEntry] =
+    OptionT(collection.find(Filters.eq("bankConsent.id", id.toString)).headOption())
 
 }
 
