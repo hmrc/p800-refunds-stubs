@@ -6,6 +6,9 @@ GET        /nps-json-service/nps/v1/api/reconciliation/p800/:identifier/:payment
 
 POST       /verify-identity                  uk.gov.hmrc.p800refundsstubs.controllers.IdentityVerificationStubController.verifyIdentity
 
+# Trace Individual API at NPS
+POST      /nps-json-service/nps/v1/api/individual/trace-individual  uk.gov.hmrc.p800refundsstubs.controllers.NpsController.traceIndividual(exactMatch: Boolean, returnRealName: Boolean)
+
 # Ecospend
 POST       /connect/token                    uk.gov.hmrc.p800refundsstubs.controllers.EcospendAuthController.accessToken
 

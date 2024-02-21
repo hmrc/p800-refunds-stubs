@@ -2,3 +2,18 @@ GET http://localhost:10151/nps-json-service/nps/v1/api/reconciliation/p800/AB923
 CorrelationId: "sialala"
 Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
 #Authorization: Basic sialala
+gov-uk-originator-id: DA2_MRA_DIGITAL
+
+###
+
+POST http://localhost:10151/nps-json-service/nps/v1/api/individual/trace-individual?exactMatch=true&returnRealName=true
+CorrelationId: "sialala"
+Content-Type: application/json
+Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
+#Authorization: Basic sialala
+gov-uk-originator-id: DA2_MRA_DIGITAL
+
+{
+  "identifier": "AB523123C",
+  "dateOfBirth": "1978-09-09"
+}
