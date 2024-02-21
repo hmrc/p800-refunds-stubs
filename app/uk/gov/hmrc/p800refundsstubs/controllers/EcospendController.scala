@@ -24,6 +24,7 @@ import uk.gov.hmrc.p800refundsstubs.models.bankconsent.{BankConsentRequest, Bank
 import uk.gov.hmrc.p800refundsstubs.models.bankverification.{BankVerification, BankVerificationRequest}
 import uk.gov.hmrc.p800refundsstubs.models.{BankAccountSummaryResponse}
 import uk.gov.hmrc.p800refundsstubs.services.{BankVerificationService, BankConsentService, BankAccountService}
+import uk.gov.hmrc.p800refundsstubs.util.SafeEquals.EqualsOps
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{Inject, Singleton}
@@ -96,12 +97,17 @@ class EcospendController @Inject() (
     }
   }
 
+  private val consentIdHeaderKey: String = "consent_id"
+
   def accountSummary(merchant_id: Option[String], merchant_user_id: Option[String]): Action[AnyContent] = Action.async { implicit request =>
     performAccessTokenHeaderCheck {
-      logger.info(s"Account summary ConsentID Header: [${request.headers.get("consent_id").toString}], Query Parameters: merchant_id: [${merchant_id.toString}], merchant_user_id: [${merchant_user_id.toString}]")
+      logger.info(s"Account summary: Query Parameters: merchant_id: [${merchant_id.toString}], merchant_user_id: [${merchant_user_id.toString}]")
 
-      request.headers
-        .get("consent_id")
+      val consentId: Option[String] = request.headers.headers.find(_._1.toLowerCase() === consentIdHeaderKey.toLowerCase()).map(_._2)
+      if (consentId.isEmpty)
+        logger.error(s"Missing '${consentIdHeaderKey}' header")
+
+      consentId
         .fold(Future.successful(BadRequest(Json.toJson(EcospendData.badRequestErrorReponse)))) { consentId: String =>
           bankAccountService
             .getAccountSummary(consentId)
