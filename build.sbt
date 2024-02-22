@@ -7,7 +7,7 @@ lazy val microservice = Project("p800-refunds-stubs", file("."))
   .disablePlugins(JUnitXmlReportPlugin)
   .settings(
     majorVersion        := 0,
-    scalaVersion        := "2.13.8",
+    scalaVersion        := "2.13.12",
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
     scalacOptions ++= ScalaCompilerFlags.scalaCompilerOptions,
     scalacOptions ++= {
@@ -21,7 +21,6 @@ lazy val microservice = Project("p800-refunds-stubs", file("."))
           "uk.gov.hmrc.p800refundsstubs.models.Nino",
           "uk.gov.hmrc.p800refundsstubs.models.P800Reference"
       ))
-  .configs(IntegrationTest)
   .settings(resolvers += Resolver.jcenterRepo)
   .settings(CodeCoverageSettings.settings: _*)
   .settings(commands ++= SbtCommands.commands)

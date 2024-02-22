@@ -1,11 +1,6 @@
 # Check Reference API at NPS
 GET        /nps-json-service/nps/v1/api/reconciliation/p800/:identifier/:paymentNumber      uk.gov.hmrc.p800refundsstubs.controllers.NpsController.p800ReferenceCheck(identifier: Nino, paymentNumber: P800Reference)
 
-# microservice specific routes
-# POST       /validate-reference               uk.gov.hmrc.p800refundsstubs.controllers.ReferenceValidationStubController.validateReference
-
-POST       /verify-identity                  uk.gov.hmrc.p800refundsstubs.controllers.IdentityVerificationStubController.verifyIdentity
-
 # Trace Individual API at NPS
 POST      /nps-json-service/nps/v1/api/individual/trace-individual  uk.gov.hmrc.p800refundsstubs.controllers.NpsController.traceIndividual(exactMatch: Boolean, returnRealName: Boolean)
 
