@@ -29,6 +29,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.util.UUID
 import javax.inject.{Inject, Singleton}
+import scala.annotation.nowarn
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton()
@@ -101,26 +102,25 @@ class EcospendController @Inject() (
   private val consentIdHeaderKey: String = "consent_id"
   private val developmentConsentIdHeaderKey: String = "consent-id"
 
-  def accountSummary(merchant_id: Option[String], merchant_user_id: Option[String]): Action[AnyContent] = Action.async { implicit request =>
+  def accountSummary(@nowarn merchant_id: Option[String], @nowarn merchant_user_id: Option[String]): Action[AnyContent] = Action.async { implicit request =>
     performAccessTokenHeaderCheck {
-      logger.info(s"Account summary: Query Parameters: merchant_id: [${merchant_id.toString}], merchant_user_id: [${merchant_user_id.toString}]")
+      /**
+        * MDTP doesn't accept for Http Headers with underscores.
+        * This is why we're accepting extra header with hyphen instead so it can work on MDTP.
+        * Client code will produce both headers.
+        * Redundant header will be ignored on productionl like systems but it will make stubs working on MDTP.
+        */
+      val consentId: Option[UUID] =
+        request.headers.headers.find(_._1.toLowerCase() === consentIdHeaderKey.toLowerCase()).map(_._2).map(UUID.fromString)
+      val developmentConsentId: Option[UUID] =
+        request.headers.headers.find(_._1.toLowerCase() === developmentConsentIdHeaderKey.toLowerCase()).map(_._2).map(UUID.fromString)
 
-      val developmentConsentId: Option[UUID] = request.headers.headers.find(_._1.toLowerCase() === developmentConsentIdHeaderKey.toLowerCase()).map(_._2).map(UUID.fromString)
-      if (developmentConsentId.isEmpty)
-        logger.error(s"Missing '${developmentConsentIdHeaderKey}' header: [developmentConsentId: ${developmentConsentId.toString}]")
-
-      val consentId: Option[UUID] = request.headers.headers.find(_._1.toLowerCase() === consentIdHeaderKey.toLowerCase()).map(_._2).map(UUID.fromString)
-      if (consentId.isEmpty)
-        logger.error(s"Missing '${consentIdHeaderKey}' header: [consentId: ${consentId.toString}]")
-
-      val resolvedConsentId =
-        if (consentId.isDefined)
-          consentId
-        else
-          developmentConsentId
-
-      resolvedConsentId
-        .fold(Future.successful(BadRequest(Json.toJson(EcospendData.badRequestErrorReponse)))) { consentId: UUID =>
+      consentId
+        .orElse(developmentConsentId)
+        .fold({
+          logger.info("Missing consent_id and consent-id header. Responding with BadRequest")
+          Future.successful(BadRequest(Json.toJson(EcospendData.badRequestErrorReponse)))
+        }) { consentId: UUID =>
           bankAccountService
             .getAccountSummary(consentId)
             .foldF[Result](Future.successful(NoContent)) {
