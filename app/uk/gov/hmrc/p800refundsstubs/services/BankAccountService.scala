@@ -31,7 +31,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class BankAccountService @Inject() (bankConsentRepo: BankConsentRepo)(implicit executionContext: ExecutionContext) {
 
-  def getAccountSummary(consentId: String): OptionT[Future, BankAccountSummaryResponse] = {
+  def getAccountSummary(consentId: UUID): OptionT[Future, BankAccountSummaryResponse] = {
     bankConsentRepo
       .findBankConsentEntry(consentId)
       .map { bankConsentEntry: BankConsentEntry =>

@@ -24,9 +24,12 @@ import uk.gov.hmrc.p800refundsstubs.models.bankconsent.{BankConsentRequest, Bank
 import uk.gov.hmrc.p800refundsstubs.models.bankverification.{BankVerification, BankVerificationRequest}
 import uk.gov.hmrc.p800refundsstubs.models.{BankAccountSummaryResponse}
 import uk.gov.hmrc.p800refundsstubs.services.{BankVerificationService, BankConsentService, BankAccountService}
+import uk.gov.hmrc.p800refundsstubs.util.SafeEquals.EqualsOps
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import java.util.UUID
 import javax.inject.{Inject, Singleton}
+import scala.annotation.nowarn
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton()
@@ -96,13 +99,28 @@ class EcospendController @Inject() (
     }
   }
 
-  def accountSummary(merchant_id: Option[String], merchant_user_id: Option[String]): Action[AnyContent] = Action.async { implicit request =>
-    performAccessTokenHeaderCheck {
-      logger.info(s"Account summary ConsentID Header: [${request.headers.get("consent_id").toString}], Query Parameters: merchant_id: [${merchant_id.toString}], merchant_user_id: [${merchant_user_id.toString}]")
+  private val consentIdHeaderKey: String = "consent_id"
+  private val developmentConsentIdHeaderKey: String = "consent-id"
 
-      request.headers
-        .get("consent_id")
-        .fold(Future.successful(BadRequest(Json.toJson(EcospendData.badRequestErrorReponse)))) { consentId: String =>
+  def accountSummary(@nowarn merchant_id: Option[String], @nowarn merchant_user_id: Option[String]): Action[AnyContent] = Action.async { implicit request =>
+    performAccessTokenHeaderCheck {
+      /**
+        * MDTP doesn't accept for Http Headers with underscores.
+        * This is why we're accepting extra header with hyphen instead so it can work on MDTP.
+        * Client code will produce both headers.
+        * Redundant header will be ignored on productionl like systems but it will make stubs working on MDTP.
+        */
+      val consentId: Option[UUID] =
+        request.headers.headers.find(_._1.toLowerCase() === consentIdHeaderKey.toLowerCase()).map(_._2).map(UUID.fromString)
+      val developmentConsentId: Option[UUID] =
+        request.headers.headers.find(_._1.toLowerCase() === developmentConsentIdHeaderKey.toLowerCase()).map(_._2).map(UUID.fromString)
+
+      consentId
+        .orElse(developmentConsentId)
+        .fold({
+          logger.info("Missing consent_id and consent-id header. Responding with BadRequest")
+          Future.successful(BadRequest(Json.toJson(EcospendData.badRequestErrorReponse)))
+        }) { consentId: UUID =>
           bankAccountService
             .getAccountSummary(consentId)
             .foldF[Result](Future.successful(NoContent)) {
