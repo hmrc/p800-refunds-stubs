@@ -105,11 +105,11 @@ class EcospendController @Inject() (
   def accountSummary(@nowarn merchant_id: Option[String], @nowarn merchant_user_id: Option[String]): Action[AnyContent] = Action.async { implicit request =>
     performAccessTokenHeaderCheck {
       /**
-        * MDTP doesn't accept for Http Headers with underscores.
-        * This is why we're accepting extra header with hyphen instead so it can work on MDTP.
-        * Client code will produce both headers.
-        * Redundant header will be ignored on productionl like systems but it will make stubs working on MDTP.
-        */
+       * MDTP doesn't accept for Http Headers with underscores.
+       * This is why we're accepting extra header with hyphen instead so it can work on MDTP.
+       * Client code will produce both headers.
+       * Redundant header will be ignored on productionl like systems but it will make stubs working on MDTP.
+       */
       val consentId: Option[UUID] =
         request.headers.headers.find(_._1.toLowerCase() === consentIdHeaderKey.toLowerCase()).map(_._2).map(UUID.fromString)
       val developmentConsentId: Option[UUID] =
