@@ -21,7 +21,8 @@ import play.api.libs.json.Json
 import play.api.mvc.Results.BadRequest
 import play.api.mvc._
 import uk.gov.hmrc.p800refundsstubs.actions.CorrelationId.WithCorrelationId
-import uk.gov.hmrc.p800refundsstubs.models.nps.{Failure, P800ReferenceCheckResultFailures}
+import uk.gov.hmrc.p800refundsstubs.models.{Nino, P800Reference}
+import uk.gov.hmrc.p800refundsstubs.models.nps.{Failure, Failures}
 import uk.gov.hmrc.p800refundsstubs.util.SafeEquals.EqualsOps
 
 import java.util.Base64
@@ -43,6 +44,34 @@ class Actions @Inject() (
       .andThen(basicAuthRefiner())
       .andThen(ensureGovUkOriginatorId)
       .andThen(addCorrelationIdActionBuilder())
+
+  @SuppressWarnings(Array("org.wartremover.warts.Any"))
+  def npsActionValidated(nino: Nino, p800Reference: P800Reference): ActionBuilder[NpsRequest, AnyContent] =
+    npsAction
+      .andThen(validateNino(nino))
+      .andThen(validateP800Reference(p800Reference))
+
+  def validateNino(nino: Nino): ActionFilter[NpsRequest] = new ActionFilter[NpsRequest] {
+    override protected def filter[A](request: NpsRequest[A]): Future[Option[Result]] = Future.successful{
+      if (!nino.isValid) {
+        Some(BadRequest(Json.toJson(Failures(
+          Failure.invalidIdentifier(nino)
+        ))))
+      } else None
+    }
+    override protected def executionContext: ExecutionContext = ec
+  }
+
+  def validateP800Reference(p800Reference: P800Reference): ActionFilter[NpsRequest] = new ActionFilter[NpsRequest] {
+    override protected def filter[A](request: NpsRequest[A]): Future[Option[Result]] = Future.successful{
+      if (!p800Reference.isValid) {
+        Some(BadRequest(Json.toJson(Failures(
+          Failure.invalidPaymentNumber(p800Reference)
+        ))))
+      } else None
+    }
+    override protected def executionContext: ExecutionContext = ec
+  }
 
   def basicAuthRefiner(): ActionRefiner[NpsRequest, NpsRequest] = new ActionRefiner[NpsRequest, NpsRequest] {
     def forbidden(reason: String): Result = Results.Forbidden(Json.toJson(Failure(reason = s"Forbidden - $reason", code = "403.2")))
@@ -117,7 +146,7 @@ class Actions @Inject() (
 
       val `gov-uk-originator-id`: Option[String] = request.headers.headers.find(_._1.toLowerCase() === "gov-uk-originator-id").map(_._2)
       if (`gov-uk-originator-id`.exists(_ === "DA2_MRA_DIGITAL")) None else {
-        Some(BadRequest(Json.toJson(P800ReferenceCheckResultFailures(
+        Some(BadRequest(Json.toJson(Failures(
           failures = List(
             Failure(reason = s"Invalid or missing 'gov-uk-originator-id' ", code = "400.invalid-or-missing-gov-uk-originator-id")
           )

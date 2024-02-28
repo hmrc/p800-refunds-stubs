@@ -4,6 +4,8 @@ GET        /nps-json-service/nps/v1/api/reconciliation/p800/:identifier/:payment
 # Trace Individual API at NPS
 POST      /nps-json-service/nps/v1/api/individual/trace-individual  uk.gov.hmrc.p800refundsstubs.controllers.NpsController.traceIndividual(exactMatch: Boolean, returnRealName: Boolean)
 
+PUT        /nps-json-service/nps/v1/api/accounting/issue-payable-order/:identifier/:paymentNumber uk.gov.hmrc.p800refundsstubs.controllers.NpsController.issuePayableOrder(identifier: Nino, paymentNumber: P800Reference)
+
 # Ecospend
 POST       /connect/token                    uk.gov.hmrc.p800refundsstubs.controllers.EcospendAuthController.accessToken
 

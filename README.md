@@ -43,6 +43,14 @@ For this endpoint the selection is driven via the NINO number using according to
 | `**8******`                         | InternalServerError |
 | `*********`                         | Happy Path (200)    |
 
+### `PUT /nps-json-service/nps/v1/api/accounting/issue-payable-order/:identifier/:paymentNumber`
+For this endpoint the selection is driven via the NINO number using according to below table.
+
+| Nino pattern for CheckReference API | Scenario            |
+|-------------------------------------|---------------------|
+| `***0*****`                         | RefundAlreadyTaken  |
+| `*********`                         | Happy Path (200)    |
+
 ### License
 
 This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").

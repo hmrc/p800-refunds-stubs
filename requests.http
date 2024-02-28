@@ -17,3 +17,18 @@ gov-uk-originator-id: DA2_MRA_DIGITAL
   "identifier": "AB523123C",
   "dateOfBirth": "1978-09-09"
 }
+
+
+###
+
+PUT http://localhost:10151/nps-json-service/nps/v1/api/accounting/issue-payable-order/AB000000C/123
+CorrelationId: "sialala"
+Content-Type: application/json
+Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
+gov-uk-originator-id: DA2_MRA_DIGITAL
+
+{
+  "customerAccountNumber":   "CustomerAccountNumber",
+  "associatedPayableNumber": "AssociatedPayableNumber",
+  "currentOptimisticLock":   1234
+}
