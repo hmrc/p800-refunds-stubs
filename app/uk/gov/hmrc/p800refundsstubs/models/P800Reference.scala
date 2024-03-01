@@ -23,11 +23,11 @@ import uk.gov.hmrc.p800refundsstubs.util.ValueClassBinder
 import scala.util.{Failure, Success, Try}
 
 final case class P800Reference(value: String) {
-  val min: Int = 0
-  val max: Int = 2147483646
+  val min: BigInt = 0
+  val max: BigInt = 2147483646 //which is Int.MaxValue, be stored as BigInt so it visually matches specs
 
   def isValid: Boolean = Try{
-    val i = value.toInt
+    val i = BigInt(value)
     i >= min && i <= max
   } match {
     case Success(r: Boolean) => r

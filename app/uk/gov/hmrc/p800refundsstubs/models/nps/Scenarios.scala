@@ -18,21 +18,37 @@ package uk.gov.hmrc.p800refundsstubs.models.nps
 
 import uk.gov.hmrc.p800refundsstubs.models.Nino
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.CheckReference.P800ReferenceCheckScenario
+import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.IssuePayableOrder.IssuePayableOrderScenario
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.TraceIndividual.TraceIndividualScenario
 
 object Scenarios {
 
+  /**
+   * It decodes a scenario for two API endpoints based on first digit in Nino.
+   */
   def selectScenario(nino: Nino): (P800ReferenceCheckScenario, TraceIndividualScenario) = nino.value match {
+    // format: OFF
     case s if "..0......".r.matches(s) => (CheckReference.NinoAndP800RefNotMatched, TraceIndividual.HappyPath)
-    case s if "..1......".r.matches(s) => (CheckReference.RefundAlreadyTaken, TraceIndividual.HappyPath)
-    case s if "..2......".r.matches(s) => (CheckReference.UnprocessedEntity, TraceIndividual.HappyPath)
-    case s if "..3......".r.matches(s) => (CheckReference.BadRequest, TraceIndividual.HappyPath)
-    case s if "..4......".r.matches(s) => (CheckReference.Forbidden, TraceIndividual.HappyPath)
-    case s if "..5......".r.matches(s) => (CheckReference.InternalServerError, TraceIndividual.HappyPath)
-    case s if "..6......".r.matches(s) => (CheckReference.HappyPath, TraceIndividual.NotFound)
-    case s if "..7......".r.matches(s) => (CheckReference.HappyPath, TraceIndividual.BadRequest)
-    case s if "..8......".r.matches(s) => (CheckReference.HappyPath, TraceIndividual.InternalServerError)
-    case s if "..9......".r.matches(s) => (CheckReference.HappyPath, TraceIndividual.HappyPath)
+    case s if "..1......".r.matches(s) => (CheckReference.RefundAlreadyTaken,       TraceIndividual.HappyPath)
+    case s if "..2......".r.matches(s) => (CheckReference.UnprocessedEntity,        TraceIndividual.HappyPath)
+    case s if "..3......".r.matches(s) => (CheckReference.BadRequest,               TraceIndividual.HappyPath)
+    case s if "..4......".r.matches(s) => (CheckReference.Forbidden,                TraceIndividual.HappyPath)
+    case s if "..5......".r.matches(s) => (CheckReference.InternalServerError,      TraceIndividual.HappyPath)
+    case s if "..6......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.NotFound)
+    case s if "..7......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.BadRequest)
+    case s if "..8......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.InternalServerError)
+    case s if "..9......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.HappyPath)
+    // format: ON
+  }
+
+  /**
+   * It decodes a scenario for IssuePayableOrder API based on the second digit in Nino.
+   */
+  def selectScenarioForIssuePayableOrder(nino: Nino): IssuePayableOrderScenario = nino.value match {
+    // format: OFF
+    case s if "...0.....".r.matches(s) => IssuePayableOrder.RefundAlreadyTaken
+    case s if ".........".r.matches(s) => IssuePayableOrder.HappyPath
+    // format: ON
   }
 
   object CheckReference {
@@ -69,6 +85,17 @@ object Scenarios {
     case object InternalServerError extends TraceIndividualScenario
 
     case object HappyPath extends TraceIndividualScenario
+  }
+
+  object IssuePayableOrder {
+    /**
+     * Scenarios for Issue Payable Order API
+     */
+    sealed trait IssuePayableOrderScenario
+
+    case object RefundAlreadyTaken extends IssuePayableOrderScenario
+
+    case object HappyPath extends IssuePayableOrderScenario
   }
 
 }

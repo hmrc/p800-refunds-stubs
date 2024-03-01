@@ -15,21 +15,17 @@
  */
 
 package uk.gov.hmrc.p800refundsstubs.models.nps
-import play.api.libs.json.{Json, OFormat}
 
-final case class P800ReferenceCheckResultFailures(
-    failures: List[Failure]
+import play.api.libs.json.{Json, OFormat}
+import uk.gov.hmrc.p800refundsstubs.models.Nino
+
+final case class IssuePayableOrderResponse(
+    identifier:            Nino,
+    currentOptimisticLock: CurrentOptimisticLock
 )
 
-object P800ReferenceCheckResultFailures {
-  implicit val format: OFormat[P800ReferenceCheckResultFailures] = Json.format[P800ReferenceCheckResultFailures]
-}
-
-final case class Failure(reason: String, code: String)
-
-object Failure {
+object IssuePayableOrderResponse {
 
   @SuppressWarnings(Array("org.wartremover.warts.Any"))
-  implicit val format: OFormat[Failure] = Json.format[Failure]
+  implicit val format: OFormat[IssuePayableOrderResponse] = Json.format[IssuePayableOrderResponse]
 }
-
