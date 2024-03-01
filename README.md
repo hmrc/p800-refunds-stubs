@@ -18,8 +18,7 @@ The microservice responds with configured response depending on the incoming req
 | `AB699999C`  | 200 - Happy path                            | 404 - Not Found                   | N/A                                  |
 | `AB799999C`  | 200 - Happy path                            | 400 - BadRequest                  | N/A                                  |
 | `AB899999C`  | 200 - Happy path                            | 500 - InternalServerError         | N/A                                  |
-| `AB899999C`  | 200 - Happy path                            | 500 - InternalServerError         | N/A                                  |
-| `AB991999C`  | 200 - Happy path                            | 200 - Happy path                  | 422 - RefundAlreadyTaken             |
+| `AB909999C`  | 200 - Happy path                            | 200 - Happy path                  | 422 - RefundAlreadyTaken             |
 
 
 ### `GET /nps-json-service/nps/v1/api/reconciliation/p800/:identifier/:paymentNumber`
