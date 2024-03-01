@@ -24,7 +24,7 @@ import scala.util.{Failure, Success, Try}
 
 final case class P800Reference(value: String) {
   val min: BigInt = 0
-  val max: BigInt = 2147483646 //which is Int.MaxValue, be stored as integer so it visually matches specs
+  val max: BigInt = 2147483646 //which is Int.MaxValue, be stored as BigInt so it visually matches specs
 
   def isValid: Boolean = Try{
     val i = BigInt(value)
