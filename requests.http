@@ -1,4 +1,4 @@
-GET http://localhost:10151/nps-json-service/nps/v1/api/reconciliation/p800/AB923123C/123
+GET http://localhost:10151/nps-json-service/nps/v1/api/reconciliation/p800/AB199999C/123
 CorrelationId: "sialala"
 Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
 #Authorization: Basic sialala
@@ -21,7 +21,7 @@ gov-uk-originator-id: DA2_MRA_DIGITAL
 
 ###
 
-PUT http://localhost:10151/nps-json-service/nps/v1/api/accounting/issue-payable-order/AB000000C/123
+PUT http://localhost:10151/nps-json-service/nps/v1/api/accounting/issue-payable-order/AB919999C/123
 CorrelationId: "sialala"
 Content-Type: application/json
 Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
