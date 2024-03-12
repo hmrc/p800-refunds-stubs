@@ -22,6 +22,7 @@ lazy val microservice = Project("p800-refunds-stubs", file("."))
   .settings(
       routesImport ++= Seq(
           "uk.gov.hmrc.p800refundsstubs.models.Nino",
+          "uk.gov.hmrc.p800refundsstubs.models.edh.ClaimId",
           "uk.gov.hmrc.p800refundsstubs.models.P800Reference"
       ))
   .settings(resolvers += Resolver.jcenterRepo)

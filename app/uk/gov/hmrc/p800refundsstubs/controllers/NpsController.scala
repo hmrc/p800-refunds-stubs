@@ -93,7 +93,7 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
    */
   def issuePayableOrder(identifier: Nino, paymentNumber: P800Reference): Action[IssuePayableOrderRequest] =
     actions.npsActionValidated(identifier, paymentNumber)(parse.json[IssuePayableOrderRequest]) { _ =>
-      Scenarios.selectScenarioForIssuePayableOrder(identifier) match {
+      Scenarios.selectScenario2(identifier)._2 match {
         case Scenarios.IssuePayableOrder.HappyPath =>
           Ok(Json.toJson(IssuePayableOrderResponse(
             identifier            = identifier,

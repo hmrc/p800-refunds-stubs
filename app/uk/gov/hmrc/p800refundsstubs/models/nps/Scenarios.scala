@@ -18,6 +18,7 @@ package uk.gov.hmrc.p800refundsstubs.models.nps
 
 import uk.gov.hmrc.p800refundsstubs.models.Nino
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.CheckReference.P800ReferenceCheckScenario
+import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.GetBankDetailsRiskResultScenario.GetBankDetailsRiskResultScenario
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.IssuePayableOrder.IssuePayableOrderScenario
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.TraceIndividual.TraceIndividualScenario
 
@@ -44,10 +45,16 @@ object Scenarios {
   /**
    * It decodes a scenario for IssuePayableOrder API based on the second digit in Nino.
    */
-  def selectScenarioForIssuePayableOrder(nino: Nino): IssuePayableOrderScenario = nino.value match {
+  def selectScenario2(nino: Nino): (GetBankDetailsRiskResultScenario, IssuePayableOrderScenario) = nino.value match {
     // format: OFF
-    case s if "...0.....".r.matches(s) => IssuePayableOrder.RefundAlreadyTaken
-    case s if ".........".r.matches(s) => IssuePayableOrder.HappyPath
+    case s if "...0.....".r.matches(s) => (GetBankDetailsRiskResultScenario.HappyPath, IssuePayableOrder.RefundAlreadyTaken)
+    case s if "...1.....".r.matches(s) => (GetBankDetailsRiskResultScenario.DoNotPay, IssuePayableOrder.HappyPath)
+    case s if "...2.....".r.matches(s) => (GetBankDetailsRiskResultScenario.SubmissionHasNotPassedValidation, IssuePayableOrder.HappyPath)
+    case s if "...3.....".r.matches(s) => (GetBankDetailsRiskResultScenario.Unauthorised, IssuePayableOrder.HappyPath)
+    case s if "...4.....".r.matches(s) => (GetBankDetailsRiskResultScenario.ResourceNotFound, IssuePayableOrder.HappyPath)
+    case s if "...5.....".r.matches(s) => (GetBankDetailsRiskResultScenario.DesIssues, IssuePayableOrder.HappyPath)
+    case s if "...6.....".r.matches(s) => (GetBankDetailsRiskResultScenario.DependentSystemIssues, IssuePayableOrder.HappyPath)
+    case s if ".........".r.matches(s) => (GetBankDetailsRiskResultScenario.HappyPath, IssuePayableOrder.HappyPath)
     // format: ON
   }
 
@@ -98,4 +105,38 @@ object Scenarios {
     case object HappyPath extends IssuePayableOrderScenario
   }
 
+  object GetBankDetailsRiskResultScenario {
+    /**
+     * Scenarios for Get Bank Details Risk Result API
+     */
+    sealed trait GetBankDetailsRiskResultScenario
+
+    /**
+     * 200 Response with nextAction = Pay
+     */
+    case object HappyPath extends GetBankDetailsRiskResultScenario
+
+    /**
+     * 200 Response with nextAction = Do Not Pay
+     */
+    case object DoNotPay extends GetBankDetailsRiskResultScenario
+
+    case object SubmissionHasNotPassedValidation extends GetBankDetailsRiskResultScenario
+
+    case object Unauthorised extends GetBankDetailsRiskResultScenario
+    /**
+     * The remote endpoint has indicated that no data can be found
+     */
+    case object ResourceNotFound extends GetBankDetailsRiskResultScenario
+
+    /**
+     * DES is currently experiencing problems that require live service intervention
+     */
+    case object DesIssues extends GetBankDetailsRiskResultScenario
+
+    /**
+     * Dependent systems are currently not responding
+     */
+    case object DependentSystemIssues extends GetBankDetailsRiskResultScenario
+  }
 }

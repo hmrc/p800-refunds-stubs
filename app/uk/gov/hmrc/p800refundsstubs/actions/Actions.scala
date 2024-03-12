@@ -38,6 +38,14 @@ class Actions @Inject() (
   val default: ActionBuilder[Request, AnyContent] = actionBuilder
 
   @SuppressWarnings(Array("org.wartremover.warts.Any"))
+  val edhAction: ActionBuilder[Request, AnyContent] =
+    default
+      .andThen(correlationIdRefiner)
+      .andThen(requireHeaderFilter("Environment", Set("isit", "clone", "live").contains(_)))
+      .andThen(requireHeaderFilter("RequesterId", _ === "Repayment Service"))
+      .andThen(bearerAuthRefiner)
+
+  @SuppressWarnings(Array("org.wartremover.warts.Any"))
   val npsAction: ActionBuilder[NpsRequest, AnyContent] =
     default
       .andThen(correlationIdRefiner)
@@ -112,6 +120,34 @@ class Actions @Inject() (
     lazy val logger: Logger = Logger(this.getClass)
   }
 
+  private lazy val bearerAuthRefiner: ActionRefiner[Request, Request] = new ActionRefiner[Request, Request] {
+    def forbidden(reason: String): Result = Results.Forbidden(Json.toJson(Failure(reason = s"Forbidden - $reason", code = "403.2")))
+
+    override protected def refine[A](request: Request[A]): Future[Either[Result, Request[A]]] = {
+      request.headers.get("Authorization") match {
+        case Some(authHeader) if authHeader.startsWith("Bearer ") =>
+          getBearerToken(authHeader) match {
+            case "test-bearer-token" =>
+              Future.successful(Right(request))
+            case a =>
+              logger.info(s"Forbidden, invalid bearer token '${a}'")
+              Future.successful(Left(forbidden("invalid bearer token")))
+          }
+        case _ =>
+          logger.info(s"Forbidden, missing Bearer token or Authorization header")
+          Future.successful(Left(forbidden("missing Bearer token or Authorization header")))
+      }
+    }
+
+    private def getBearerToken(authHeader: String): String = {
+      authHeader.substring("Bearer ".length)
+    }
+
+    override protected def executionContext: ExecutionContext = ec
+
+    lazy val logger: Logger = Logger(this.getClass)
+  }
+
   private lazy val correlationIdRefiner: ActionRefiner[Request, NpsRequest] = new ActionRefiner[Request, NpsRequest] {
 
     override protected def refine[A](request: Request[A]): Future[Either[Result, NpsRequest[A]]] = {
@@ -130,6 +166,30 @@ class Actions @Inject() (
     override protected def executionContext: ExecutionContext = ec
 
     lazy val logger: Logger = Logger(this.getClass)
+  }
+
+  private def requireHeaderFilter(headerName: String, headerValuePredicate: String => Boolean): ActionFilter[Request] = new ActionFilter[Request] {
+
+    override protected def executionContext: ExecutionContext = ec
+
+    lazy val logger: Logger = Logger(this.getClass)
+
+    override protected def filter[A](request: Request[A]): Future[Option[Result]] = {
+      val headerValue: Option[String] = request.headers.headers.find(_._1.toLowerCase() === headerName.toLowerCase()).map(_._2)
+      headerValue.fold[Future[Option[Result]]] {
+        val message: String = s"Missing '$headerName' header."
+        logger.error(message)
+        Future.successful(Some(BadRequest(message)))
+      } { headerValue: String =>
+        if (headerValuePredicate(headerValue)) {
+          Future.successful(None)
+        } else {
+          val message: String = s"Invalid value for '$headerName' header: '$headerValue'"
+          Future.successful(Some(BadRequest(message)))
+        }
+      }
+
+    }
   }
 
   private def addCorrelationIdActionBuilder[R[_]](): ActionFunction[R, R] = new ActionFunction[R, R] {

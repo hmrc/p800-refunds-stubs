@@ -16,3 +16,7 @@ POST       /api/v2.0/validate                uk.gov.hmrc.p800refundsstubs.contro
 POST       /api/v2.0/consents                uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.createConsent
 
 GET        /api/v2.0/accounts/summary        uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.accountSummary(merchant_id: Option[String], merchant_user_id: Option[String])
+
+# EDH
+# API#1133: Get Bank Details Risk Result v2.1.
+POST    /risking/claims/:claimId/bank-details uk.gov.hmrc.p800refundsstubs.controllers.EdhController.getBankDetailsRiskResult(claimId: ClaimId)
