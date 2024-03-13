@@ -34,10 +34,9 @@ class EcospendAuthController @Inject() (cc: ControllerComponents) extends Backen
     val grantType = request.body.get("grant_type")
     val clientId = request.body.get("client_id")
     val clientSecret = request.body.get("client_secret")
-    val scope = request.body.get("scope")
 
-    (grantType, clientId, clientSecret, scope) match {
-      case (Some(Seq("client_credentials")), Some(Seq("stub-client-id")), Some(Seq("stub-client-secret")), Some(Seq("px01.ecospend.pis.sandbox"))) =>
+    (grantType, clientId, clientSecret) match {
+      case (Some(Seq("client_credentials")), Some(Seq("stub-client-id")), Some(Seq("stub-client-secret"))) =>
         val accessToken = "1234567890"
 
         val responseBody = Json.obj(
@@ -50,7 +49,7 @@ class EcospendAuthController @Inject() (cc: ControllerComponents) extends Backen
         logger.info(s"*** ECOSPEND STUB AUTH - stubbed auth request success, providing access token: $accessToken ***")
 
         Ok(responseBody)
-      case (Some(Seq("client_credentials")), _, _, Some(Seq("px01.ecospend.pis.sandbox"))) =>
+      case (Some(Seq("client_credentials")), _, _) =>
         val responseBody =
           EcospendErrorResponse("INVALID_CLIENT_CREDENTIALS", "Client credentials are missing or invalid", Json.obj())
 
