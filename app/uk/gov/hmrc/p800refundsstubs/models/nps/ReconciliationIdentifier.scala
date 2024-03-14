@@ -18,7 +18,7 @@ package uk.gov.hmrc.p800refundsstubs.models.nps
 
 import play.api.libs.json.{Format, Json}
 
-final case class ReconciliationIdentifier(value: String)
+final case class ReconciliationIdentifier(value: Int)
 
 object ReconciliationIdentifier {
   implicit val format: Format[ReconciliationIdentifier] = Json.valueFormat[ReconciliationIdentifier]

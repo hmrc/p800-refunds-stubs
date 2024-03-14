@@ -16,9 +16,15 @@
 
 package uk.gov.hmrc.p800refundsstubs.models.nps
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{OFormat, Json}
+import uk.gov.hmrc.p800refundsstubs.models.Nino
 
-final case class AssociatedPayableNumber(value: Int)
-object AssociatedPayableNumber {
-  implicit val format: Format[AssociatedPayableNumber] = Json.valueFormat[AssociatedPayableNumber]
+final case class ClaimOverpaymentResponse(
+    identifer:             Nino,
+    currentOptimisticLock: CurrentOptimisticLock
+)
+
+@SuppressWarnings(Array("org.wartremover.warts.Any"))
+object ClaimOverpaymentResponse {
+  implicit val format: OFormat[ClaimOverpaymentResponse] = Json.format[ClaimOverpaymentResponse]
 }
