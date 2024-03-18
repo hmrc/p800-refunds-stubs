@@ -74,12 +74,15 @@ object EcospendData {
               "group": "Barclays",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -96,12 +99,15 @@ object EcospendData {
               "group": "Barclays",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -118,12 +124,15 @@ object EcospendData {
               "group": "Test",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -140,12 +149,15 @@ object EcospendData {
               "group": "Test",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -162,12 +174,15 @@ object EcospendData {
               "group": "Test",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -184,12 +199,15 @@ object EcospendData {
               "group": "Test",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -206,12 +224,15 @@ object EcospendData {
               "group": "Test",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -228,12 +249,15 @@ object EcospendData {
               "group": "Lloyds",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -250,12 +274,15 @@ object EcospendData {
               "group": "Lloyds",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -272,12 +299,15 @@ object EcospendData {
               "group": "Monzo",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -294,12 +324,15 @@ object EcospendData {
               "group": "Monzo",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -316,12 +349,15 @@ object EcospendData {
               "group": "Monzo",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -338,12 +374,15 @@ object EcospendData {
               "group": "Natwest",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -360,12 +399,15 @@ object EcospendData {
               "group": "Natwest",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -382,12 +424,15 @@ object EcospendData {
               "group": "HSBC",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -404,12 +449,15 @@ object EcospendData {
               "group": "HSBC",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -426,12 +474,15 @@ object EcospendData {
               "group": "Santander",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -448,12 +499,15 @@ object EcospendData {
               "group": "Santander",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -469,12 +523,15 @@ object EcospendData {
               "group": "Chase Bank",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -490,12 +547,15 @@ object EcospendData {
               "group": "Z Bank",
               "order": 0,
               "abilities": {
-                "domestic_payment": true,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -512,12 +572,15 @@ object EcospendData {
               "group": "RBS",
               "order": 0,
               "abilities": {
-                "domestic_payment": false,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -534,12 +597,15 @@ object EcospendData {
               "group": "RBS",
               "order": 0,
               "abilities": {
-                "domestic_payment": false,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -556,12 +622,15 @@ object EcospendData {
               "group": "RBS",
               "order": 0,
               "abilities": {
-                "domestic_payment": false,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -578,12 +647,15 @@ object EcospendData {
               "group": "M&S Bank",
               "order": 0,
               "abilities": {
-                "domestic_payment": false,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": true
             },
@@ -600,12 +672,15 @@ object EcospendData {
               "group": "Unavailable Bank",
               "order": 0,
               "abilities": {
-                "domestic_payment": false,
-                "domestic_scheduled_payment": true,
-                "domestic_standing_order": true,
-                "international_payment": true,
-                "international_scheduled_payment": true,
-                "international_standing_order": true
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
               },
               "service_status": false
             }
