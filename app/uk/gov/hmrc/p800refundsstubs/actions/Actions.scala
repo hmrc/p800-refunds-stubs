@@ -41,7 +41,7 @@ class Actions @Inject() (
   val edhAction: ActionBuilder[Request, AnyContent] =
     default
       .andThen(correlationIdRefiner)
-      .andThen(requireHeaderFilter("Environment", Set("isit", "clone", "live").contains(_)))
+      .andThen(requireHeaderFilter("Environment", Set("isit", "clone", "live", "stub").contains(_)))
       .andThen(requireHeaderFilter("RequesterId", _ === "Repayment Service"))
       .andThen(bearerAuthRefiner)
 

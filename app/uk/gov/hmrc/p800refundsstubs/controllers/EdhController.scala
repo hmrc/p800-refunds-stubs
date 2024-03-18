@@ -70,7 +70,7 @@ class EdhController @Inject() (
       }
     }
 
-  def createSuccessResponseExample(nextAction: NextAction): SuccessResponse = {
+  def createSuccessResponseExample(nextAction: NextAction): GetBankDetailsRiskResultResponse = {
     val header = Header(
       transactionID = TransactionID("TX1234567890"),
       requesterID   = RequesterID("REQ1234567890"),
@@ -123,7 +123,7 @@ class EdhController @Inject() (
         )
     }
 
-    SuccessResponse(
+    GetBankDetailsRiskResultResponse(
       header                = header,
       bankValidationResults = Some(bankValidationResults),
       overallRiskResult     = overallRiskResult,

@@ -18,16 +18,16 @@ package uk.gov.hmrc.p800refundsstubs.models.edh
 
 import play.api.libs.json._
 
-final case class SuccessResponse(
+final case class GetBankDetailsRiskResultResponse(
     header:                Header,
     bankValidationResults: Option[BankValidationResults],
     overallRiskResult:     OverallRiskResult, //making it mandatory as without it it doesn't make any sense
     riskResults:           Option[List[RuleResult]]
 )
 
-object SuccessResponse {
+object GetBankDetailsRiskResultResponse {
   @SuppressWarnings(Array("org.wartremover.warts.Any"))
-  implicit val format: OFormat[SuccessResponse] = Json.format[SuccessResponse]
+  implicit val format: OFormat[GetBankDetailsRiskResultResponse] = Json.format[GetBankDetailsRiskResultResponse]
 }
 
 final case class FailureResponse(reason: String)
