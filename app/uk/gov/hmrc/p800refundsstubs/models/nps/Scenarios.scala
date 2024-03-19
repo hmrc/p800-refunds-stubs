@@ -46,7 +46,7 @@ object Scenarios {
   /**
    * It decodes a scenario for IssuePayableOrder API based on the second digit in Nino.
    */
-  def selectScenario2(nino: Nino): (GetBankDetailsRiskResultScenario, IssuePayableOrderScenario) = nino.value match {
+  def selectScenarioForEdhAndIssuePayableOrder(nino: Nino): (GetBankDetailsRiskResultScenario, IssuePayableOrderScenario) = nino.value match {
     // format: OFF
     case s if "...0.....".r.matches(s) => (GetBankDetailsRiskResultScenario.HappyPath, IssuePayableOrder.RefundAlreadyTaken)
     case s if "...1.....".r.matches(s) => (GetBankDetailsRiskResultScenario.DoNotPay, IssuePayableOrder.HappyPath)

@@ -59,7 +59,7 @@ class EdhController @Inject() (
           .person.getOrElse(throw new RuntimeException("Missing 'person'"))
           .nino
 
-      Scenarios.selectScenario2(nino)._1 match {
+      Scenarios.selectScenarioForEdhAndIssuePayableOrder(nino)._1 match {
         case GetBankDetailsRiskResultScenario.HappyPath                        => Ok(Json.toJson(createSuccessResponseExample(NextAction.Pay)))
         case GetBankDetailsRiskResultScenario.DoNotPay                         => Ok(Json.toJson(createSuccessResponseExample(NextAction.DoNotPay)))
         case GetBankDetailsRiskResultScenario.SubmissionHasNotPassedValidation => BadRequest(Json.toJson(FailureResponse("Emulating SubmissionHasNotPassedValidation")))
