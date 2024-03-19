@@ -18,7 +18,9 @@ package uk.gov.hmrc.p800refundsstubs.models.nps
 
 import play.api.libs.json.{Format, Json}
 
-final case class AssociatedPayableNumber(value: Int)
-object AssociatedPayableNumber {
-  implicit val format: Format[AssociatedPayableNumber] = Json.valueFormat[AssociatedPayableNumber]
+final case class PayeeBankAccountNumber(value: String)
+
+@SuppressWarnings(Array("org.wartremover.warts.Any"))
+object PayeeBankAccountNumber {
+  implicit val format: Format[PayeeBankAccountNumber] = Json.valueFormat[PayeeBankAccountNumber]
 }
