@@ -51,12 +51,12 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
           InternalServerError("Internal Server Error as per scenario")
         case Scenarios.CheckReference.HappyPath =>
           Ok(Json.toJson(P800ReferenceCheckResult(
-            reconciliationIdentifier = ReconciliationIdentifier("reconciliationIdentifier"),
+            reconciliationIdentifier = ReconciliationIdentifier(123),
             paymentNumber            = paymentNumber,
             payeNumber               = PayeNumber("payeNumber"),
             taxDistrictNumber        = TaxDistrictNumber("taxDistrictNumber"),
             paymentAmount            = BigDecimal("4321.09"),
-            associatedPayableNumber  = AssociatedPayableNumber("associatedPayableNumber"),
+            associatedPayableNumber  = AssociatedPayableNumber(123),
             customerAccountNumber    = CustomerAccountNumber("customerAccountNumber"),
             currentOptimisticLock    = CurrentOptimisticLock(123)
           )))
@@ -103,6 +103,26 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
           UnprocessableEntity(Json.toJson(Failures(
             Failure.overpaymentAlreadyClaimed
           )))
+      }
+    }
+
+  /**
+   * NPS Interface to claim overpayment. It's used in a Bank Transfer journey.
+   */
+  def claimOverpayment(identifier: Nino, paymentNumber: P800Reference): Action[ClaimOverpaymentRequest] =
+    actions.npsActionValidated(identifier, paymentNumber)(parse.json[ClaimOverpaymentRequest]) { implicit request =>
+      Scenarios.selectScenarioForClaimOverpayment(identifier) match {
+        case Scenarios.ClaimOverpayment.HappyPath =>
+          Ok(Json.toJson(ClaimOverpaymentResponse(
+            identifer             = identifier,
+            currentOptimisticLock = request.body.currentOptimisticLock
+          )))
+        case Scenarios.ClaimOverpayment.BadRequest =>
+          BadRequest(Json.toJson(Failures.badRequestAsPerScenario))
+        case Scenarios.ClaimOverpayment.Forbidden =>
+          Forbidden(Json.toJson(Failures.forbiddenAsPerScenario))
+        case Scenarios.ClaimOverpayment.InternalServerError =>
+          InternalServerError("Internal Server Error as per scenario")
       }
     }
 

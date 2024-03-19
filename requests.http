@@ -29,8 +29,26 @@ gov-uk-originator-id: DA2_MRA_DIGITAL
 
 {
   "customerAccountNumber":   "CustomerAccountNumber",
-  "associatedPayableNumber": "AssociatedPayableNumber",
+  "associatedPayableNumber": 123,
   "currentOptimisticLock":   1234
+}
+
+###
+
+PUT http://localhost:10151/nps-json-service/nps/v1/api/accounting/claim-overpayment/AB999999C/123
+CorrelationId: "sialala"
+Content-Type: application/json
+Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
+gov-uk-originator-id: DA2_MRA_DIGITAL
+
+{
+  "currentOptimisticLock": 86,
+  "reconciliationIdentifier": 12,
+  "associatedPayableNumber": 789,
+  "payeeBankAccountNumber": "11223344",
+  "payeeBankSortCode": "112233",
+  "payeeBankAccountName": "ACME BANK & SERVICES LTD",
+  "designatedPayeeAccount": true
 }
 
 ###

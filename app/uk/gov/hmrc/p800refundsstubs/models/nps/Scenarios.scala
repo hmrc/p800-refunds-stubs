@@ -18,6 +18,7 @@ package uk.gov.hmrc.p800refundsstubs.models.nps
 
 import uk.gov.hmrc.p800refundsstubs.models.Nino
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.CheckReference.P800ReferenceCheckScenario
+import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.ClaimOverpayment.ClaimOverpaymentScenario
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.GetBankDetailsRiskResultScenario.GetBankDetailsRiskResultScenario
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.IssuePayableOrder.IssuePayableOrderScenario
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.TraceIndividual.TraceIndividualScenario
@@ -58,6 +59,16 @@ object Scenarios {
     // format: ON
   }
 
+  /**
+   * Decodes a scenario for ClaimOverpayment API based on the last digit of the Nino.
+   */
+  def selectScenarioForClaimOverpayment(nino: Nino): ClaimOverpaymentScenario = nino.value match {
+    case s if ".......1.".r.matches(s) => ClaimOverpayment.BadRequest
+    case s if ".......2.".r.matches(s) => ClaimOverpayment.Forbidden
+    case s if ".......3.".r.matches(s) => ClaimOverpayment.InternalServerError
+    case s if ".........".r.matches(s) => ClaimOverpayment.HappyPath
+  }
+
   object CheckReference {
     /**
      * Scenarios for P800 Check Reference API
@@ -77,6 +88,18 @@ object Scenarios {
     case object InternalServerError extends P800ReferenceCheckScenario
 
     case object HappyPath extends P800ReferenceCheckScenario
+  }
+
+  object ClaimOverpayment {
+    sealed trait ClaimOverpaymentScenario
+
+    case object BadRequest extends ClaimOverpaymentScenario
+
+    case object Forbidden extends ClaimOverpaymentScenario
+
+    case object InternalServerError extends ClaimOverpaymentScenario
+
+    case object HappyPath extends ClaimOverpaymentScenario
   }
 
   object TraceIndividual {

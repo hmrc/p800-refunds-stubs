@@ -6,6 +6,9 @@ POST      /nps-json-service/nps/v1/api/individual/trace-individual  uk.gov.hmrc.
 
 PUT        /nps-json-service/nps/v1/api/accounting/issue-payable-order/:identifier/:paymentNumber uk.gov.hmrc.p800refundsstubs.controllers.NpsController.issuePayableOrder(identifier: Nino, paymentNumber: P800Reference)
 
+# Claim Overpayment API at NPS
+PUT        /nps-json-service/nps/v1/api/accounting/claim-overpayment/:identifier/:paymentNumber uk.gov.hmrc.p800refundsstubs.controllers.NpsController.claimOverpayment(identifier: Nino, paymentNumber: P800Reference)
+
 # Ecospend
 POST       /connect/token                    uk.gov.hmrc.p800refundsstubs.controllers.EcospendAuthController.accessToken
 
