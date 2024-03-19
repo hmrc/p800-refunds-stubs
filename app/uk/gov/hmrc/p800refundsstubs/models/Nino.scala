@@ -24,6 +24,7 @@ import scala.util.matching.Regex
 
 final case class Nino(value: String) {
   def isValid: Boolean = Nino.regex.matches(value)
+  def validate: Option[String] = if (isValid) None else Some("Invalid 'Nino'")
 }
 
 object Nino {

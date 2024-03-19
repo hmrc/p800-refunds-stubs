@@ -50,3 +50,76 @@ gov-uk-originator-id: DA2_MRA_DIGITAL
   "payeeBankAccountName": "ACME BANK & SERVICES LTD",
   "designatedPayeeAccount": true
 }
+
+###
+
+POST http://localhost:10151/risking/claims/6b9a2351-cc29-41ef-bfc7-8117c7d0ae05/bank-details
+CorrelationId: sialalala
+Content-Type: application/json
+Authorization: Bearer test-bearer-token
+Environment: isit
+RequesterId: Repayment Service
+
+{
+  "header": {
+    "transactionID": "6b9a2351-cc29-41ef-bfc7-8117c7d0ae05",
+    "requesterID": "Repayment Service",
+    "serviceID": "P800"
+  },
+  "paymentData": {
+    "paymentAmount": 1500.25,
+    "paymentNumber": 1
+  },
+  "employerData": {
+    "taxDistrictNumber": "123",
+    "schemeRef": "SCH-ABC"
+  },
+  "riskData": [
+    {
+      "personType": "Customer",
+      "person": {
+        "surname": "Doe",
+        "firstForenameOrInitial": "John",
+        "secondForenameOrInitial": "M",
+        "nino": "AB969999C",
+        "dateOfBirth": "1980-01-01",
+        "title": "MR",
+        "address": [
+          {
+            "addressType": "NPS Address",
+            "line": [
+              "123 Main St",
+              "Apt 4"
+            ],
+            "postcode": "AB1 2CD"
+          },
+          {
+            "addressType": "Edited Address",
+            "line": [
+              "456 Oak Ave"
+            ],
+            "postcode": "EF3 4GH"
+          }
+        ]
+      },
+      "bankDetails": {
+        "bankAccountNumber": "1234567890",
+        "bankSortCode": "123456",
+        "bankAccountName": "John Doe",
+        "buildingSocietyRef": "BS-REF",
+        "designatedAccountFlag": 1,
+        "currency": "GBP"
+      }
+    }
+  ],
+  "bankValidationResults": {
+    "accountExists": "yes",
+    "nameMatches": "indeterminate",
+    "addressMatches": "no",
+    "nonConsented": "inapplicable",
+    "subjectHasDeceased": "error"
+  },
+  "transactionMonitoringResults": {
+    "transactionMonitoringScore": 750.5
+  }
+}
