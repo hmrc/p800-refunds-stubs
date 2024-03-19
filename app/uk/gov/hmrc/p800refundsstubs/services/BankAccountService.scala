@@ -49,7 +49,7 @@ class BankAccountService @Inject() (bankConsentRepo: BankConsentRepo)(implicit e
       subType               = BankAccountSubType.CurrentAccount,
       currency              = Currency.getInstance("GBP"),
       accountFormat         = BankAccountFormat.SortCode,
-      accountIdentification = AccountIdentification("abc:123"),
+      accountIdentification = AccountIdentification("22334410002333"),
       calculatedOwnerName   = CalculatedOwnerName("Greg Greggson"),
       accountOwnerName      = AccountOwnerName("Greg Greggson"),
       displayName           = DisplayName("Greg G Greggson"),

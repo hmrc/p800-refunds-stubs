@@ -266,7 +266,7 @@ object BankDetails {
 }
 
 final case class BankAccountNumber(value: String) {
-  def validate: Option[String] = if (BankAccountNumber.regex.matches(value)) None else Some("Invalid 'BankAccountNumber'")
+  def validate: Option[String] = if (BankAccountNumber.regex.matches(value)) None else Some(s"Invalid 'BankAccountNumber': [$value]")
 }
 
 object BankAccountNumber {
