@@ -66,6 +66,8 @@ object Scenarios {
     case s if ".......1.".r.matches(s) => ClaimOverpayment.BadRequest
     case s if ".......2.".r.matches(s) => ClaimOverpayment.Forbidden
     case s if ".......3.".r.matches(s) => ClaimOverpayment.InternalServerError
+    case s if ".......4.".r.matches(s) => ClaimOverpayment.RefundAlreadyTaken
+    case s if ".......5.".r.matches(s) => ClaimOverpayment.Suspended
     case s if ".........".r.matches(s) => ClaimOverpayment.HappyPath
   }
 
@@ -98,6 +100,10 @@ object Scenarios {
     case object Forbidden extends ClaimOverpaymentScenario
 
     case object InternalServerError extends ClaimOverpaymentScenario
+
+    case object RefundAlreadyTaken extends ClaimOverpaymentScenario
+
+    case object Suspended extends ClaimOverpaymentScenario
 
     case object HappyPath extends ClaimOverpaymentScenario
   }

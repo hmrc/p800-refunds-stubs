@@ -58,6 +58,20 @@ For this endpoint the selection is driven via the NINO number using according to
 | `***0*****`                              | RefundAlreadyTaken  |
 | `*********`                              | Happy Path (200)    |
 
+### `PUT /nps-json-service/nps/v1/api/accounting/claim-overpayment/:identifier/:paymentNumber
+
+For this endpoint the selection is driven via the NINO number provided as the `:identifier` URL parameter according to
+the below table.
+
+| NINO pattern for ClaimOverpayment API | Scenario                                         |
+|---------------------------------------|--------------------------------------------------|
+| `*******1*`                           | Bad Request (400)                                |
+| `*******2*`                           | Forbidden (403)                                  |
+| `*******3*`                           | InternalServerError (500)                        |
+| `*******4*`                           | RefundAlreadyTaken - Unprocessable Entity (422)  |
+| `*******5*`                           | Suspended - Unprocessable Entity (422)           |
+| `*********`                           | Happy Path (200)                                 |
+
 ### `POST /risking/claims/:claimId/bank-details`
 For this endpoint the selection is driven via the NINO number using according to below table.
 
