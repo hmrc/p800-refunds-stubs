@@ -121,6 +121,14 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
           BadRequest(Json.toJson(Failures.badRequestAsPerScenario))
         case Scenarios.ClaimOverpayment.Forbidden =>
           Forbidden(Json.toJson(Failures.forbiddenAsPerScenario))
+        case Scenarios.ClaimOverpayment.RefundAlreadyTaken =>
+          UnprocessableEntity(Json.toJson(Failures(
+            Failure.overpaymentAlreadyClaimed
+          )))
+        case Scenarios.ClaimOverpayment.Suspended =>
+          UnprocessableEntity(Json.toJson(Failures(
+            Failure.overpaymentSuspended
+          )))
         case Scenarios.ClaimOverpayment.InternalServerError =>
           InternalServerError("Internal Server Error as per scenario")
       }
