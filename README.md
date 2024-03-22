@@ -20,7 +20,7 @@ The microservice responds with configured response depending on the incoming req
 | `AB899999C`  | 200 - Happy path                            | 500 - InternalServerError             | N/A                                       | N/A                                      |
 | `AB919999C`  | 200 - Happy path                            | 200 - Happy path                      | 200 - Unhappy Path (Do Not Pay)           | N/A                                      |
 | `AB929999C`  | 200 - Happy path                            | 200 - Happy path                      | 400 - Bad Request                         | N/A                                      |
-| `AB939999C`  | 200 - Happy path                            | 200 - Happy path                      | 403 - Unauthorised                        | N/A                                      |
+| `AB939999C`  | 200 - Happy path                            | 200 - Happy path                      | 403 - Forbidden                           | N/A                                      |
 | `AB949999C`  | 200 - Happy path                            | 200 - Happy path                      | 404 - Resource not found                  | N/A                                      |
 | `AB959999C`  | 200 - Happy path                            | 200 - Happy path                      | 500 - Des issues                          | N/A                                      |
 | `AB969999C`  | 200 - Happy path                            | 200 - Happy path                      | 503 - Dependent system issues             | N/A                                      |
