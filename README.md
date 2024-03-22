@@ -79,7 +79,7 @@ For this endpoint the selection is driven via the NINO number using according to
 |----------------------------------------|-------------------------------------------------------------------------------------|
 | `***1*****`                            | Do Not Pay (200)                                                                    |
 | `***2*****`                            | Submission has not passed validation (400)                                          |
-| `***3*****`                            | Unauthorised (403)                                                                  |
+| `***3*****`                            | Forbidden (403)                                                                     |
 | `***4*****`                            | Resource not found (404)                                                            |
 | `***5*****`                            | DES is currently experiencing problems that require live service intervention (500) |
 | `***6*****`                            | Dependent systems are currently not responding (503)                                |
