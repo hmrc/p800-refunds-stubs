@@ -51,7 +51,7 @@ object Scenarios {
     case s if "...0.....".r.matches(s) => (GetBankDetailsRiskResultScenario.HappyPath, IssuePayableOrder.RefundAlreadyTaken)
     case s if "...1.....".r.matches(s) => (GetBankDetailsRiskResultScenario.DoNotPay, IssuePayableOrder.HappyPath)
     case s if "...2.....".r.matches(s) => (GetBankDetailsRiskResultScenario.SubmissionHasNotPassedValidation, IssuePayableOrder.HappyPath)
-    case s if "...3.....".r.matches(s) => (GetBankDetailsRiskResultScenario.Unauthorised, IssuePayableOrder.HappyPath)
+    case s if "...3.....".r.matches(s) => (GetBankDetailsRiskResultScenario.Forbidden, IssuePayableOrder.HappyPath)
     case s if "...4.....".r.matches(s) => (GetBankDetailsRiskResultScenario.ResourceNotFound, IssuePayableOrder.HappyPath)
     case s if "...5.....".r.matches(s) => (GetBankDetailsRiskResultScenario.DesIssues, IssuePayableOrder.HappyPath)
     case s if "...6.....".r.matches(s) => (GetBankDetailsRiskResultScenario.DependentSystemIssues, IssuePayableOrder.HappyPath)
@@ -152,7 +152,7 @@ object Scenarios {
 
     case object SubmissionHasNotPassedValidation extends GetBankDetailsRiskResultScenario
 
-    case object Unauthorised extends GetBankDetailsRiskResultScenario
+    case object Forbidden extends GetBankDetailsRiskResultScenario
     /**
      * The remote endpoint has indicated that no data can be found
      */

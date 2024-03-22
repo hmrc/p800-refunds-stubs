@@ -63,10 +63,10 @@ class EdhController @Inject() (
         case GetBankDetailsRiskResultScenario.HappyPath                        => Ok(Json.toJson(createSuccessResponseExample(NextAction.Pay)))
         case GetBankDetailsRiskResultScenario.DoNotPay                         => Ok(Json.toJson(createSuccessResponseExample(NextAction.DoNotPay)))
         case GetBankDetailsRiskResultScenario.SubmissionHasNotPassedValidation => BadRequest(Json.toJson(FailureResponse("Emulating SubmissionHasNotPassedValidation")))
-        case GetBankDetailsRiskResultScenario.Unauthorised                     => Unauthorized(Json.toJson(FailureResponse("Emulating Unauthorised")))
+        case GetBankDetailsRiskResultScenario.Forbidden                        => Forbidden(Json.toJson(FailureResponse("Emulating Unauthorised")))
         case GetBankDetailsRiskResultScenario.ResourceNotFound                 => NotFound(Json.toJson(FailureResponse("Emulating ResourceNotFound")))
         case GetBankDetailsRiskResultScenario.DesIssues                        => InternalServerError(Json.toJson(FailureResponse("Emulating DesIssues")))
-        case GetBankDetailsRiskResultScenario.DependentSystemIssues            => BadGateway(Json.toJson(FailureResponse("Emulating DependentSystemIssues")))
+        case GetBankDetailsRiskResultScenario.DependentSystemIssues            => ServiceUnavailable(Json.toJson(FailureResponse("Emulating DependentSystemIssues")))
       }
     }
 
