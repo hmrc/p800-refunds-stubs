@@ -114,7 +114,7 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
       Scenarios.selectScenarioForClaimOverpayment(identifier) match {
         case Scenarios.ClaimOverpayment.HappyPath =>
           Ok(Json.toJson(ClaimOverpaymentResponse(
-            identifer             = identifier,
+            identifier            = identifier,
             currentOptimisticLock = request.body.currentOptimisticLock
           )))
         case Scenarios.ClaimOverpayment.BadRequest =>

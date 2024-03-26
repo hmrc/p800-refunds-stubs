@@ -20,7 +20,7 @@ import play.api.libs.json.{OFormat, Json}
 import uk.gov.hmrc.p800refundsstubs.models.Nino
 
 final case class ClaimOverpaymentResponse(
-    identifer:             Nino,
+    identifier:            Nino,
     currentOptimisticLock: CurrentOptimisticLock
 )
 
