@@ -14,17 +14,21 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.p800refundsstubs.models.nps
+package uk.gov.hmrc.p800refundsstubs.util
 
-import play.api.libs.json.{OFormat, Json}
-import uk.gov.hmrc.p800refundsstubs.models.Nino
+import play.api.libs.json.{Reads, Writes, Format, JsString, JsSuccess, JsError}
 
-final case class ClaimOverpaymentResponse(
-    identifier:            Nino,
-    currentOptimisticLock: CurrentOptimisticLock
-)
+import java.util.Currency
 
-@SuppressWarnings(Array("org.wartremover.warts.Any"))
-object ClaimOverpaymentResponse {
-  implicit val format: OFormat[ClaimOverpaymentResponse] = Json.format[ClaimOverpaymentResponse]
+object CurrencyFormat {
+  private val reads: Reads[Currency] = Reads[Currency] {
+    case JsString(s) => JsSuccess(Currency.getInstance(s))
+    case _           => JsError("Unable to parse currency")
+  }
+
+  private val writes: Writes[Currency] = Writes[Currency] { c =>
+    JsString(c.toString)
+  }
+
+  implicit val format: Format[Currency] = Format[Currency](reads, writes)
 }

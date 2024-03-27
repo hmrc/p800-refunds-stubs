@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.p800refundsstubs.models.nps
+package uk.gov.hmrc.p800refundsstubs.models.edh
 
-import play.api.libs.json.{OFormat, Json}
-import uk.gov.hmrc.p800refundsstubs.models.Nino
+import play.api.libs.json.{Format, Json}
 
-final case class ClaimOverpaymentResponse(
-    identifier:            Nino,
-    currentOptimisticLock: CurrentOptimisticLock
-)
+final case class ClientUId(value: String)
 
-@SuppressWarnings(Array("org.wartremover.warts.Any"))
-object ClaimOverpaymentResponse {
-  implicit val format: OFormat[ClaimOverpaymentResponse] = Json.format[ClaimOverpaymentResponse]
+object ClientUId {
+  implicit val format: Format[ClientUId] = Json.valueFormat[ClientUId]
 }

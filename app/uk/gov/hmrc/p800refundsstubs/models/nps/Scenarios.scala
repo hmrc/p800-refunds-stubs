@@ -22,6 +22,7 @@ import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.ClaimOverpayment.ClaimO
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.GetBankDetailsRiskResultScenario.GetBankDetailsRiskResultScenario
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.IssuePayableOrder.IssuePayableOrderScenario
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.TraceIndividual.TraceIndividualScenario
+import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.NotifyRiskingException.NotifyRiskingExceptionScenario
 
 object Scenarios {
 
@@ -69,6 +70,28 @@ object Scenarios {
     case s if ".......4.".r.matches(s) => ClaimOverpayment.RefundAlreadyTaken
     case s if ".......5.".r.matches(s) => ClaimOverpayment.Suspended
     case s if ".........".r.matches(s) => ClaimOverpayment.HappyPath
+  }
+
+  /**
+   * Decodes a scenario for Notify Risking Exception
+   */
+  def notifyRiskingExceptionEdhScenario(nino: Nino): NotifyRiskingExceptionScenario = nino.value match {
+    case s if "......1..".r.matches(s) => NotifyRiskingException.BadRequest
+    case s if "......2..".r.matches(s) => NotifyRiskingException.Forbidden
+    case s if "......3..".r.matches(s) => NotifyRiskingException.InternalServerError
+    case s if ".........".r.matches(s) => NotifyRiskingException.HappyPath
+  }
+
+  object NotifyRiskingException {
+    sealed trait NotifyRiskingExceptionScenario
+
+    case object BadRequest extends NotifyRiskingExceptionScenario
+
+    case object Forbidden extends NotifyRiskingExceptionScenario
+
+    case object InternalServerError extends NotifyRiskingExceptionScenario
+
+    case object HappyPath extends NotifyRiskingExceptionScenario
   }
 
   object CheckReference {
