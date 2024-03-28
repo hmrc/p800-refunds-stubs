@@ -4,7 +4,11 @@ GET        /nps-json-service/nps/v1/api/reconciliation/p800/:identifier/:payment
 # Trace Individual API at NPS
 POST      /nps-json-service/nps/v1/api/individual/trace-individual  uk.gov.hmrc.p800refundsstubs.controllers.NpsController.traceIndividual(exactMatch: Boolean, returnRealName: Boolean)
 
+# Issue Payable Order API at NPS
 PUT        /nps-json-service/nps/v1/api/accounting/issue-payable-order/:identifier/:paymentNumber uk.gov.hmrc.p800refundsstubs.controllers.NpsController.issuePayableOrder(identifier: Nino, paymentNumber: P800Reference)
+
+# Suspend Overpaymant API at NPS
+PUT        /nps-json-service/nps/v1/api/accounting/suspend-overpayment/:identifier/:paymentNumber uk.gov.hmrc.p800refundsstubs.controllers.NpsController.suspendOverpayment(identifier: Nino, paymentNumber: P800Reference)
 
 # Claim Overpayment API at NPS
 PUT        /nps-json-service/nps/v1/api/accounting/claim-overpayment/:identifier/:paymentNumber uk.gov.hmrc.p800refundsstubs.controllers.NpsController.claimOverpayment(identifier: Nino, paymentNumber: P800Reference)

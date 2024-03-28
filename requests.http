@@ -123,3 +123,21 @@ RequesterId: Repayment Service
     "transactionMonitoringScore": 750.5
   }
 }
+
+###
+
+PUT http://localhost:10151/nps-json-service/nps/v1/api/accounting/suspend-overpayment/AB919099C/123
+CorrelationId: "sialala"
+Content-Type: application/json
+Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
+gov-uk-originator-id: DA2_MRA_DIGITAL
+
+{
+  "currentOptimisticLock": 86,
+  "reconciliationIdentifier": 12,
+  "associatedPayableNumber": 789,
+  "payeeBankAccountNumber": "34256789",
+  "payeeBankSortCode": "593211",
+  "payeeBankAccountName": "ACME BANK & SERVICES LTD",
+  "designatedPayeeAccount": true
+}

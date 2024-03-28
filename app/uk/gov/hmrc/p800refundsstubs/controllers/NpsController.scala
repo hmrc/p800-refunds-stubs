@@ -107,6 +107,22 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
     }
 
   /**
+   * NPS Interface to Suspend Overpayment. It's used in a Bank Transfer journey.
+   */
+  def suspendOverpayment(identifier: Nino, paymentNumber: P800Reference): Action[SuspendOverpaymentRequest] =
+    actions.npsActionValidated(identifier, paymentNumber)(parse.json[SuspendOverpaymentRequest]) { _ =>
+      Scenarios.selectScenarioForSuspendOverpayment(identifier) match {
+        case Scenarios.SuspendOverpayment.HappyPath =>
+          Ok(Json.toJson(SuspendOverpaymentResponse(
+            identifier            = identifier,
+            currentOptimisticLock = CurrentOptimisticLock(123)
+          )))
+        case Scenarios.SuspendOverpayment.InternalServerError =>
+          InternalServerError(Json.toJson("reason" -> "Emulating errors for testing"))
+      }
+    }
+
+  /**
    * NPS Interface to claim overpayment. It's used in a Bank Transfer journey.
    */
   def claimOverpayment(identifier: Nino, paymentNumber: P800Reference): Action[ClaimOverpaymentRequest] =

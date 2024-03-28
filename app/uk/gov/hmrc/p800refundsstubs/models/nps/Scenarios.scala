@@ -61,6 +61,16 @@ object Scenarios {
   }
 
   /**
+   * It decodes a scenario for Suspend Overpayment API based on the fourth (4) digit in Nino.
+   */
+  def selectScenarioForSuspendOverpayment(nino: Nino): SuspendOverpayment.SuspendOverpaymentScenario = nino.value match {
+    // format: OFF
+    case s if ".....0...".r.matches(s) => SuspendOverpayment.InternalServerError
+    case s if ".........".r.matches(s) => SuspendOverpayment.HappyPath
+    // format: ON
+  }
+
+  /**
    * Decodes a scenario for ClaimOverpayment API based on the last digit of the Nino.
    */
   def selectScenarioForClaimOverpayment(nino: Nino): ClaimOverpaymentScenario = nino.value match {
@@ -155,6 +165,17 @@ object Scenarios {
     case object RefundAlreadyTaken extends IssuePayableOrderScenario
 
     case object HappyPath extends IssuePayableOrderScenario
+  }
+
+  object SuspendOverpayment {
+    /**
+     * Scenarios for Suspend Overpayment API
+     */
+    sealed trait SuspendOverpaymentScenario
+
+    case object HappyPath extends SuspendOverpaymentScenario
+
+    case object InternalServerError extends SuspendOverpaymentScenario
   }
 
   object GetBankDetailsRiskResultScenario {
