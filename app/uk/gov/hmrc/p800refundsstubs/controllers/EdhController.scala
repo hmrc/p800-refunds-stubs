@@ -37,30 +37,6 @@ class EdhController @Inject() (
     actions: Actions
 )(implicit ec: ExecutionContext) extends BackendController(cc) {
 
-  /**
-   * EDH Interface to start a risking case with case management
-   */
-  def notifyCaseManagement(clientUId: String): Action[CaseManagementRequest] = actions
-    .edhAction
-    .apply(
-      parse
-        .json[CaseManagementRequest]
-        .validate(r => if (r.clientUId.value === clientUId) Right(r) else Left(BadRequest("'clientUId' has to match the path parameter")))
-        .validate(r => if (r.clientUId.value.length <= 36) Right(r) else Left(BadRequest("'clientUId' has a max length of 36 characters")))
-    )
-    .apply { implicit request: Request[CaseManagementRequest] =>
-      Scenarios.notifyRiskingExceptionEdhScenario(request.body.nino) match {
-        case Scenarios.NotifyRiskingException.BadRequest =>
-          BadRequest("BadRequest as per scenario")
-        case Scenarios.NotifyRiskingException.Forbidden =>
-          Forbidden("Forbidden as per scenario")
-        case Scenarios.NotifyRiskingException.InternalServerError =>
-          InternalServerError("Internal Server Error as per scenario")
-        case Scenarios.NotifyRiskingException.HappyPath =>
-          Ok
-      }
-    }
-
   def getBankDetailsRiskResult(claimId: ClaimId): Action[GetBankDetailsRiskResultRequest] = actions
     .edhAction
     .apply(

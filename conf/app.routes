@@ -28,4 +28,6 @@ GET        /api/v2.0/accounts/summary        uk.gov.hmrc.p800refundsstubs.contro
 # API#1133: Get Bank Details Risk Result v2.1.
 POST    /risking/claims/:claimId/bank-details    uk.gov.hmrc.p800refundsstubs.controllers.EdhController.getBankDetailsRiskResult(claimId: ClaimId)
 
-POST    /risking/exceptions/:clientUId           uk.gov.hmrc.p800refundsstubs.controllers.EdhController.notifyCaseManagement(clientUId: String)
+# Case Management
+# API#1132: Notify Risking Exception
+POST    /risking/exceptions/:clientUId           uk.gov.hmrc.p800refundsstubs.controllers.CaseManagementController.notifyCaseManagement(clientUId: String)

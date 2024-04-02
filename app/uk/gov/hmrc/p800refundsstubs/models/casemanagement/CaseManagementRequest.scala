@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.p800refundsstubs.models.edh
+package uk.gov.hmrc.p800refundsstubs.models.casemanagement
 
 import play.api.libs.json.{Json, OFormat, Format}
 import uk.gov.hmrc.p800refundsstubs.models.Nino
+import uk.gov.hmrc.p800refundsstubs.models.edh.{BankSortCode, BankAccountNumber, BankAccountName}
 import uk.gov.hmrc.p800refundsstubs.util.CurrencyFormat
 
 import java.util.Currency

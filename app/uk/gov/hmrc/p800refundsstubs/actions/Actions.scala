@@ -46,6 +46,13 @@ class Actions @Inject() (
       .andThen(bearerAuthRefiner)
 
   @SuppressWarnings(Array("org.wartremover.warts.Any"))
+  val caseManagementAction: ActionBuilder[Request, AnyContent] =
+    default
+      .andThen(correlationIdRefiner)
+      .andThen(basicAuthRefiner())
+      .andThen(requireHeaderFilter("Environment", Set("isit", "clone", "live", "stub").contains(_)))
+
+  @SuppressWarnings(Array("org.wartremover.warts.Any"))
   val npsAction: ActionBuilder[NpsRequest, AnyContent] =
     default
       .andThen(correlationIdRefiner)
@@ -89,7 +96,9 @@ class Actions @Inject() (
       request.headers.get("Authorization") match {
         case Some(authHeader) if authHeader.startsWith("Basic ") =>
           decodeBasicAuth(authHeader) match {
-            case Some((username, password)) if isValidUser(username, password) =>
+            case Some((username, password)) if isValidNpsUser(username, password) =>
+              Future.successful(Right(request))
+            case Some((username, password)) if isValidCaseManagementUser(username, password) =>
               Future.successful(Right(request))
             case a =>
               logger.info(s"Forbidden, invalid credentials ${a.toString}")
@@ -101,9 +110,14 @@ class Actions @Inject() (
       }
     }
 
-    private def isValidUser(username: String, password: String): Boolean = {
+    private def isValidNpsUser(username: String, password: String): Boolean = {
       //testNpsUserName:testNpsPassword is dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
       username === "testNpsUserName" && password === "testNpsPassword"
+    }
+
+    private def isValidCaseManagementUser(username: String, password: String): Boolean = {
+      //testCaseManagementUserName:testCaseManagementPassword is dGVzdENhc2VNYW5hZ2VtZW50VXNlck5hbWU6dGVzdENhc2VNYW5hZ2VtZW50UGFzc3dvcmQK
+      username === "testCaseManagementUserName" && password === "testCaseManagementPassword"
     }
 
     private def decodeBasicAuth(authHeader: String): Option[(String, String)] = {

@@ -135,15 +135,14 @@ For this endpoint the selection is driven via the NINO number using according to
 For this endpoint the selection is driven via the NINO number provided in the request body JSON according to the
 below table.
 
-Note: to reach this API call the GetBankRiskResult API must reply with a 'Do Not Pay (200)' response, hence the
-required `1` in the fourth value of the NINO.
+Note: to reach this API call the GetBankRiskResult API must reply with a 'Do Not Pay (200)' response.
 
 | NINO pattern for Notify Case Management API | Scenario                                         |
 |---------------------------------------------|--------------------------------------------------|
-| `***1**1**`                                 | Bad Request (400)                                |
-| `***1**2**`                                 | Forbidden (403)                                  |
-| `***1**3**`                                 | InternalServerError (500)                        |
-| `***1*****`                                 | Happy Path (200)                                 |
+| `******1**`                                 | Bad Request (400)                                |
+| `******2**`                                 | Forbidden (403)                                  |
+| `******3**`                                 | InternalServerError (500)                        |
+| `*********`                                 | Happy Path (200)                                 |
 
 ### License
 

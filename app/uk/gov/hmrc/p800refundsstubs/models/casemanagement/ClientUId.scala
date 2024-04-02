@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.p800refundsstubs.models.edh
+package uk.gov.hmrc.p800refundsstubs.models.casemanagement
 
 import play.api.libs.json.{Format, Json}
 
