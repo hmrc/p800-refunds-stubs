@@ -85,7 +85,7 @@ object Scenarios {
   /**
    * Decodes a scenario for Notify Risking Exception
    */
-  def notifyRiskingExceptionEdhScenario(nino: Nino): NotifyRiskingExceptionScenario = nino.value match {
+  def selectScenarioForNotifyRiskingException(nino: Nino): NotifyRiskingExceptionScenario = nino.value match {
     case s if "......1..".r.matches(s) => NotifyRiskingException.BadRequest
     case s if "......2..".r.matches(s) => NotifyRiskingException.Forbidden
     case s if "......3..".r.matches(s) => NotifyRiskingException.InternalServerError

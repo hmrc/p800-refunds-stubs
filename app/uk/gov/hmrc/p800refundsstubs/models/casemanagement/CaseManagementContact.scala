@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.p800refundsstubs.models.edh
+package uk.gov.hmrc.p800refundsstubs.models.casemanagement
 
 import play.api.libs.json.{Json, OFormat}
+import uk.gov.hmrc.p800refundsstubs.models.edh.{AddressType, PersonType, Postcode}
 
 final case class CaseManagementContact(
     `type`:    PersonType,
