@@ -54,7 +54,7 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
             reconciliationIdentifier = ReconciliationIdentifier(123),
             paymentNumber            = paymentNumber,
             payeNumber               = PayeNumber("payeNumber"),
-            taxDistrictNumber        = TaxDistrictNumber("taxDistrictNumber"),
+            taxDistrictNumber        = TaxDistrictNumber(123),
             paymentAmount            = BigDecimal("4321.09"),
             associatedPayableNumber  = AssociatedPayableNumber(123),
             customerAccountNumber    = CustomerAccountNumber("customerAccountNumber"),
