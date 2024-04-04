@@ -19,6 +19,7 @@ package uk.gov.hmrc.p800refundsstubs.models.casemanagement
 import play.api.libs.json.{Json, OFormat, Format}
 import uk.gov.hmrc.p800refundsstubs.models.Nino
 import uk.gov.hmrc.p800refundsstubs.models.edh.{BankSortCode, BankAccountNumber, BankAccountName}
+import uk.gov.hmrc.p800refundsstubs.models.nps.{TaxDistrictNumber, ReconciliationIdentifier, PayeNumber}
 import uk.gov.hmrc.p800refundsstubs.util.CurrencyFormat
 
 import java.util.Currency
@@ -41,9 +42,9 @@ final case class CaseManagementRequest(
     subjectHasDeceased:    Option[String],
     nonConsented:          Option[String],
     ruleResults:           Option[List[CaseManagementRuleResult]],
-    reconciliationId:      Option[Int],
-    taxDistrictNumber:     Option[Int],
-    payeNumber:            Option[String]
+    reconciliationId:      Option[ReconciliationIdentifier],
+    taxDistrictNumber:     Option[TaxDistrictNumber],
+    payeNumber:            Option[PayeNumber]
 )
 
 object CaseManagementRequest {
