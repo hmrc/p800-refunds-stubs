@@ -173,13 +173,14 @@ class Actions @Inject() (
         logger.error(message)
         Future.successful(Left[Result, NpsRequest[A]](BadRequest(message).withCorrelationId(correlationId)))
       } { correlationId: CorrelationId =>
+        logger.info(s"CorrelationId from request: ${correlationId.toString}")
         Future.successful(Right[Result, NpsRequest[A]](new NpsRequest(correlationId, request)))
       }
     }
 
     override protected def executionContext: ExecutionContext = ec
 
-    lazy val logger: Logger = Logger(this.getClass)
+    lazy val logger: Logger = Logger("correlation-id-logger")
   }
 
   private def requireHeaderFilter(headerName: String, headerValuePredicate: String => Boolean): ActionFilter[Request] = new ActionFilter[Request] {
