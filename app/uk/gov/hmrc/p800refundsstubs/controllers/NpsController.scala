@@ -103,6 +103,8 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
           UnprocessableEntity(Json.toJson(Failures(
             Failure.overpaymentAlreadyClaimed
           )))
+        case Scenarios.IssuePayableOrder.InternalServerError =>
+          InternalServerError("Internal Server Error as per scenario")
       }
     }
 

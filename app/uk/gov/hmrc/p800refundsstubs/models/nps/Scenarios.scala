@@ -56,6 +56,7 @@ object Scenarios {
     case s if "...4.....".r.matches(s) => (GetBankDetailsRiskResultScenario.ResourceNotFound, IssuePayableOrder.HappyPath)
     case s if "...5.....".r.matches(s) => (GetBankDetailsRiskResultScenario.DesIssues, IssuePayableOrder.HappyPath)
     case s if "...6.....".r.matches(s) => (GetBankDetailsRiskResultScenario.DependentSystemIssues, IssuePayableOrder.HappyPath)
+    case s if "...7.....".r.matches(s) => (GetBankDetailsRiskResultScenario.HappyPath, IssuePayableOrder.InternalServerError)
     case s if ".........".r.matches(s) => (GetBankDetailsRiskResultScenario.HappyPath, IssuePayableOrder.HappyPath)
     // format: ON
   }
@@ -165,6 +166,8 @@ object Scenarios {
     case object RefundAlreadyTaken extends IssuePayableOrderScenario
 
     case object HappyPath extends IssuePayableOrderScenario
+
+    case object InternalServerError extends IssuePayableOrderScenario
   }
 
   object SuspendOverpayment {
