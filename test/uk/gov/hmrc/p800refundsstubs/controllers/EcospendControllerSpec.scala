@@ -43,7 +43,6 @@ class EcospendControllerSpec extends ItSpec {
 
   "POST /notification" - {
     "return 402 (PaymentRequired) if no entry in mongo" in {
-      //      println(Test)
       val result = ecospendController.notification(fakeRequest("AB123456A"))
       status(result) shouldBe PAYMENT_REQUIRED
     }
