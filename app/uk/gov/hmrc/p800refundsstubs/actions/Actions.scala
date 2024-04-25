@@ -66,6 +66,11 @@ class Actions @Inject() (
       .andThen(validateNino(nino))
       .andThen(validateP800Reference(p800Reference))
 
+  @SuppressWarnings(Array("org.wartremover.warts.Any"))
+  def npsActionValidated(nino: Nino): ActionBuilder[NpsRequest, AnyContent] =
+    npsAction
+      .andThen(validateNino(nino))
+
   def validateNino(nino: Nino): ActionFilter[NpsRequest] = new ActionFilter[NpsRequest] {
     override protected def filter[A](request: NpsRequest[A]): Future[Option[Result]] = Future.successful{
       if (!nino.isValid) {

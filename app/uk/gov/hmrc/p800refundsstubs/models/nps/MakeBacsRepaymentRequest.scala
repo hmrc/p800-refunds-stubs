@@ -16,9 +16,11 @@
 
 package uk.gov.hmrc.p800refundsstubs.models.nps
 
-import play.api.libs.json.{OFormat, Json}
+import play.api.libs.json.{Json, OFormat}
+import uk.gov.hmrc.p800refundsstubs.models.P800Reference
 
-final case class ClaimOverpaymentRequest(
+final case class MakeBacsRepaymentRequest(
+    paymentNumber:            P800Reference,
     currentOptimisticLock:    CurrentOptimisticLock,
     reconciliationIdentifier: ReconciliationIdentifier,
     associatedPayableNumber:  AssociatedPayableNumber,
@@ -29,6 +31,6 @@ final case class ClaimOverpaymentRequest(
 )
 
 @SuppressWarnings(Array("org.wartremover.warts.Any"))
-object ClaimOverpaymentRequest {
-  implicit val format: OFormat[ClaimOverpaymentRequest] = Json.format[ClaimOverpaymentRequest]
+object MakeBacsRepaymentRequest {
+  implicit val format: OFormat[MakeBacsRepaymentRequest] = Json.format[MakeBacsRepaymentRequest]
 }

@@ -18,7 +18,7 @@ package uk.gov.hmrc.p800refundsstubs.models.nps
 
 import uk.gov.hmrc.p800refundsstubs.models.Nino
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.CheckReference.P800ReferenceCheckScenario
-import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.ClaimOverpayment.ClaimOverpaymentScenario
+import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.MakeBacsRepayment.MakeBacsRepaymentScenario
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.GetBankDetailsRiskResultScenario.GetBankDetailsRiskResultScenario
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.IssuePayableOrder.IssuePayableOrderScenario
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios.TraceIndividual.TraceIndividualScenario
@@ -74,13 +74,13 @@ object Scenarios {
   /**
    * Decodes a scenario for ClaimOverpayment API based on the last digit of the Nino.
    */
-  def selectScenarioForClaimOverpayment(nino: Nino): ClaimOverpaymentScenario = nino.value match {
-    case s if ".......1.".r.matches(s) => ClaimOverpayment.BadRequest
-    case s if ".......2.".r.matches(s) => ClaimOverpayment.Forbidden
-    case s if ".......3.".r.matches(s) => ClaimOverpayment.InternalServerError
-    case s if ".......4.".r.matches(s) => ClaimOverpayment.RefundAlreadyTaken
-    case s if ".......5.".r.matches(s) => ClaimOverpayment.Suspended
-    case s if ".........".r.matches(s) => ClaimOverpayment.HappyPath
+  def selectScenarioForMakeBacsRepayment(nino: Nino): MakeBacsRepaymentScenario = nino.value match {
+    case s if ".......1.".r.matches(s) => MakeBacsRepayment.BadRequest
+    case s if ".......2.".r.matches(s) => MakeBacsRepayment.Forbidden
+    case s if ".......3.".r.matches(s) => MakeBacsRepayment.InternalServerError
+    case s if ".......4.".r.matches(s) => MakeBacsRepayment.RefundAlreadyTaken
+    case s if ".......5.".r.matches(s) => MakeBacsRepayment.Suspended
+    case s if ".........".r.matches(s) => MakeBacsRepayment.HappyPath
   }
 
   /**
@@ -126,20 +126,20 @@ object Scenarios {
     case object HappyPath extends P800ReferenceCheckScenario
   }
 
-  object ClaimOverpayment {
-    sealed trait ClaimOverpaymentScenario
+  object MakeBacsRepayment {
+    sealed trait MakeBacsRepaymentScenario
 
-    case object BadRequest extends ClaimOverpaymentScenario
+    case object BadRequest extends MakeBacsRepaymentScenario
 
-    case object Forbidden extends ClaimOverpaymentScenario
+    case object Forbidden extends MakeBacsRepaymentScenario
 
-    case object InternalServerError extends ClaimOverpaymentScenario
+    case object InternalServerError extends MakeBacsRepaymentScenario
 
-    case object RefundAlreadyTaken extends ClaimOverpaymentScenario
+    case object RefundAlreadyTaken extends MakeBacsRepaymentScenario
 
-    case object Suspended extends ClaimOverpaymentScenario
+    case object Suspended extends MakeBacsRepaymentScenario
 
-    case object HappyPath extends ClaimOverpaymentScenario
+    case object HappyPath extends MakeBacsRepaymentScenario
   }
 
   object TraceIndividual {
