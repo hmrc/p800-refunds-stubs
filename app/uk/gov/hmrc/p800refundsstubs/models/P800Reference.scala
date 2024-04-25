@@ -18,14 +18,14 @@ package uk.gov.hmrc.p800refundsstubs.models
 
 import play.api.libs.json.{Format, Json}
 import play.api.mvc.PathBindable
-import uk.gov.hmrc.p800refundsstubs.util.ValueClassBinder
 
 import scala.util.{Failure, Success, Try}
 
-final case class P800Reference(value: String) {
+final case class P800Reference(value: Int) {
   val min: BigInt = 0
   val max: BigInt = 2147483646 //which is Int.MaxValue, be stored as BigInt so it visually matches specs
 
+  //TODO: remove this
   def isValid: Boolean = Try{
     val i = BigInt(value)
     i >= min && i <= max
@@ -38,5 +38,5 @@ final case class P800Reference(value: String) {
 
 object P800Reference {
   implicit val format: Format[P800Reference] = Json.valueFormat[P800Reference]
-  implicit val pathBindable: PathBindable[P800Reference] = ValueClassBinder.valueClassBinder(_.value)
+  implicit val pathBinder: PathBindable[P800Reference] = implicitly[PathBindable[Int]].transform[P800Reference](P800Reference.apply, _.value)
 }

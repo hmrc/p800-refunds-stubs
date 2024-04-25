@@ -30,6 +30,10 @@ import java.time.format.DateTimeFormatter
 
 class EcospendControllerSpec extends ItSpec {
 
+  object Test {
+    println("sialala")
+  }
+
   private val ecospendController = app.injector.instanceOf[EcospendController]
 
   private def fakeRequest(identifier: String): FakeRequest[BankVerificationRequest] = FakeRequest()
@@ -43,6 +47,7 @@ class EcospendControllerSpec extends ItSpec {
 
   "POST /notification" - {
     "return 402 (PaymentRequired) if no entry in mongo" in {
+      //      println(Test)
       val result = ecospendController.notification(fakeRequest("AB123456A"))
       status(result) shouldBe PAYMENT_REQUIRED
     }
