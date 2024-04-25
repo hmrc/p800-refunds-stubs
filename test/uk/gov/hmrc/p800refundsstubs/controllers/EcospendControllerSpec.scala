@@ -30,10 +30,6 @@ import java.time.format.DateTimeFormatter
 
 class EcospendControllerSpec extends ItSpec {
 
-  object Test {
-    println("sialala")
-  }
-
   private val ecospendController = app.injector.instanceOf[EcospendController]
 
   private def fakeRequest(identifier: String): FakeRequest[BankVerificationRequest] = FakeRequest()
