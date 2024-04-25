@@ -1,33 +1,33 @@
 # Check Reference API at NPS
-GET        /nps-json-service/nps/v1/api/reconciliation/p800/:identifier/:paymentNumber      uk.gov.hmrc.p800refundsstubs.controllers.NpsController.p800ReferenceCheck(identifier: Nino, paymentNumber: P800Reference)
+GET         /nps/nps-json-service/nps/v1/api/reconciliation/p800/:identifier/:paymentNumber               uk.gov.hmrc.p800refundsstubs.controllers.NpsController.p800ReferenceCheck(identifier: Nino, paymentNumber: P800Reference)
 
 # Trace Individual API at NPS
-POST      /nps-json-service/nps/v1/api/individual/trace-individual  uk.gov.hmrc.p800refundsstubs.controllers.NpsController.traceIndividual(exactMatch: Boolean, returnRealName: Boolean)
+POST        /nps-json-service/nps/v1/api/individual/trace-individual                                      uk.gov.hmrc.p800refundsstubs.controllers.NpsController.traceIndividual(exactMatch: Boolean, returnRealName: Boolean)
 
 # Issue Payable Order API at NPS
-PUT        /nps-json-service/nps/v1/api/accounting/issue-payable-order/:identifier/:paymentNumber uk.gov.hmrc.p800refundsstubs.controllers.NpsController.issuePayableOrder(identifier: Nino, paymentNumber: P800Reference)
+PUT         /nps/nps-json-service/nps/v1/api/accounting/issue-payable-order/:identifier/:paymentNumber        uk.gov.hmrc.p800refundsstubs.controllers.NpsController.issuePayableOrder(identifier: Nino, paymentNumber: P800Reference)
 
 # Suspend Overpaymant API at NPS
-PUT        /nps-json-service/nps/v1/api/accounting/suspend-overpayment/:identifier/:paymentNumber uk.gov.hmrc.p800refundsstubs.controllers.NpsController.suspendOverpayment(identifier: Nino, paymentNumber: P800Reference)
+PUT         /nps/pay-as-you-earn/individuals/:identifier/repayments/suspension        uk.gov.hmrc.p800refundsstubs.controllers.NpsController.suspendOverpayment(identifier: Nino)
 
-# Claim Overpayment API at NPS
-PUT        /nps-json-service/nps/v1/api/accounting/claim-overpayment/:identifier/:paymentNumber uk.gov.hmrc.p800refundsstubs.controllers.NpsController.claimOverpayment(identifier: Nino, paymentNumber: P800Reference)
+# Make Bacs Repayment API at NPS
+PUT         /nps/pay-as-you-earn/individuals/:identifier/repayments/bacs-payment                          uk.gov.hmrc.p800refundsstubs.controllers.NpsController.makeBacsRepayment(identifier: Nino)
 
 # Ecospend
-POST       /connect/token                    uk.gov.hmrc.p800refundsstubs.controllers.EcospendAuthController.accessToken
+POST        /connect/token                                                                                uk.gov.hmrc.p800refundsstubs.controllers.EcospendAuthController.accessToken
 
-GET        /api/v2.0/banks                   uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.banks
+GET         /api/v2.0/banks                                                                               uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.banks
 
-POST       /api/v2.0/validate                uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.notification
+POST        /api/v2.0/validate                                                                            uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.notification
 
-POST       /api/v2.0/consents                uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.createConsent
+POST        /api/v2.0/consents                                                                            uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.createConsent
 
-GET        /api/v2.0/accounts/summary        uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.accountSummary(merchant_id: Option[String], merchant_user_id: Option[String])
+GET         /api/v2.0/accounts/summary                                                                    uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.accountSummary(merchant_id: Option[String], merchant_user_id: Option[String])
 
 # EDH
 # API#1133: Get Bank Details Risk Result v2.1.
-POST    /risking/claims/:claimId/bank-details    uk.gov.hmrc.p800refundsstubs.controllers.EdhController.getBankDetailsRiskResult(claimId: ClaimId)
+POST        /risking/claims/:claimId/bank-details                                                         uk.gov.hmrc.p800refundsstubs.controllers.EdhController.getBankDetailsRiskResult(claimId: ClaimId)
 
 # Case Management
 # API#1132: Notify Risking Exception
-POST    /risking/exceptions/:clientUId           uk.gov.hmrc.p800refundsstubs.controllers.CaseManagementController.notifyCaseManagement(clientUId: String)
+POST        /risking/exceptions/:clientUId                                                                uk.gov.hmrc.p800refundsstubs.controllers.CaseManagementController.notifyCaseManagement(clientUId: String)

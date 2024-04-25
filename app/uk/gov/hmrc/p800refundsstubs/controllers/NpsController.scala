@@ -111,8 +111,8 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
   /**
    * NPS Interface to Suspend Overpayment. It's used in a Bank Transfer journey.
    */
-  def suspendOverpayment(identifier: Nino, paymentNumber: P800Reference): Action[SuspendOverpaymentRequest] =
-    actions.npsActionValidated(identifier, paymentNumber)(parse.json[SuspendOverpaymentRequest]) { _ =>
+  def suspendOverpayment(identifier: Nino): Action[SuspendOverpaymentRequest] =
+    actions.npsActionValidated(identifier)(parse.json[SuspendOverpaymentRequest]) { _ =>
       Scenarios.selectScenarioForSuspendOverpayment(identifier) match {
         case Scenarios.SuspendOverpayment.HappyPath =>
           Ok(Json.toJson(SuspendOverpaymentResponse(
@@ -127,27 +127,27 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
   /**
    * NPS Interface to claim overpayment. It's used in a Bank Transfer journey.
    */
-  def claimOverpayment(identifier: Nino, paymentNumber: P800Reference): Action[ClaimOverpaymentRequest] =
-    actions.npsActionValidated(identifier, paymentNumber)(parse.json[ClaimOverpaymentRequest]) { implicit request =>
-      Scenarios.selectScenarioForClaimOverpayment(identifier) match {
-        case Scenarios.ClaimOverpayment.HappyPath =>
-          Ok(Json.toJson(ClaimOverpaymentResponse(
+  def makeBacsRepayment(identifier: Nino): Action[MakeBacsRepaymentRequest] =
+    actions.npsActionValidated(identifier)(parse.json[MakeBacsRepaymentRequest]) { implicit request =>
+      Scenarios.selectScenarioForMakeBacsRepayment(identifier) match {
+        case Scenarios.MakeBacsRepayment.HappyPath =>
+          Ok(Json.toJson(MakeBacsRepaymentResponse(
             identifier            = identifier,
             currentOptimisticLock = request.body.currentOptimisticLock
           )))
-        case Scenarios.ClaimOverpayment.BadRequest =>
+        case Scenarios.MakeBacsRepayment.BadRequest =>
           BadRequest(Json.toJson(Failures.badRequestAsPerScenario))
-        case Scenarios.ClaimOverpayment.Forbidden =>
+        case Scenarios.MakeBacsRepayment.Forbidden =>
           Forbidden(Json.toJson(Failures.forbiddenAsPerScenario))
-        case Scenarios.ClaimOverpayment.RefundAlreadyTaken =>
+        case Scenarios.MakeBacsRepayment.RefundAlreadyTaken =>
           UnprocessableEntity(Json.toJson(Failures(
             Failure.overpaymentAlreadyClaimed
           )))
-        case Scenarios.ClaimOverpayment.Suspended =>
+        case Scenarios.MakeBacsRepayment.Suspended =>
           UnprocessableEntity(Json.toJson(Failures(
             Failure.overpaymentSuspended
           )))
-        case Scenarios.ClaimOverpayment.InternalServerError =>
+        case Scenarios.MakeBacsRepayment.InternalServerError =>
           InternalServerError("Internal Server Error as per scenario")
       }
     }

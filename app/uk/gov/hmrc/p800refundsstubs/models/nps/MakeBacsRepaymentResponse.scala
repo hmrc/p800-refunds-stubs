@@ -19,12 +19,12 @@ package uk.gov.hmrc.p800refundsstubs.models.nps
 import play.api.libs.json.{OFormat, Json}
 import uk.gov.hmrc.p800refundsstubs.models.Nino
 
-final case class ClaimOverpaymentResponse(
+final case class MakeBacsRepaymentResponse(
     identifier:            Nino,
     currentOptimisticLock: CurrentOptimisticLock
 )
 
 @SuppressWarnings(Array("org.wartremover.warts.Any"))
-object ClaimOverpaymentResponse {
-  implicit val format: OFormat[ClaimOverpaymentResponse] = Json.format[ClaimOverpaymentResponse]
+object MakeBacsRepaymentResponse {
+  implicit val format: OFormat[MakeBacsRepaymentResponse] = Json.format[MakeBacsRepaymentResponse]
 }
