@@ -22,9 +22,9 @@ import uk.gov.hmrc.p800refundsstubs.models.Nino
 final case class TraceIndividualResponse(
     identifier:      Nino,
     title:           Option[String] = None,
-    firstForename:   Option[String] = Some("Bob"),
-    secondForename:  Option[String] = None,
-    surname:         String         = "Ross",
+    firstForename:   Option[String] = Some("Greg"),
+    secondForename:  Option[String] = Some("G"),
+    surname:         String         = "Greggson",
     sex:             Option[String] = None,
     dateOfBirth:     String         = "1978-01-02",
     addressType:     Option[String] = Some("RESIDENTIAL"),

@@ -41,6 +41,8 @@ object Scenarios {
     case s if "..7......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.BadRequest)
     case s if "..8......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.InternalServerError)
     case s if "..9......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.HappyPath)
+    case s if "FN0......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.NameMatchingFailure)
+
     // format: ON
   }
 
@@ -153,6 +155,8 @@ object Scenarios {
     case object BadRequest extends TraceIndividualScenario
 
     case object InternalServerError extends TraceIndividualScenario
+
+    case object NameMatchingFailure extends TraceIndividualScenario
 
     case object HappyPath extends TraceIndividualScenario
   }

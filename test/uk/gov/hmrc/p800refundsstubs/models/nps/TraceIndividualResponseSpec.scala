@@ -32,8 +32,9 @@ class TraceIndividualResponseSpec extends UnitSpec {
       //language=JSON
       """{
         "identifier" : "AB999999C",
-        "firstForename" : "Bob",
-        "surname" : "Ross",
+        "firstForename" : "Greg",
+        "secondForename" : "G",
+        "surname" : "Greggson",
         "dateOfBirth" : "1978-01-02",
         "addressType" : "RESIDENTIAL",
         "addressLine1" : "Flat 1 Rose House",
