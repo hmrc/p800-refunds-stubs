@@ -80,6 +80,10 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
         case Scenarios.TraceIndividual.BadRequest => BadRequest(Json.toJson(Failures.badRequestAsPerScenario))
         case Scenarios.TraceIndividual.InternalServerError =>
           InternalServerError("Internal Server Error as per scenario")
+        case Scenarios.TraceIndividual.NameMatchingFailure =>
+          Ok(Json.toJson(List(TraceIndividualResponse(
+            identifier     = identifier, firstForename = Some("error"), secondForename = Some("error"), surname = "error"
+          ))))
         case Scenarios.TraceIndividual.HappyPath =>
           Ok(Json.toJson(List(TraceIndividualResponse(
             identifier = identifier
