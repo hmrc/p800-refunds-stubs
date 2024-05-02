@@ -17,27 +17,11 @@
 package uk.gov.hmrc.p800refundsstubs.models.nps
 
 import play.api.libs.json.{Json, OFormat}
-import uk.gov.hmrc.p800refundsstubs.models.Nino
 
 final case class TraceIndividualResponse(
-    identifier:      Nino,
-    title:           Option[String] = None,
-    firstForename:   Option[String] = Some("Greg"),
-    secondForename:  Option[String] = Some("G"),
-    surname:         String         = "Greggson",
-    sex:             Option[String] = None,
-    dateOfBirth:     String         = "1978-01-02",
-    addressType:     Option[String] = Some("RESIDENTIAL"),
-    addressLine1:    String         = "Flat 1 Rose House",
-    addressLine2:    String         = "Worthing",
-    locality:        Option[String] = None,
-    postalTown:      Option[String] = None,
-    county:          Option[String] = None,
-    addressPostcode: String         = "BN12 4XL",
-    country:         Option[String] = Some("ENGLAND")
+    traceIndividualResponse: List[TracedIndividual]
 )
 
 object TraceIndividualResponse {
-  @SuppressWarnings(Array("org.wartremover.warts.Any"))
-  implicit val format: OFormat[TraceIndividualResponse] = Json.format[TraceIndividualResponse]
+  implicit val formats: OFormat[TraceIndividualResponse] = Json.format[TraceIndividualResponse]
 }
