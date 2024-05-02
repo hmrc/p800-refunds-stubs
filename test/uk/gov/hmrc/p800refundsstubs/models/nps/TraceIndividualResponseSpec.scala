@@ -24,24 +24,26 @@ class TraceIndividualResponseSpec extends UnitSpec {
 
   "serialize" in {
 
-    val t = TraceIndividualResponse(
+    val t = TraceIndividualResponse(List(TracedIndividual(
       identifier = Nino("AB999999C")
-    )
+    )))
 
     Json.toJson(t) shouldBe Json.parse(
       //language=JSON
       """{
-        "identifier" : "AB999999C",
-        "firstForename" : "Greg",
-        "secondForename" : "G",
-        "surname" : "Greggson",
-        "dateOfBirth" : "1978-01-02",
-        "addressType" : "RESIDENTIAL",
-        "addressLine1" : "Flat 1 Rose House",
-        "addressLine2" : "Worthing",
-        "addressPostcode" : "BN12 4XL",
-        "country" : "ENGLAND"
-      }"""
+        |  "traceIndividualResponse" : [{
+        |    "identifier" : "AB999999C",
+        |    "firstForename" : "Greg",
+        |    "secondForename" : "G",
+        |    "surname" : "Greggson",
+        |    "dateOfBirth" : "1978-01-02",
+        |    "addressType" : "RESIDENTIAL",
+        |    "addressLine1" : "Flat 1 Rose House",
+        |    "addressLine2" : "Worthing",
+        |    "addressPostcode" : "BN12 4XL",
+        |    "country" : "ENGLAND"
+        |  }]
+        |}""".stripMargin
     )
   }
 

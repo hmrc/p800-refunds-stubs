@@ -81,13 +81,13 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
         case Scenarios.TraceIndividual.InternalServerError =>
           InternalServerError("Internal Server Error as per scenario")
         case Scenarios.TraceIndividual.NameMatchingFailure =>
-          Ok(Json.toJson(List(TraceIndividualResponse(
+          Ok(Json.toJson(TraceIndividualResponse(List(TracedIndividual(
             identifier     = identifier, firstForename = Some("error"), secondForename = Some("error"), surname = "error"
-          ))))
+          )))))
         case Scenarios.TraceIndividual.HappyPath =>
-          Ok(Json.toJson(List(TraceIndividualResponse(
+          Ok(Json.toJson(TraceIndividualResponse(List(TracedIndividual(
             identifier = identifier
-          ))))
+          )))))
       }
     }
   }
