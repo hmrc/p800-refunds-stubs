@@ -31,6 +31,7 @@ object Scenarios {
    */
   def selectScenario(nino: Nino): (P800ReferenceCheckScenario, TraceIndividualScenario) = nino.value match {
     // format: OFF
+    case s if "NN99.....".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.NameMatchingFailure)
     case s if "..0......".r.matches(s) => (CheckReference.NinoAndP800RefNotMatched, TraceIndividual.HappyPath)
     case s if "..1......".r.matches(s) => (CheckReference.RefundAlreadyTaken,       TraceIndividual.HappyPath)
     case s if "..2......".r.matches(s) => (CheckReference.UnprocessedEntity,        TraceIndividual.HappyPath)
@@ -41,7 +42,6 @@ object Scenarios {
     case s if "..7......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.BadRequest)
     case s if "..8......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.InternalServerError)
     case s if "..9......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.HappyPath)
-    case s if "FN0......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.NameMatchingFailure)
 
     // format: ON
   }
