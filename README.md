@@ -26,6 +26,7 @@ The microservice responds with configured response depending on the incoming req
 | Nino       | Check Reference API (1)            | Trace Individual API (1)  |
 |------------|------------------------------------|---------------------------|
 | `AB999999C`| 200 - Happy Path                   | 200 - Happy Path          |
+| `NN999999C`| 200 - Happy Path                   | 200 - Name Match Failure  |
 | `AB099999C`| 404 - NINO & Reference don't match | N/A                       |
 | `AB199999C`| 422 - Refund already taken         | N/A                       |           
 | `AB299999C`| 422 - Unprocessable Entity         | N/A                       |    
