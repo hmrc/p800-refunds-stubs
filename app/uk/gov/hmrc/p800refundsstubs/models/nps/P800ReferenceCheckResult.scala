@@ -20,10 +20,10 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.p800refundsstubs.models.P800Reference
 
 final case class P800ReferenceCheckResult(
-    reconciliationIdentifier: ReconciliationIdentifier,
+    reconciliationIdentifier: Option[ReconciliationIdentifier],
     paymentNumber:            P800Reference,
-    payeNumber:               PayeNumber,
-    taxDistrictNumber:        TaxDistrictNumber,
+    payeNumber:               Option[PayeNumber],
+    taxDistrictNumber:        Option[TaxDistrictNumber],
     paymentAmount:            BigDecimal,
     associatedPayableNumber:  AssociatedPayableNumber,
     customerAccountNumber:    CustomerAccountNumber,

@@ -22,7 +22,7 @@ import uk.gov.hmrc.p800refundsstubs.models.P800Reference
 final case class SuspendOverpaymentRequest(
     paymentNumber:            P800Reference,
     currentOptimisticLock:    CurrentOptimisticLock,
-    reconciliationIdentifier: ReconciliationIdentifier,
+    reconciliationIdentifier: Option[ReconciliationIdentifier],
     associatedPayableNumber:  AssociatedPayableNumber,
     payeeBankAccountNumber:   PayeeBankAccountNumber,
     payeeBankSortCode:        PayeeBankSortCode,
