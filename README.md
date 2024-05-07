@@ -12,6 +12,7 @@ The microservice responds with configured response depending on the incoming req
 | Nino       | Check Reference API (1)            | Payable Order API (2)      |
 |------------|------------------------------------|----------------------------|
 | `AB999999C`| 200 - Happy Path                   | 200 - Happy Path           |
+| `AB990999C`| 200 - Happy Path (OPS-12156)       | 200 - Happy Path           |
 | `AB099999C`| 404 - NINO & Reference don't match | N/A                        |          
 | `AB199999C`| 422 - Refund already taken         | N/A                        |               
 | `AB299999C`| 422 - Unprocessable Entity         | N/A                        |          
@@ -26,6 +27,7 @@ The microservice responds with configured response depending on the incoming req
 | Nino       | Check Reference API (1)            | Trace Individual API (1)  |
 |------------|------------------------------------|---------------------------|
 | `AB999999C`| 200 - Happy Path                   | 200 - Happy Path          |
+| `AB990999C`| 200 - Happy Path  (OPS-12156)      | 200 - Happy Path          |
 | `NN999999C`| 200 - Happy Path                   | 200 - Name Match Failure  |
 | `AB099999C`| 404 - NINO & Reference don't match | N/A                       |
 | `AB199999C`| 422 - Refund already taken         | N/A                       |           
@@ -39,29 +41,31 @@ The microservice responds with configured response depending on the incoming req
 
 ### Bank Transfer (Valid Account)
 
-| Nino       | Check Reference API (1) | Trace Individual API (1)  | Get Bank Risk Result API (2) | Claim Overpayment API (6) |
-|------------|------------------------ |---------------------------|------------------------------|---------------------------|
-| `AB999999C`| 200 - Happy Path        | 200 - Happy Path          | 200 - Happy Path             | 200 - Happy Path          |
-| `AB929999C`| 200 - Happy Path        | 200 - Happy Path          | 400 - BadRequest             | N/A                       |
-| `AB939999C`| 200 - Happy Path        | 200 - Happy Path          | 403 - Forbidden              | N/A                       |
-| `AB949999C`| 200 - Happy Path        | 200 - Happy Path          | 403 - Not Found              | N/A                       |
-| `AB959999C`| 200 - Happy Path        | 200 - Happy Path          | 500 - DES issues             | N/A                       |
-| `AB969999C`| 200 - Happy Path        | 200 - Happy Path          | 503 - Systems Not Responding | N/A                       |
-| `AB999991C`| 200 - Happy Path        | 200 - Happy Path          | 200 - Happy Path             | 400 - BadRequest          |
-| `AB999992C`| 200 - Happy Path        | 200 - Happy Path          | 200 - Happy Path             | 403 - Forbidden           |
-| `AB999993C`| 200 - Happy Path        | 200 - Happy Path          | 200 - Happy Path             | 500 - InternalServerError |
-| `AB999994C`| 200 - Happy Path        | 200 - Happy Path          | 200 - Happy Path             | 422 - Refund Already Taken|
-| `AB999995C`| 200 - Happy Path        | 200 - Happy Path          | 200 - Happy Path             | 422 - Suspended           |
+| Nino        | Check Reference API (1)      | Trace Individual API (1)  | Get Bank Risk Result API (2) | Claim Overpayment API (6) |
+|-------------|------------------------------|---------------------------|------------------------------|---------------------------|
+| `AB999999C` | 200 - Happy Path             | 200 - Happy Path          | 200 - Happy Path             | 200 - Happy Path          |
+| `AB990999C` | 200 - Happy Path (OPS-12156) | 200 - Happy Path          | 200 - Happy Path             | 200 - Happy Path          |
+| `AB929999C` | 200 - Happy Path             | 200 - Happy Path          | 400 - BadRequest             | N/A                       |
+| `AB939999C` | 200 - Happy Path             | 200 - Happy Path          | 403 - Forbidden              | N/A                       |
+| `AB949999C` | 200 - Happy Path             | 200 - Happy Path          | 403 - Not Found              | N/A                       |
+| `AB959999C` | 200 - Happy Path             | 200 - Happy Path          | 500 - DES issues             | N/A                       |
+| `AB969999C` | 200 - Happy Path             | 200 - Happy Path          | 503 - Systems Not Responding | N/A                       |
+| `AB999991C` | 200 - Happy Path             | 200 - Happy Path          | 200 - Happy Path             | 400 - BadRequest          |
+| `AB999992C` | 200 - Happy Path             | 200 - Happy Path          | 200 - Happy Path             | 403 - Forbidden           |
+| `AB999993C` | 200 - Happy Path             | 200 - Happy Path          | 200 - Happy Path             | 500 - InternalServerError |
+| `AB999994C` | 200 - Happy Path             | 200 - Happy Path          | 200 - Happy Path             | 422 - Refund Already Taken|
+| `AB999995C` | 200 - Happy Path             | 200 - Happy Path          | 200 - Happy Path             | 422 - Suspended           |
 
 ### Bank Transfer (Fails HMRC Fraud Check)
 
-| Nino       | Check Reference API (1) | Trace Individual API (1)  | Get Bank Risk Result API (2) | Case Management API (5)   | Suspend Overpayment API (4) | 
-|------------|------------------------ |---------------------------|------------------------------|---------------------------|-----------------------------|
-| `AB919999C`| 200 - Happy Path        | 200 - Happy Path          | 200 - Do Not Pay             | 200 - Happy Path          | 200 - Happy Path            |
-| `AB919919C`| 200 - Happy Path        | 200 - Happy Path          | 200 - Do Not Pay             | 400 - BadRequest          | N/A                         |
-| `AB919929C`| 200 - Happy Path        | 200 - Happy Path          | 200 - Do Not Pay             | 403 - Forbidden           | N/A                         |
-| `AB919939C`| 200 - Happy Path        | 200 - Happy Path          | 200 - Do Not Pay             | 500 - InternalServerError | N/A                         |
-| `AB919099C`| 200 - Happy Path        | 200 - Happy Path          | 200 - Do Not Pay             | 200 - Happy Path          | 500 - InternalServerError   |
+| Nino        | Check Reference API (1)      | Trace Individual API (1)  | Get Bank Risk Result API (2) | Case Management API (5)   | Suspend Overpayment API (4) | 
+|-------------|------------------------------|---------------------------|------------------------------|---------------------------|-----------------------------|
+| `AB919999C` | 200 - Happy Path             | 200 - Happy Path          | 200 - Do Not Pay             | 200 - Happy Path          | 200 - Happy Path            |
+| `AB910999C` | 200 - Happy Path (OPS-12156) | 200 - Happy Path          | 200 - Do Not Pay             | 200 - Happy Path          | 200 - Happy Path            |
+| `AB919919C` | 200 - Happy Path             | 200 - Happy Path          | 200 - Do Not Pay             | 400 - BadRequest          | N/A                         |
+| `AB919929C` | 200 - Happy Path             | 200 - Happy Path          | 200 - Do Not Pay             | 403 - Forbidden           | N/A                         |
+| `AB919939C` | 200 - Happy Path             | 200 - Happy Path          | 200 - Do Not Pay             | 500 - InternalServerError | N/A                         |
+| `AB919099C` | 200 - Happy Path             | 200 - Happy Path          | 200 - Do Not Pay             | 200 - Happy Path          | 500 - InternalServerError   |
 
 ## Details per API
 
@@ -77,6 +81,7 @@ For this endpoint the selection is driven via the NINO number using according to
 | `**3******`                         | BadRequest (400)                            |
 | `**4******`                         | Forbidden (403)                             |
 | `**5******`                         | InternalServerError (500)                   |
+| `***0*****`                         | Happy path (200) (OPS-12156)                |
 | `*********`                         | Happy path (200)                            |
 
 ### `POST /nps-json-service/nps/v1/api/individual/trace-individual?exactMatch=true&returnRealName=true`

@@ -51,10 +51,21 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
           InternalServerError("Internal Server Error as per scenario")
         case Scenarios.CheckReference.HappyPath =>
           Ok(Json.toJson(P800ReferenceCheckResult(
-            reconciliationIdentifier = ReconciliationIdentifier(123),
+            reconciliationIdentifier = Some(ReconciliationIdentifier(123)),
             paymentNumber            = paymentNumber,
-            payeNumber               = PayeNumber("payeNumber"),
-            taxDistrictNumber        = TaxDistrictNumber(123),
+            payeNumber               = Some(PayeNumber("payeNumber")),
+            taxDistrictNumber        = Some(TaxDistrictNumber(123)),
+            paymentAmount            = BigDecimal("4321.09"),
+            associatedPayableNumber  = AssociatedPayableNumber(123),
+            customerAccountNumber    = CustomerAccountNumber("customerAccountNumber"),
+            currentOptimisticLock    = CurrentOptimisticLock(123)
+          )))
+        case Scenarios.CheckReference.HappyPathOptionalFields =>
+          Ok(Json.toJson(P800ReferenceCheckResult(
+            reconciliationIdentifier = None,
+            paymentNumber            = paymentNumber,
+            payeNumber               = None,
+            taxDistrictNumber        = None,
             paymentAmount            = BigDecimal("4321.09"),
             associatedPayableNumber  = AssociatedPayableNumber(123),
             customerAccountNumber    = CustomerAccountNumber("customerAccountNumber"),

@@ -41,6 +41,7 @@ object Scenarios {
     case s if "..6......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.NotFound)
     case s if "..7......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.BadRequest)
     case s if "..8......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.InternalServerError)
+    case s if "..9.0....".r.matches(s) => (CheckReference.HappyPathOptionalFields,  TraceIndividual.HappyPath)
     case s if "..9......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.HappyPath)
 
     // format: ON
@@ -126,6 +127,13 @@ object Scenarios {
     case object InternalServerError extends P800ReferenceCheckScenario
 
     case object HappyPath extends P800ReferenceCheckScenario
+
+    /**
+     * Make reconciliationIdentifier, taxDistrictNumber, payeNumber optional
+     * OPS-12156
+     */
+    case object HappyPathOptionalFields extends P800ReferenceCheckScenario
+
   }
 
   object MakeBacsRepayment {
