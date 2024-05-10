@@ -45,7 +45,7 @@ The microservice responds with configured response depending on the incoming req
 | `AB990999C` | 200 - Happy Path (Optional Fields Empty) | 200 - Happy Path          | 200 - Happy Path             | 200 - Happy Path          |
 | `AB929999C` | 200 - Happy Path                         | 200 - Happy Path          | 400 - BadRequest             | N/A                       |
 | `AB939999C` | 200 - Happy Path                         | 200 - Happy Path          | 403 - Forbidden              | N/A                       |
-| `AB949999C` | 200 - Happy Path                         | 200 - Happy Path          | 403 - Not Found              | N/A                       |
+| `AB949999C` | 200 - Happy Path                         | 200 - Happy Path          | 404 - Not Found              | N/A                       |
 | `AB959999C` | 200 - Happy Path                         | 200 - Happy Path          | 500 - DES issues             | N/A                       |
 | `AB969999C` | 200 - Happy Path                         | 200 - Happy Path          | 503 - Systems Not Responding | N/A                       |
 | `AB999991C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Happy Path             | 400 - BadRequest          |
@@ -59,7 +59,7 @@ The microservice responds with configured response depending on the incoming req
 | Nino        | Check Reference API (1)                  | Trace Individual API (1)  | Get Bank Risk Result API (2) | Name-Matching | Case Management API (5)   | Suspend Overpayment API (4) | 
 |-------------|------------------------------------------|---------------------------|------------------------------|---------------|---------------------------|-----------------------------|
 | `AB919999C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Do Not Pay             | Pass          | 200 - Happy Path          | 200 - Happy Path            |
-| `NN999999C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Happy Path             | Fail          | N/A                       | 200 - Happy Path            |
+| `NN999999C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Happy Path             | Fail          | N/A                       | N/A                         |
 | `AB910999C` | 200 - Happy Path (Optional Fields Empty) | 200 - Happy Path          | 200 - Do Not Pay             | Pass          | 200 - Happy Path          | 200 - Happy Path            |
 | `AB919919C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Do Not Pay             | Pass          | 400 - BadRequest          | N/A                         |
 | `AB919929C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Do Not Pay             | Pass          | 403 - Forbidden           | N/A                         |
