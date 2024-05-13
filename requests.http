@@ -2,7 +2,7 @@ GET http://localhost:10151/nps-json-service/nps/v1/api/reconciliation/p800/AB199
 CorrelationId: "sialala"
 Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
 #Authorization: Basic sialala
-gov-uk-originator-id: DA2_MRA_DIGITAL
+OriginatorId: DA2_MRA_DIGITAL
 
 ###
 
@@ -11,7 +11,7 @@ CorrelationId: "sialala"
 Content-Type: application/json
 Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
 #Authorization: Basic sialala
-gov-uk-originator-id: DA2_MRA_DIGITAL
+OriginatorId: DA2_MRA_DIGITAL
 
 {
   "identifier": "AB523123C",
@@ -25,7 +25,7 @@ PUT http://localhost:10151/nps-json-service/nps/v1/api/accounting/issue-payable-
 CorrelationId: "sialala"
 Content-Type: application/json
 Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
-gov-uk-originator-id: DA2_MRA_DIGITAL
+OriginatorId: DA2_MRA_DIGITAL
 
 {
   "customerAccountNumber":   "CustomerAccountNumber",
@@ -39,7 +39,7 @@ PUT http://localhost:10151/nps-json-service/nps/v1/api/accounting/claim-overpaym
 CorrelationId: "sialala"
 Content-Type: application/json
 Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
-gov-uk-originator-id: DA2_MRA_DIGITAL
+OriginatorId: DA2_MRA_DIGITAL
 
 {
   "currentOptimisticLock": 86,
@@ -130,7 +130,7 @@ PUT http://localhost:10151/nps-json-service/nps/v1/api/accounting/suspend-overpa
 CorrelationId: "sialala"
 Content-Type: application/json
 Authorization: Basic dGVzdE5wc1VzZXJOYW1lOnRlc3ROcHNQYXNzd29yZA==
-gov-uk-originator-id: DA2_MRA_DIGITAL
+OriginatorId: DA2_MRA_DIGITAL
 
 {
   "currentOptimisticLock": 86,
