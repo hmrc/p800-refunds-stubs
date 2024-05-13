@@ -217,7 +217,7 @@ class Actions @Inject() (
   private lazy val ensureGovUkOriginatorId = new ActionFilter[NpsRequest] {
     override protected def filter[A](request: NpsRequest[A]): Future[Option[Result]] = Future.successful{
 
-      val `OriginatorId`: Option[String] = request.headers.headers.find(_._1 === "OriginatorId").map(_._2)
+      val `OriginatorId`: Option[String] = request.headers.headers.find(_._1.toLowerCase() === "originatorid").map(_._2)
       if (`OriginatorId`.exists(_ === "DA2_MRA_DIGITAL")) None else {
         Some(BadRequest(Json.toJson(Failures(
           failures = List(
