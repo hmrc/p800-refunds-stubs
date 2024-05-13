@@ -217,11 +217,11 @@ class Actions @Inject() (
   private lazy val ensureGovUkOriginatorId = new ActionFilter[NpsRequest] {
     override protected def filter[A](request: NpsRequest[A]): Future[Option[Result]] = Future.successful{
 
-      val `gov-uk-originator-id`: Option[String] = request.headers.headers.find(_._1.toLowerCase() === "gov-uk-originator-id").map(_._2)
-      if (`gov-uk-originator-id`.exists(_ === "DA2_MRA_DIGITAL")) None else {
+      val `OriginatorId`: Option[String] = request.headers.headers.find(_._1 === "OriginatorId").map(_._2)
+      if (`OriginatorId`.exists(_ === "DA2_MRA_DIGITAL")) None else {
         Some(BadRequest(Json.toJson(Failures(
           failures = List(
-            Failure(reason = s"Invalid or missing 'gov-uk-originator-id' ", code = "400.invalid-or-missing-gov-uk-originator-id")
+            Failure(reason = s"Invalid or missing 'OriginatorId' ", code = "400.invalid-or-missing-OriginatorId")
           )
         ))))
       }
