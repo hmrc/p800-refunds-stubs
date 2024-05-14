@@ -33,9 +33,9 @@ class TraceIndividualResponseSpec extends UnitSpec {
       """{
         |  "traceIndividualResponse" : [{
         |    "identifier" : "AB999999C",
-        |    "firstForename" : "Greg",
-        |    "secondForename" : "G",
-        |    "surname" : "Greggson",
+        |    "firstForename" : "Alice",
+        |    "secondForename" : "B",
+        |    "surname" : "Crawford",
         |    "dateOfBirth" : "1978-01-02",
         |    "addressType" : "RESIDENTIAL",
         |    "addressLine1" : "Flat 1 Rose House",
