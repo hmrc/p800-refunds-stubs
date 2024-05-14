@@ -121,14 +121,14 @@ class EcospendControllerSpec extends ItSpec {
       currency              = Currency.getInstance("GBP"),
       accountFormat         = BankAccountFormat.SortCode,
       accountIdentification = AccountIdentification("abc:123"),
-      calculatedOwnerName   = CalculatedOwnerName("Greg Greggson"),
-      accountOwnerName      = AccountOwnerName("Greg Greggson"),
-      displayName           = DisplayName("Greg G Greggson"),
+      calculatedOwnerName   = CalculatedOwnerName("Alice Crawford"),
+      accountOwnerName      = AccountOwnerName("Alice Crawford"),
+      displayName           = DisplayName("Alice B Crawford"),
       balance               = 123.7,
       lastUpdateTime        = localDateTime,
       parties               = List(BankAccountParty(
-        name          = BankPartyName("Greg Greggson"),
-        fullLegalName = BankPartyFullLegalName("Greg Greggory Greggson")
+        name          = BankPartyName("Alice Crawford"),
+        fullLegalName = BankPartyFullLegalName("Alice Crawford")
       ))
     )))
 
