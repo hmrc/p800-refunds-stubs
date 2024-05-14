@@ -50,14 +50,14 @@ class BankAccountService @Inject() (bankConsentRepo: BankConsentRepo)(implicit e
       currency              = Currency.getInstance("GBP"),
       accountFormat         = BankAccountFormat.SortCode,
       accountIdentification = AccountIdentification("22334410002333"),
-      calculatedOwnerName   = CalculatedOwnerName("Greg Greggson"),
-      accountOwnerName      = AccountOwnerName("Greg Greggson"),
-      displayName           = DisplayName("Greg G Greggson"),
+      calculatedOwnerName   = CalculatedOwnerName("Alice Crawford"),
+      accountOwnerName      = AccountOwnerName("Alice Crawford"),
+      displayName           = DisplayName("Alice B Crawford"),
       balance               = 123.7,
       lastUpdateTime        = LocalDateTime.now(),
       parties               = List(BankAccountParty(
-        name          = BankPartyName("Greg Greggson"),
-        fullLegalName = BankPartyFullLegalName("Greg Greggory Greggson")
+        name          = BankPartyName("Alice Crawford"),
+        fullLegalName = BankPartyFullLegalName("Alice Crawford")
       ))
     ))
 
