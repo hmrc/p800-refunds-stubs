@@ -41,7 +41,8 @@ object Scenarios {
     case s if "..6......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.NotFound)
     case s if "..7......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.BadRequest)
     case s if "..8......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.InternalServerError)
-    case s if "..9.0....".r.matches(s) => (CheckReference.HappyPathOptionalFields,  TraceIndividual.HappyPathOptionalFields)
+    case s if "..9.0....".r.matches(s) => (CheckReference.HappyPathOptionalFields,  TraceIndividual.HappyPath)
+    case s if "..9.1....".r.matches(s) => (CheckReference.HappyPath,  TraceIndividual.HappyPathOptionalFields)
     case s if "..9......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.HappyPath)
 
     // format: ON
