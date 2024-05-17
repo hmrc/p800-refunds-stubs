@@ -24,16 +24,16 @@ final case class TracedIndividual(
     title:           Option[String] = None,
     firstForename:   Option[String] = Some("Alice"),
     secondForename:  Option[String] = Some("B"),
-    surname:         String         = "Crawford",
+    surname:         Option[String] = Some("Crawford"),
     sex:             Option[String] = None,
     dateOfBirth:     String         = "1978-01-02",
     addressType:     Option[String] = Some("RESIDENTIAL"),
-    addressLine1:    String         = "Flat 1 Rose House",
-    addressLine2:    String         = "Worthing",
+    addressLine1:    Option[String] = Some("Flat 1 Rose House"),
+    addressLine2:    Option[String] = Some("Worthing"),
     locality:        Option[String] = None,
     postalTown:      Option[String] = None,
     county:          Option[String] = None,
-    addressPostcode: String         = "BN12 4XL",
+    addressPostcode: Option[String] = Some("BN12 4XL"),
     country:         Option[String] = Some("ENGLAND")
 )
 
