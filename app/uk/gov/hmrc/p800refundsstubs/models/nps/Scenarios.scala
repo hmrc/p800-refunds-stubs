@@ -42,6 +42,7 @@ object Scenarios {
     case s if "..7......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.BadRequest)
     case s if "..8......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.InternalServerError)
     case s if "..9.0....".r.matches(s) => (CheckReference.HappyPathOptionalFields,  TraceIndividual.HappyPath)
+    case s if "..9.1....".r.matches(s) => (CheckReference.HappyPath,  TraceIndividual.HappyPathOptionalFields)
     case s if "..9......".r.matches(s) => (CheckReference.HappyPath,                TraceIndividual.HappyPath)
 
     // format: ON
@@ -167,6 +168,9 @@ object Scenarios {
     case object NameMatchingFailure extends TraceIndividualScenario
 
     case object HappyPath extends TraceIndividualScenario
+
+    case object HappyPathOptionalFields extends TraceIndividualScenario
+
   }
 
   object IssuePayableOrder {

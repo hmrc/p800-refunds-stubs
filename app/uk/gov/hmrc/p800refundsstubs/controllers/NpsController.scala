@@ -95,6 +95,23 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
           Ok(Json.toJson(TraceIndividualResponse(List(TracedIndividual(
             identifier     = identifier, firstForename = Some("error"), secondForename = Some("error"), surname = Some("error")
           )))))
+        case Scenarios.TraceIndividual.HappyPathOptionalFields =>
+          Ok(Json.toJson(TraceIndividualResponse(List(TracedIndividual(
+            identifier      = identifier,
+            title           = None,
+            firstForename   = None,
+            secondForename  = None,
+            surname         = None,
+            sex             = None,
+            addressType     = None,
+            addressLine1    = None,
+            addressLine2    = None,
+            locality        = None,
+            postalTown      = None,
+            county          = None,
+            addressPostcode = None,
+            country         = None
+          )))))
         case Scenarios.TraceIndividual.HappyPath =>
           Ok(Json.toJson(TraceIndividualResponse(List(TracedIndividual(
             identifier = identifier
