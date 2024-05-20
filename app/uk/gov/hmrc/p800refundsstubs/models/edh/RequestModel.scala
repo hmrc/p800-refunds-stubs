@@ -135,11 +135,10 @@ final case class Person(
     address:                 Option[List[Address]]
 ) {
   def validate: Option[String] =
-    nino.validate
-      .orElse(nino.validate)
-      .orElse(surname.flatMap(_.validate))
+    surname.flatMap(_.validate)
       .orElse(firstForenameOrInitial.flatMap(_.validate))
       .orElse(secondForenameOrInitial.flatMap(_.validate))
+      .orElse(nino.validate)
       .orElse(dateOfBirth.validate)
       .orElse(title.flatMap(_.validate))
       .orElse(address.flatMap(_.collectFirst(_.validate).flatten))
