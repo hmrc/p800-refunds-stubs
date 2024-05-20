@@ -24,35 +24,38 @@ The microservice responds with configured response depending on the incoming req
 
 ### Bank Transfer (Validation checks)
 
-| Nino       | Check Reference API (1)            | Trace Individual API (1)  |
-|------------|------------------------------------|---------------------------|
-| `AB999999C`| 200 - Happy Path                   | 200 - Happy Path          |
-| `AB099999C`| 404 - NINO & Reference don't match | N/A                       |
-| `AB199999C`| 422 - Refund already taken         | N/A                       |           
-| `AB299999C`| 422 - Unprocessable Entity         | N/A                       |    
-| `AB399999C`| 400 - BadRequest                   | N/A                       | 
-| `AB499999C`| 403 - Forbidden                    | N/A                       |  
-| `AB599999C`| 500 - InternalServerError          | N/A                       |
-| `AB699999C`| 200 - Happy Path                   | 404 - Not Found           |
-| `AB799999C`| 200 - Happy Path                   | 400 - BadRequest          |
-| `AB899999C`| 200 - Happy Path                   | 400 - InternalServerError |
+| Nino       | Check Reference API (1)                  | Trace Individual API (1)                 |
+|------------|------------------------------------------|------------------------------------------|
+| `AB999999C`| 200 - Happy Path                         | 200 - Happy Path                         |
+| `AB990999C`| 200 - Happy Path (Optional Fields Empty) | 200 - Happy Path                         |
+| `AB991999C`| 200 - Happy Path                         | 200 - Happy Path (Optional Fields Empty) |
+| `AB099999C`| 404 - NINO & Reference don't match       | N/A                                      |
+| `AB199999C`| 422 - Refund already taken               | N/A                                      |           
+| `AB299999C`| 422 - Unprocessable Entity               | N/A                                      |    
+| `AB399999C`| 400 - BadRequest                         | N/A                                      | 
+| `AB499999C`| 403 - Forbidden                          | N/A                                      |  
+| `AB599999C`| 500 - InternalServerError                | N/A                                      |
+| `AB699999C`| 200 - Happy Path                         | 404 - Not Found                          |
+| `AB799999C`| 200 - Happy Path                         | 400 - BadRequest                         |
+| `AB899999C`| 200 - Happy Path                         | 500 - InternalServerError                |
 
 ### Bank Transfer (Valid Account)
 
-| Nino        | Check Reference API (1)                  | Trace Individual API (1)  | Get Bank Risk Result API (2) | Claim Overpayment API (6) |
-|-------------|------------------------------------------|---------------------------|------------------------------|---------------------------|
-| `AB999999C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Happy Path             | 200 - Happy Path          |
-| `AB990999C` | 200 - Happy Path (Optional Fields Empty) | 200 - Happy Path          | 200 - Happy Path             | 200 - Happy Path          |
-| `AB929999C` | 200 - Happy Path                         | 200 - Happy Path          | 400 - BadRequest             | N/A                       |
-| `AB939999C` | 200 - Happy Path                         | 200 - Happy Path          | 403 - Forbidden              | N/A                       |
-| `AB949999C` | 200 - Happy Path                         | 200 - Happy Path          | 404 - Not Found              | N/A                       |
-| `AB959999C` | 200 - Happy Path                         | 200 - Happy Path          | 500 - DES issues             | N/A                       |
-| `AB969999C` | 200 - Happy Path                         | 200 - Happy Path          | 503 - Systems Not Responding | N/A                       |
-| `AB999991C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Happy Path             | 400 - BadRequest          |
-| `AB999992C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Happy Path             | 403 - Forbidden           |
-| `AB999993C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Happy Path             | 500 - InternalServerError |
-| `AB999994C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Happy Path             | 422 - Refund Already Taken|
-| `AB999995C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Happy Path             | 422 - Suspended           |
+| Nino        | Check Reference API (1)                  | Trace Individual API (1)                 | Get Bank Risk Result API (2) | Claim Overpayment API (6) |
+|-------------|------------------------------------------|------------------------------------------|------------------------------|---------------------------|
+| `AB999999C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | 200 - Happy Path          |
+| `AB990999C` | 200 - Happy Path (Optional Fields Empty) | 200 - Happy Path                         | 200 - Happy Path             | 200 - Happy Path          |
+| `AB991999C` | 200 - Happy Path                         | 200 - Happy Path (Optional Fields Empty) | 400 - BadRequest             | N/A                       |
+| `AB929999C` | 200 - Happy Path                         | 200 - Happy Path                         | 400 - BadRequest             | N/A                       |
+| `AB939999C` | 200 - Happy Path                         | 200 - Happy Path                         | 403 - Forbidden              | N/A                       |
+| `AB949999C` | 200 - Happy Path                         | 200 - Happy Path                         | 404 - Not Found              | N/A                       |
+| `AB959999C` | 200 - Happy Path                         | 200 - Happy Path                         | 500 - DES issues             | N/A                       |
+| `AB969999C` | 200 - Happy Path                         | 200 - Happy Path                         | 503 - Systems Not Responding | N/A                       |
+| `AB999991C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | 400 - BadRequest          |
+| `AB999992C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | 403 - Forbidden           |
+| `AB999993C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | 500 - InternalServerError |
+| `AB999994C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | 422 - Refund Already Taken|
+| `AB999995C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | 422 - Suspended           |
 
 ### Bank Transfer (Fails Security Checks)
 
@@ -87,12 +90,13 @@ For this endpoint the selection is driven via the NINO number using according to
 
 For this endpoint the selection is driven via the NINO number using according to below table.
 
-| Nino pattern for CheckReference API | Scenario                  |
-|-------------------------------------|---------------------------|
-| `**6******`                         | NotFound (404)            |
-| `**7******`                         | BadRequest (400)          |
-| `**8******`                         | InternalServerError (500) |
-| `**9******`                         | Happy Path (200)          |
+| Nino pattern for CheckReference API | Scenario                                 |
+|-------------------------------------|------------------------------------------|
+| `**6******`                         | NotFound (404)                           |
+| `**7******`                         | BadRequest (400)                         |
+| `**8******`                         | InternalServerError (500)                |
+| `**9******`                         | Happy Path (200)                         |
+| `****1****`                         | Happy Path (200) (Optional fields empty) |
 
 ### `PUT /nps-json-service/nps/v1/api/accounting/issue-payable-order/:identifier/:paymentNumber`
 
