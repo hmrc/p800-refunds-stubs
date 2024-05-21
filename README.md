@@ -99,33 +99,33 @@ The microservice responds with configured response depending on the incoming req
 
 ### Bank Transfer (Valid Account)
 
-| Nino        | Check Reference API (1)                  | Trace Individual API (1)                 | Get Bank Risk Result API (2) | Claim Overpayment API (6) |
-|-------------|------------------------------------------|------------------------------------------|------------------------------|---------------------------|
-| `AB999999C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | 200 - Happy Path          |
-| `AB990999C` | 200 - Happy Path (Optional Fields Empty) | 200 - Happy Path                         | 200 - Happy Path             | 200 - Happy Path          |
-| `AB991999C` | 200 - Happy Path                         | 200 - Happy Path (Optional Fields Empty) | 400 - BadRequest             | N/A                       |
-| `AB929999C` | 200 - Happy Path                         | 200 - Happy Path                         | 400 - BadRequest             | N/A                       |
-| `AB939999C` | 200 - Happy Path                         | 200 - Happy Path                         | 403 - Forbidden              | N/A                       |
-| `AB949999C` | 200 - Happy Path                         | 200 - Happy Path                         | 404 - Not Found              | N/A                       |
-| `AB959999C` | 200 - Happy Path                         | 200 - Happy Path                         | 500 - DES issues             | N/A                       |
-| `AB969999C` | 200 - Happy Path                         | 200 - Happy Path                         | 503 - Systems Not Responding | N/A                       |
-| `AB999991C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | 400 - BadRequest          |
-| `AB999992C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | 403 - Forbidden           |
-| `AB999993C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | 500 - InternalServerError |
-| `AB999994C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | 422 - Refund Already Taken|
-| `AB999995C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | 422 - Suspended           |
+| Nino        | Check Reference API (1)                  | Trace Individual API (1) | Get Bank Risk Result API (2) | Claim Overpayment API (6) |
+|-------------|------------------------------------------|--------------------------|------------------------------|---------------------------|
+| `AB999999C` | 200 - Happy Path                         | 200 - Happy Path         | 200 - Happy Path             | 200 - Happy Path          |
+| `AB990999C` | 200 - Happy Path (Optional Fields Empty) | 200 - Happy Path         | 200 - Happy Path             | 200 - Happy Path          |
+| `AB929999C` | 200 - Happy Path                         | 200 - Happy Path         | 400 - BadRequest             | N/A                       |
+| `AB939999C` | 200 - Happy Path                         | 200 - Happy Path         | 403 - Forbidden              | N/A                       |
+| `AB949999C` | 200 - Happy Path                         | 200 - Happy Path         | 404 - Not Found              | N/A                       |
+| `AB959999C` | 200 - Happy Path                         | 200 - Happy Path         | 500 - DES issues             | N/A                       |
+| `AB969999C` | 200 - Happy Path                         | 200 - Happy Path         | 503 - Systems Not Responding | N/A                       |
+| `AB999991C` | 200 - Happy Path                         | 200 - Happy Path         | 200 - Happy Path             | 400 - BadRequest          |
+| `AB999992C` | 200 - Happy Path                         | 200 - Happy Path         | 200 - Happy Path             | 403 - Forbidden           |
+| `AB999993C` | 200 - Happy Path                         | 200 - Happy Path         | 200 - Happy Path             | 500 - InternalServerError |
+| `AB999994C` | 200 - Happy Path                         | 200 - Happy Path         | 200 - Happy Path             | 422 - Refund Already Taken|
+| `AB999995C` | 200 - Happy Path                         | 200 - Happy Path         | 200 - Happy Path             | 422 - Suspended           |
 
 ### Bank Transfer (Fails Security Checks)
 
-| Nino        | Check Reference API (1)                  | Trace Individual API (1)  | Get Bank Risk Result API (2) | Name-Matching | Case Management API (5)   | Suspend Overpayment API (4) |
-|-------------|------------------------------------------|---------------------------|------------------------------|---------------|---------------------------|-----------------------------|
-| `AB919999C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Do Not Pay             | Pass          | 200 - Happy Path          | 200 - Happy Path            |
-| `NN999999C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Happy Path             | Fail          | N/A                       | N/A                         |
-| `AB910999C` | 200 - Happy Path (Optional Fields Empty) | 200 - Happy Path          | 200 - Do Not Pay             | Pass          | 200 - Happy Path          | 200 - Happy Path            |
-| `AB919919C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Do Not Pay             | Pass          | 400 - BadRequest          | N/A                         |
-| `AB919929C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Do Not Pay             | Pass          | 403 - Forbidden           | N/A                         |
-| `AB919939C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Do Not Pay             | Pass          | 500 - InternalServerError | N/A                         |
-| `AB919099C` | 200 - Happy Path                         | 200 - Happy Path          | 200 - Do Not Pay             | Pass          | 200 - Happy Path          | 500 - InternalServerError   |
+| Nino        | Check Reference API (1)                  | Trace Individual API (1)                 | Get Bank Risk Result API (2) | Name-Matching | Case Management API (5)   | Suspend Overpayment API (4) | 
+|-------------|------------------------------------------|------------------------------------------|------------------------------|---------------|---------------------------|-----------------------------|
+| `AB919999C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Do Not Pay             | Pass          | 200 - Happy Path          | 200 - Happy Path            |
+| `NN999999C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | Fail          | N/A                       | N/A                         |
+| `AB910999C` | 200 - Happy Path (Optional Fields Empty) | 200 - Happy Path                         | 200 - Do Not Pay             | Pass          | 200 - Happy Path          | 200 - Happy Path            |
+| `AB991999C` | 200 - Happy Path                         | 200 - Happy Path (Optional Fields Empty) | 200 - Pay                    | Fail          | N/A                       | N/A                         |
+| `AB919919C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Do Not Pay             | Pass          | 400 - BadRequest          | N/A                         |
+| `AB919929C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Do Not Pay             | Pass          | 403 - Forbidden           | N/A                         |
+| `AB919939C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Do Not Pay             | Pass          | 500 - InternalServerError | N/A                         |
+| `AB919099C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Do Not Pay             | Pass          | 200 - Happy Path          | 500 - InternalServerError   |
 
 ## Details per API
 
