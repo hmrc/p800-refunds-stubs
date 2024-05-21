@@ -18,8 +18,6 @@ POST        /connect/token                                                      
 
 GET         /api/v2.0/banks                                                                               uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.banks
 
-# POST        /api/v2.0/validate                                                                            uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.notification
-
 POST        /api/v2.0/consents                                                                            uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.createConsent
 
 GET         /api/v2.0/accounts/summary                                                                    uk.gov.hmrc.p800refundsstubs.controllers.EcospendController.accountSummary(merchant_id: Option[String], merchant_user_id: Option[String])
