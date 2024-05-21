@@ -53,11 +53,11 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
           Ok(Json.toJson(P800ReferenceCheckResult(
             reconciliationIdentifier = Some(ReconciliationIdentifier(123)),
             paymentNumber            = paymentNumber,
-            payeNumber               = Some(PayeNumber("payeNumber")),
+            payeNumber               = Some(PayeNumber("123PH123456")),
             taxDistrictNumber        = Some(TaxDistrictNumber(123)),
             paymentAmount            = BigDecimal("4321.09"),
             associatedPayableNumber  = AssociatedPayableNumber(123),
-            customerAccountNumber    = CustomerAccountNumber("customerAccountNumber"),
+            customerAccountNumber    = CustomerAccountNumber("7654321"),
             currentOptimisticLock    = CurrentOptimisticLock(123)
           )))
         case Scenarios.CheckReference.HappyPathOptionalFields =>
@@ -68,7 +68,7 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
             taxDistrictNumber        = None,
             paymentAmount            = BigDecimal("4321.09"),
             associatedPayableNumber  = AssociatedPayableNumber(123),
-            customerAccountNumber    = CustomerAccountNumber("customerAccountNumber"),
+            customerAccountNumber    = CustomerAccountNumber("7654321"),
             currentOptimisticLock    = CurrentOptimisticLock(123)
           )))
       }
