@@ -24,7 +24,6 @@ import play.api.test.{DefaultTestServerFactory, RunningServer}
 import play.api.{Application, Mode}
 import play.core.server.ServerConfig
 import testsupport.wiremock.WireMockSupport
-import uk.gov.hmrc.p800refundsstubs.repo.BankVerificationRepo
 
 import scala.concurrent.ExecutionContext
 
@@ -46,18 +45,6 @@ trait ItSpec extends AnyFreeSpecLike
     "auditing.enabled" -> false,
     "auditing.traceRequests" -> false
   )
-
-  lazy val bankVerificationRepo: BankVerificationRepo = app.injector.instanceOf[BankVerificationRepo]
-
-  override def beforeEach(): Unit = {
-    super.beforeEach()
-    bankVerificationRepo.collection.drop().toFuture().map(_ => ()).futureValue
-  }
-
-  override def afterEach(): Unit = {
-    super.afterEach()
-    bankVerificationRepo.collection.drop().toFuture().map(_ => ()).futureValue
-  }
 
   override def fakeApplication(): Application = new GuiceApplicationBuilder()
     .configure(configMap).build()

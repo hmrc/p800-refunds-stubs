@@ -21,9 +21,8 @@ import play.api.libs.json.Json
 import play.api.mvc._
 import uk.gov.hmrc.p800refundsstubs.EcospendData
 import uk.gov.hmrc.p800refundsstubs.models.bankconsent.{BankConsentRequest, BankConsentResponse}
-import uk.gov.hmrc.p800refundsstubs.models.bankverification.{BankVerification, BankVerificationRequest}
 import uk.gov.hmrc.p800refundsstubs.models.{BankAccountSummaryResponse}
-import uk.gov.hmrc.p800refundsstubs.services.{BankVerificationService, BankConsentService, BankAccountService}
+import uk.gov.hmrc.p800refundsstubs.services.{BankConsentService, BankAccountService}
 import uk.gov.hmrc.p800refundsstubs.util.SafeEquals.EqualsOps
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -34,10 +33,9 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton()
 class EcospendController @Inject() (
-    cc:                      ControllerComponents,
-    bankVerificationService: BankVerificationService,
-    bankConsentService:      BankConsentService,
-    bankAccountService:      BankAccountService
+    cc:                 ControllerComponents,
+    bankConsentService: BankConsentService,
+    bankAccountService: BankAccountService
 )(implicit executionContext: ExecutionContext) extends BackendController(cc) {
 
   val logger: Logger = Logger(this.getClass)
@@ -60,17 +58,6 @@ class EcospendController @Inject() (
       case None =>
         logger.info(s"*** ECOSPEND STUB AUTH - stubbed auth check failed, no access token present in header ***")
         Future.successful(Unauthorized(Json.toJson(EcospendData.missingAccessTokenCheckResponse)))
-    }
-  }
-
-  val notification: Action[BankVerificationRequest] = Action.async(parse.json[BankVerificationRequest]) { implicit request =>
-    val bankVerificationRequest = request.body
-    performAccessTokenHeaderCheck {
-      bankVerificationService
-        .findData(bankVerificationRequest)
-        .foldF[Result](bankVerificationService.insertData(bankVerificationRequest).map(_ => PaymentRequired)){
-          bankVerificationResult: BankVerification => Future.successful(Ok(Json.toJson(bankVerificationResult)))
-        }
     }
   }
 
