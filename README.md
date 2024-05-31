@@ -116,7 +116,7 @@ The microservice responds with configured response depending on the incoming req
 
 ### Bank Transfer (Fails Security Checks)
 
-| Nino        | Check Reference API (1)                  | Trace Individual API (1)                 | Get Bank Risk Result API (2) | Name-Matching | Case Management API (5)   | Suspend Overpayment API (4) | 
+| Nino        | Check Reference API (1)                  | Trace Individual API (1)                 | Get Bank Risk Result API (2) | Name-Matching | Case Management API (5)   | Suspend Overpayment API (4) |
 |-------------|------------------------------------------|------------------------------------------|------------------------------|---------------|---------------------------|-----------------------------|
 | `AB919999C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Do Not Pay             | Pass          | 200 - Happy Path          | 200 - Happy Path            |
 | `NN999999C` | 200 - Happy Path                         | 200 - Happy Path                         | 200 - Happy Path             | Fail          | N/A                       | N/A                         |
@@ -217,6 +217,22 @@ the below table.
 |-----------------------------------------|---------------------------|
 | `*****0***`                             | InternalServerError (500) |
 | `*********`                             | Happy Path (200)          |
+
+## Ecospend
+
+### Account Summary
+
+| Bank Display Name                                                | Bank ID                                           | Scenario                                                    |
+|------------------------------------------------------------------|---------------------------------------------------|-------------------------------------------------------------|
+| Test \| Account Summary \| BankID set to None                    | test-account-summary-bank-id-none                 | 'bank_id' field is set to None                              |
+| Test \| Account Summary \| Account Identification set to None    | test-account-summary-account-identification-none  | 'account_identification' field is set to None               |
+| Test \| Account Summary \| Calculated owner name set to None     | test-account-summary-calculated-owner-name-none   | 'calculated_owner_name' field is set to None                |
+| Test \| Account Summary \| Display name set to None              | test-account-summary-display-name-none            | 'display_name' field is set to None                         |
+| Test \| Account Summary \| Parties set to None                   | test-account-summary-parties-none                 | 'parties' field is set to None                              |
+| Test \| Account Summary \| Parties name set to None              | test-account-summary-parties-name-none            | 'parties.name' fields is set to None                        |
+| Test \| Account Summary \| Parties 'full legal name' set to None | test-account-summary-parties-full-legal-name-none | 'parties.full_legal_name' is set to None                    |
+| Test \| Account Summary \| Parties all names set to None         | test-account-summary-parties-all-none             | 'parties.name' and 'parties.full_legal_name' is set to None |
+| Test \| Account Summary \| All optional fields set to None       | test-account-summary-all-none                     | All above fields are set to None                            |
 
 ### License
 
