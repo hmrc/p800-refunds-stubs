@@ -18,7 +18,6 @@ package uk.gov.hmrc.p800refundsstubs.models
 
 import enumeratum._
 import play.api.libs.json._
-import uk.gov.hmrc.p800refundsstubs.util.SafeEquals.EqualsOps
 import uk.gov.hmrc.p800refundsstubs.util.CurrencyFormat
 
 import java.util.{UUID, Currency}
@@ -32,49 +31,36 @@ object BankAccountSummaryResponse {
 
 final case class BankAccountSummary(
     id:                    UUID,
-    bankId:                String,
+    bankId:                Option[String],
     merchantId:            Option[String],
     merchantUserId:        Option[String],
-    ttype:                 BankAccountType,
+    `type`:                BankAccountType,
     subType:               BankAccountSubType,
     currency:              Currency,
     accountFormat:         BankAccountFormat,
-    accountIdentification: AccountIdentification,
-    calculatedOwnerName:   CalculatedOwnerName,
+    accountIdentification: Option[AccountIdentification],
+    calculatedOwnerName:   Option[CalculatedOwnerName],
     accountOwnerName:      AccountOwnerName,
-    displayName:           DisplayName,
+    displayName:           Option[DisplayName],
     balance:               Double,
     lastUpdateTime:        LocalDateTime,
-    parties:               List[BankAccountParty]
+    parties:               Option[List[BankAccountParty]]
 )
 
 @SuppressWarnings(Array("org.wartremover.warts.Any"))
 object BankAccountSummary {
   implicit val currencyFormat: Format[Currency] = CurrencyFormat.format
 
-  // Converts the name "ttype" to the string "type" for JSON without needing to do custom Reads, Writes & Format
-  // As "type" is a keyword we are unable to use it in the case class directly.
-  object SnakeCaseCustom extends JsonNaming {
-    override def apply(property: String): String = {
-      if (property === "ttype")
-        "type"
-      else
-        JsonNaming.SnakeCase.apply(property)
-    }
-
-    override val toString = "SnakeCaseCustom"
-  }
-
   implicit val format: OFormat[BankAccountSummary] = {
-    implicit val config: JsonConfiguration = JsonConfiguration(BankAccountSummary.SnakeCaseCustom)
+    implicit val config: JsonConfiguration = JsonConfiguration(JsonNaming.SnakeCase)
 
     Json.format[BankAccountSummary]
   }
 }
 
 final case class BankAccountParty(
-    name:          BankPartyName,
-    fullLegalName: BankPartyFullLegalName
+    name:          Option[BankPartyName],
+    fullLegalName: Option[BankPartyFullLegalName]
 )
 
 @SuppressWarnings(Array("org.wartremover.warts.Any"))

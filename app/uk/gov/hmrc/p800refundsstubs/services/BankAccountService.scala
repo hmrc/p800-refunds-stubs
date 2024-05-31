@@ -42,23 +42,23 @@ class BankAccountService @Inject() (bankConsentRepo: BankConsentRepo)(implicit e
   private def fromBankConsent(bankConsent: BankConsent): List[BankAccountSummary] =
     List(BankAccountSummary(
       id                    = UUID.fromString(bankConsent.id),
-      bankId                = bankConsent.bankId,
+      bankId                = Some(bankConsent.bankId),
       merchantId            = None,
       merchantUserId        = None,
-      ttype                 = BankAccountType.Personal,
+      `type`                = BankAccountType.Personal,
       subType               = BankAccountSubType.CurrentAccount,
       currency              = Currency.getInstance("GBP"),
       accountFormat         = BankAccountFormat.SortCode,
-      accountIdentification = AccountIdentification("22334410002333"),
-      calculatedOwnerName   = CalculatedOwnerName("Alice Crawford"),
+      accountIdentification = Some(AccountIdentification("22334410002333")),
+      calculatedOwnerName   = Some(CalculatedOwnerName("Alice Crawford")),
       accountOwnerName      = AccountOwnerName("Alice Crawford"),
-      displayName           = DisplayName("Alice B Crawford"),
+      displayName           = Some(DisplayName("Alice B Crawford")),
       balance               = 123.7,
       lastUpdateTime        = LocalDateTime.now(),
-      parties               = List(BankAccountParty(
-        name          = BankPartyName("Alice Crawford"),
-        fullLegalName = BankPartyFullLegalName("Alice Crawford")
-      ))
+      parties               = Some(List(BankAccountParty(
+        name          = Some(BankPartyName("Alice Crawford")),
+        fullLegalName = Some(BankPartyFullLegalName("Alice Crawford"))
+      )))
     ))
 
 }

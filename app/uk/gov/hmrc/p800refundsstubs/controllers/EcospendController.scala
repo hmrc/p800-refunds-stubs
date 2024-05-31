@@ -21,7 +21,7 @@ import play.api.libs.json.Json
 import play.api.mvc._
 import uk.gov.hmrc.p800refundsstubs.EcospendData
 import uk.gov.hmrc.p800refundsstubs.models.bankconsent.{BankConsentRequest, BankConsentResponse}
-import uk.gov.hmrc.p800refundsstubs.models.{BankAccountSummaryResponse}
+import uk.gov.hmrc.p800refundsstubs.models.{BankAccountSummaryResponse, BankAccountParty, BankPartyName, BankPartyFullLegalName}
 import uk.gov.hmrc.p800refundsstubs.services.{BankConsentService, BankAccountService}
 import uk.gov.hmrc.p800refundsstubs.util.SafeEquals.EqualsOps
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
@@ -95,7 +95,7 @@ class EcospendController @Inject() (
        * MDTP doesn't accept for Http Headers with underscores.
        * This is why we're accepting extra header with hyphen instead so it can work on MDTP.
        * Client code will produce both headers.
-       * Redundant header will be ignored on productionl like systems but it will make stubs working on MDTP.
+       * Redundant header will be ignored on production like systems but it will make stubs working on MDTP.
        */
       val consentId: Option[UUID] =
         request.headers.headers.find(_._1.toLowerCase() === consentIdHeaderKey.toLowerCase()).map(_._2).map(UUID.fromString)
@@ -111,7 +111,80 @@ class EcospendController @Inject() (
           bankAccountService
             .getAccountSummary(consentId)
             .foldF[Result](Future.successful(NoContent)) {
-              bankAccountSummaryResponse: BankAccountSummaryResponse => Future.successful(Ok(Json.toJson(bankAccountSummaryResponse)))
+              bankAccountSummaryResponse: BankAccountSummaryResponse =>
+                bankAccountSummaryResponse.value.headOption.map(_.bankId.getOrElse("")) match {
+                  case Some("test-account-summary-bank-id-none") =>
+                    Future.successful(Ok(Json.toJson(
+                      bankAccountSummaryResponse.value.map(_.copy(bankId = None))
+                    )))
+                  case Some("test-account-summary-account-identification-none") =>
+                    Future.successful(Ok(Json.toJson(
+                      bankAccountSummaryResponse.value.map(_.copy(accountIdentification = None))
+                    )))
+                  case Some("test-account-summary-calculated-owner-name-none") =>
+                    Future.successful(Ok(Json.toJson(
+                      bankAccountSummaryResponse.value.map(_.copy(calculatedOwnerName = None))
+                    )))
+                  case Some("test-account-summary-display-name-none") =>
+                    Future.successful(Ok(Json.toJson(
+                      bankAccountSummaryResponse.value.map(_.copy(displayName = None))
+                    )))
+                  case Some("test-account-summary-parties-none") =>
+                    Future.successful(Ok(Json.toJson(
+                      bankAccountSummaryResponse.value.map(_.copy(parties = None))
+                    )))
+                  case Some("test-account-summary-parties-name-none") =>
+                    Future.successful(Ok(Json.toJson(
+                      bankAccountSummaryResponse.value.map(_.copy(parties = Some(List(
+                        BankAccountParty(
+                          name          = None,
+                          fullLegalName = Some(BankPartyFullLegalName("Alice Crawford"))
+                        ),
+                        BankAccountParty(
+                          name          = None,
+                          fullLegalName = Some(BankPartyFullLegalName("Alice Crawford"))
+                        )
+                      ))))
+                    )))
+                  case Some("test-account-summary-parties-full-legal-name-none") =>
+                    Future.successful(Ok(Json.toJson(
+                      bankAccountSummaryResponse.value.map(_.copy(parties = Some(List(
+                        BankAccountParty(
+                          name          = Some(BankPartyName("Alice Crawford")),
+                          fullLegalName = None
+                        ),
+                        BankAccountParty(
+                          name          = Some(BankPartyName("Alice Crawford")),
+                          fullLegalName = None
+                        )
+                      ))))
+                    )))
+                  case Some("test-account-summary-parties-all-name-none") =>
+                    Future.successful(Ok(Json.toJson(
+                      bankAccountSummaryResponse.value.map(_.copy(parties = Some(List(
+                        BankAccountParty(
+                          name          = None,
+                          fullLegalName = None
+                        ),
+                        BankAccountParty(
+                          name          = None,
+                          fullLegalName = None
+                        )
+                      ))))
+                    )))
+                  case Some("test-account-summary-all-none") =>
+                    Future.successful(Ok(Json.toJson(
+                      bankAccountSummaryResponse.value.map(_.copy(
+                        bankId                = None,
+                        accountIdentification = None,
+                        calculatedOwnerName   = None,
+                        displayName           = None,
+                        parties               = None
+                      ))
+                    )))
+                  case _ =>
+                    Future.successful(Ok(Json.toJson(bankAccountSummaryResponse)))
+                }
             }
         }
     }

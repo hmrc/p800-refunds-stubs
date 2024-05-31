@@ -60,23 +60,23 @@ class EcospendControllerSpec extends ItSpec {
 
     val expectedBankAccountSummaryResponse: BankAccountSummaryResponse = BankAccountSummaryResponse(List(BankAccountSummary(
       id                    = UUID.fromString("cddd0273-b709-4ee7-b73d-7113dd7a7d66"),
-      bankId                = "obie-barclays-personal",
+      bankId                = Some("obie-barclays-personal"),
       merchantId            = None,
       merchantUserId        = None,
-      ttype                 = BankAccountType.Personal,
+      `type`                = BankAccountType.Personal,
       subType               = BankAccountSubType.CurrentAccount,
       currency              = Currency.getInstance("GBP"),
       accountFormat         = BankAccountFormat.SortCode,
-      accountIdentification = AccountIdentification("abc:123"),
-      calculatedOwnerName   = CalculatedOwnerName("Alice Crawford"),
+      accountIdentification = Some(AccountIdentification("abc:123")),
+      calculatedOwnerName   = Some(CalculatedOwnerName("Alice Crawford")),
       accountOwnerName      = AccountOwnerName("Alice Crawford"),
-      displayName           = DisplayName("Alice B Crawford"),
+      displayName           = Some(DisplayName("Alice B Crawford")),
       balance               = 123.7,
       lastUpdateTime        = localDateTime,
-      parties               = List(BankAccountParty(
-        name          = BankPartyName("Alice Crawford"),
-        fullLegalName = BankPartyFullLegalName("Alice Crawford")
-      ))
+      parties               = Some(List(BankAccountParty(
+        name          = Some(BankPartyName("Alice Crawford")),
+        fullLegalName = Some(BankPartyFullLegalName("Alice Crawford"))
+      )))
     )))
 
     implicitly[Format[BankAccountSummaryResponse]].reads(input) shouldBe JsSuccess(expectedBankAccountSummaryResponse)
