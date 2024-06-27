@@ -18,9 +18,12 @@ package uk.gov.hmrc.p800refundsstubs.models.nps
 
 import play.api.libs.json.{Format, Json}
 
+import scala.util.matching.Regex
+
 final case class PayeeBankAccountName(value: String)
 
 @SuppressWarnings(Array("org.wartremover.warts.Any"))
 object PayeeBankAccountName {
   implicit val format: Format[PayeeBankAccountName] = Json.valueFormat[PayeeBankAccountName]
+  val regex: Regex = """^[A-Za-z0-9,.&()\/' -]+$""".r
 }

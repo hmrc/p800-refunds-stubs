@@ -19,6 +19,7 @@ package uk.gov.hmrc.p800refundsstubs.controllers
 import play.api.mvc._
 import uk.gov.hmrc.p800refundsstubs.actions.Actions
 import uk.gov.hmrc.p800refundsstubs.models.casemanagement._
+import uk.gov.hmrc.p800refundsstubs.models.edh.BankAccountName
 import uk.gov.hmrc.p800refundsstubs.models.nps.Scenarios
 import uk.gov.hmrc.p800refundsstubs.util.SafeEquals.EqualsOps
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
@@ -42,6 +43,7 @@ class CaseManagementController @Inject() (
         .json[CaseManagementRequest]
         .validate(r => if (r.clientUId.value === clientUId) Right(r) else Left(BadRequest("'clientUId' has to match the path parameter")))
         .validate(r => if (r.clientUId.value.length <= 36) Right(r) else Left(BadRequest("'clientUId' has a max length of 36 characters")))
+        .validate(r => if (BankAccountName.regex.matches(r.bankAccountName.value)) Right(r) else Left(BadRequest("'bankAccountName' failed to match regex")))
     )
     .apply { implicit request: Request[CaseManagementRequest] =>
       Scenarios.selectScenarioForNotifyRiskingException(request.body.nino) match {

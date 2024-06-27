@@ -637,6 +637,31 @@ object EcospendData {
               "service_status": true
             },
             {
+              "bank_id": "obie-natwest-online-and-mobile",
+              "name": "Natwest Online",
+              "friendly_name": "NatWest Online and Mobile Banking&.-",
+              "is_sandbox": false,
+              "logo": "https://logo.com",
+              "icon": "https://public.ecospend.com/images/banks/NatWest_icon.svg",
+              "standard": "obie",
+              "country_iso_code": "",
+              "division": "GB",
+              "group": "Natwest",
+              "order": 0,
+              "abilities": {
+                "account": true,
+                "balance": true,
+                "transactions": true,
+                "direct_debits": true,
+                "standing_orders": true,
+                "parties": true,
+                "scheduled_payments": true,
+                "statements": true,
+                "offers": true
+              },
+              "service_status": true
+            },
+            {
               "bank_id": "obie-hsbc-personal",
               "name": "HSBC Personal",
               "friendly_name": "HSBC Personal",

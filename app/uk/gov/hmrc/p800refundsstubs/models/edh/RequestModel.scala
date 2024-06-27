@@ -290,6 +290,7 @@ final case class BankAccountName(value: String)
 object BankAccountName {
   @SuppressWarnings(Array("org.wartremover.warts.Any"))
   implicit val format: Format[BankAccountName] = Json.valueFormat[BankAccountName]
+  val regex: Regex = """^[a-zA-Z][a-zA-Z \'\-&.\/]{1,34}$""".r
 }
 
 final case class BuildingSocietyRef(value: String) {
