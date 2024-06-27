@@ -25,8 +25,9 @@ import uk.gov.hmrc.p800refundsstubs.models.{Nino, P800Reference}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.Inject
+import scala.concurrent.ExecutionContext
 
-class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
+class NpsController @Inject() (actions: Actions, cc: ControllerComponents)(implicit ec: ExecutionContext)
   extends BackendController(cc) {
 
   /**
@@ -144,45 +145,52 @@ class NpsController @Inject() (actions: Actions, cc: ControllerComponents)
    * NPS Interface to Suspend Overpayment. It's used in a Bank Transfer journey.
    */
   def suspendOverpayment(identifier: Nino): Action[SuspendOverpaymentRequest] =
-    actions.npsActionValidated(identifier)(parse.json[SuspendOverpaymentRequest]) { _ =>
-      Scenarios.selectScenarioForSuspendOverpayment(identifier) match {
-        case Scenarios.SuspendOverpayment.HappyPath =>
-          Ok(Json.toJson(SuspendOverpaymentResponse(
-            identifier            = identifier,
-            currentOptimisticLock = CurrentOptimisticLock(123)
-          )))
-        case Scenarios.SuspendOverpayment.InternalServerError =>
-          InternalServerError(Json.toJson("reason" -> "Emulating errors for testing"))
+    actions.npsActionValidated(identifier)(
+      parse.json[SuspendOverpaymentRequest]
+        .validate(r => if (PayeeBankAccountName.regex.matches(r.payeeBankAccountName.value)) Right(r) else Left(BadRequest("'payeeBankAccountName' failed to match regex")))
+    ) { _ =>
+        Scenarios.selectScenarioForSuspendOverpayment(identifier) match {
+          case Scenarios.SuspendOverpayment.HappyPath =>
+            Ok(Json.toJson(SuspendOverpaymentResponse(
+              identifier            = identifier,
+              currentOptimisticLock = CurrentOptimisticLock(123)
+            )))
+          case Scenarios.SuspendOverpayment.InternalServerError =>
+            InternalServerError(Json.toJson("reason" -> "Emulating errors for testing"))
+        }
       }
-    }
 
   /**
    * NPS Interface to claim overpayment. It's used in a Bank Transfer journey.
    */
   def makeBacsRepayment(identifier: Nino): Action[MakeBacsRepaymentRequest] =
-    actions.npsActionValidated(identifier)(parse.json[MakeBacsRepaymentRequest]) { implicit request =>
-      Scenarios.selectScenarioForMakeBacsRepayment(identifier) match {
-        case Scenarios.MakeBacsRepayment.HappyPath =>
-          Ok(Json.toJson(MakeBacsRepaymentResponse(
-            identifier            = identifier,
-            currentOptimisticLock = request.body.currentOptimisticLock
-          )))
-        case Scenarios.MakeBacsRepayment.BadRequest =>
-          BadRequest(Json.toJson(Failures.badRequestAsPerScenario))
-        case Scenarios.MakeBacsRepayment.Forbidden =>
-          Forbidden(Json.toJson(Failures.forbiddenAsPerScenario))
-        case Scenarios.MakeBacsRepayment.RefundAlreadyTaken =>
-          UnprocessableEntity(Json.toJson(Failures(
-            Failure.overpaymentAlreadyClaimed
-          )))
-        case Scenarios.MakeBacsRepayment.Suspended =>
-          UnprocessableEntity(Json.toJson(Failures(
-            Failure.overpaymentSuspended
-          )))
-        case Scenarios.MakeBacsRepayment.InternalServerError =>
-          InternalServerError("Internal Server Error as per scenario")
+    actions.npsActionValidated(identifier)(
+      parse
+        .json[MakeBacsRepaymentRequest]
+        .validate(r => if (PayeeBankAccountName.regex.matches(r.payeeBankAccountName.value)) Right(r) else Left(BadRequest("'payeeBankAccountName' failed to match regex")))
+    ) { implicit request =>
+        Scenarios.selectScenarioForMakeBacsRepayment(identifier) match {
+          case Scenarios.MakeBacsRepayment.HappyPath =>
+            Ok(Json.toJson(MakeBacsRepaymentResponse(
+              identifier            = identifier,
+              currentOptimisticLock = request.body.currentOptimisticLock
+            )))
+          case Scenarios.MakeBacsRepayment.BadRequest =>
+            BadRequest(Json.toJson(Failures.badRequestAsPerScenario))
+          case Scenarios.MakeBacsRepayment.Forbidden =>
+            Forbidden(Json.toJson(Failures.forbiddenAsPerScenario))
+          case Scenarios.MakeBacsRepayment.RefundAlreadyTaken =>
+            UnprocessableEntity(Json.toJson(Failures(
+              Failure.overpaymentAlreadyClaimed
+            )))
+          case Scenarios.MakeBacsRepayment.Suspended =>
+            UnprocessableEntity(Json.toJson(Failures(
+              Failure.overpaymentSuspended
+            )))
+          case Scenarios.MakeBacsRepayment.InternalServerError =>
+            InternalServerError("Internal Server Error as per scenario")
+        }
       }
-    }
 
   private lazy val logger = Logger(this.getClass)
 }
